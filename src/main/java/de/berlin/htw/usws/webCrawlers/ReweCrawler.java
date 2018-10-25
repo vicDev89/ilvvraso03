@@ -46,7 +46,7 @@ public class ReweCrawler {
 
         Collections.sort(pricesList);
 
-        return new Product(Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size()-1) );
+        return new Product(ingredientName,Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size()-1) );
 
     }
 

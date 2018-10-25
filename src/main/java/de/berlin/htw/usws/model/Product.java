@@ -13,6 +13,10 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 public class Product extends BaseEntity{
 
+
+    @Column
+    private String name;
+
     @Column
     private Supermarket supermarket;
 
