@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.starter;
+package de.berlin.htw.usws.repositories;
 
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
