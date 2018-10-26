@@ -4,5 +4,7 @@ public enum Supermarket {
 
     REWE,
 
-    EDEKA;
+    EDEKA,
+
+    BRINGMEISTER;
 }
