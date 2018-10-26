@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 public class Recipe {
 
+    // TODO: Recipe ID? (String) , time in minutes?
+
     private String title;
 
     @Column

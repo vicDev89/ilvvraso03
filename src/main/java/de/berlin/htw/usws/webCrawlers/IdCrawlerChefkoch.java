@@ -40,6 +40,8 @@ public class IdCrawlerChefkoch extends ChefkochCrawler {
 
         super.appendToBaseUrl(RECIPES_URL);
 
+        // TODO: Set list to null?
+
         boolean isLastKnownIdFound = false;
         boolean isLastPage = false;
 
@@ -77,7 +79,7 @@ public class IdCrawlerChefkoch extends ChefkochCrawler {
                     isKnownIdFound = true;
                     break;
                 } else {
-                    // TODO: If null -> new?
+                    // TODO: If null -> list = new?
                     allRecipeIds.add(idNumber);
                 }
             }
