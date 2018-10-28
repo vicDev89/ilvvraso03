@@ -10,7 +10,7 @@ public class ChefkochCrawlersTest {
 
     @Test
     public void crawlRecipes() throws IOException {
-        UnknownIdCrawlerChefkoch idCrawler = new UnknownIdCrawlerChefkoch();
+        UnknownIdsCrawlerChefkoch idCrawler = new UnknownIdsCrawlerChefkoch();
         RecipeCrawlerChefkoch recipeCrawler = new RecipeCrawlerChefkoch();
 
         ArrayList<Long> idList = idCrawler.crawlRecipePages();
