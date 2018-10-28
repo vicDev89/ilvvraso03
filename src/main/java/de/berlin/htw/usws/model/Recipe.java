@@ -34,6 +34,8 @@ public class Recipe extends BaseEntity {
     @Column
     private int preparationTimeInMin;
 
+    // TODO: Für Victor, von Lucas: Wir brauchen noch eine Datenbankspalte "Ruhezeit" für tolle Gerichte wie dieses: https://www.chefkoch.de/rezepte/3292121488810516 (Im Übrigen sollten wir das finde ich beim nächsten Meeting kochen)
+
     @Column
     private Double rate;
 

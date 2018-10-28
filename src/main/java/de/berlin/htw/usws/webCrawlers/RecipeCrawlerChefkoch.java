@@ -27,7 +27,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     public Recipe scrapRecipe(long recipeId) {
         super.appendToBaseUrl(RECIPES_APPEND_BEFORE_ID + recipeId + ONE_PORTION_APPEND);
 
-        recipe = null; // TODO: maintain?
+        recipe = null;
 
         try {
             Document recipePage = getUnlimitedDocument();
@@ -45,7 +45,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
         String preparation = recipePage.select(CSS_QUERY_RECIPE_PRERARATION).text();
 
         String preparationInfo = recipePage.select(CSS_QUERY_PREPARATION_INFO).first().toString();
-        for (String s : preparationInfo.split("<\\/strong>.*<strong>"))
+        for (String s : preparationInfo.split("<\\/strong>"))
             System.out.println(s);
 
         return recipe;
