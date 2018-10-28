@@ -73,13 +73,13 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
         for (Element e : recipesIdList) {
             String id = e.id();
             if(id.matches(ID_REGEX)) {
-                String idNumber = id.replace("recipe-","");
-                if (true) {
-                    // TODO prüft gegen DB
+                id = id.replace("recipe-","");
+                long idNumber = Long.parseLong(id);
+                if (idNumber == 3594861540582589L) {
+                    // TODO prüft gegen DB | Lucas: if-Anweisung ist zu ersetzen, nachdem DB eingerichtet wurde
                     isKnownIdFound = true;
                     break;
                 } else {
-                    // TODO: If null -> list = new?
                     allRecipeIds.add(idNumber);
                 }
             }

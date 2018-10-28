@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Recipe extends BaseEntity {
 
-    // TODO: (Vic) ID von BaseEntity mit Recipe-ID überschreiben
+    // TODO: (Vic) ID von BaseEntity mit Recipe-ID (long) überschreiben
 
     private String title;
 

@@ -28,8 +28,6 @@ public class Starter {
     }
 
     public static void main(String[] args) {
-        //  new CrawlerService().start();
-        new RecipeCrawlerChefkoch().scrapRecipe("3593891540449959");
 
         List<Product> edekaProducts = EdekaCrawler.getAllProducts();
 
