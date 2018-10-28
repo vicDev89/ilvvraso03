@@ -80,7 +80,7 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
                     break;
                 } else {
                     // TODO: If null -> list = new?
-                    allRecipeIds.add(idNumber);
+                    allRecipeIds.add(Long.valueOf(idNumber));
                 }
             }
         }

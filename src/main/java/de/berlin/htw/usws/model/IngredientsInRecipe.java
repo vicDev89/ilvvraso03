@@ -1,11 +1,10 @@
 package de.berlin.htw.usws.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 
 @Getter
@@ -13,10 +12,16 @@ import javax.persistence.JoinColumn;
 @Entity
 public class IngredientsInRecipe extends BaseEntity{
 
-    @JoinColumn
+    @Setter(value = AccessLevel.NONE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column( updatable = false, nullable = false)
+    private Long id;
+
+    @OneToOne
     private Ingredient ingredient;
 
-    @JoinColumn
+    @OneToOne
     private Recipe recipe;
 
     @Column

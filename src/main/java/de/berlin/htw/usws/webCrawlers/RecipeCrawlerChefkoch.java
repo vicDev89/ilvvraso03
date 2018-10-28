@@ -20,7 +20,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
 
     private Recipe recipe;
 
-    public Recipe scrapRecipe(String recipeId) {
+    public Recipe scrapRecipe(Long recipeId) {
         super.appendToBaseUrl(RECIPES_APPEND_BEFORE_ID + recipeId + ONE_PORTION_APPEND);
 
         recipe = null; // TODO: maintain?

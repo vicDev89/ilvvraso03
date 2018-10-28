@@ -1,9 +1,11 @@
 package de.berlin.htw.usws.services;
 
 
+import de.berlin.htw.usws.repositories.RecipeRepository;
 import de.berlin.htw.usws.webCrawlers.UnknownIdCrawlerChefkoch;
 import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +17,9 @@ import java.util.LinkedList;
  * @author Lucas Larisch
  */
 public class CrawlerService {
+
+    @Inject
+    private RecipeRepository recipeRepository;
 
     /** Used for collecting IDs of recipes. */
     private UnknownIdCrawlerChefkoch idCrawler;
