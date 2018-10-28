@@ -45,7 +45,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
         for (String s : preparationInfo.split("<\\/strong>.*<strong>"))
             System.out.println(s);
 
-        // TODO: Add to recipe. (Project/Problem Lombok)
+
 
         return recipe;
     }

@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Class used for scrapping unknown recipe-IDs.
@@ -14,7 +14,7 @@ import java.util.LinkedList;
  * @author Lucas Larisch
  * @return Newest ID of a recipe stored in the database.
  */
-public class IdCrawlerChefkoch extends ChefkochCrawler {
+public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
 
     /** Regex for (real) recipe IDs. */
     private final String ID_REGEX="recipe\\-[0-9]*";
@@ -23,20 +23,20 @@ public class IdCrawlerChefkoch extends ChefkochCrawler {
     private final String RECIPES_URL = "/rs/s0o3/Rezepte.html";
 
     /** List all unknown IDs are to be added to. */
-    private LinkedList<String> allRecipeIds = new LinkedList<String>();
+    private ArrayList<Long> allRecipeIds = new ArrayList<Long>();
 
     /**
-     * Parses all pages for recipe IDs and adds the IDs to {@link IdCrawlerChefkoch#allRecipeIds}
+     * Parses all pages for recipe IDs and adds the IDs to {@link UnknownIdCrawlerChefkoch#allRecipeIds}
      * (List that will be returned). This method will run as long as there are (new) pages
      * containing recipes and as long as an ID to be added is not stored in the database yet.
      *
      * @since 24.10.2018
      * @author Lucas Larisch
      * @return List of all IDs representing recipes not yet stored.
-     *         ({@link IdCrawlerChefkoch#allRecipeIds})
+     *         ({@link UnknownIdCrawlerChefkoch#allRecipeIds})
      * @throws IOException
      */
-    public LinkedList<String> crawlRecipePages() throws IOException {
+    public ArrayList<Long> crawlRecipePages() throws IOException {
 
         super.appendToBaseUrl(RECIPES_URL);
 
@@ -61,7 +61,7 @@ public class IdCrawlerChefkoch extends ChefkochCrawler {
     }
 
     /**
-     * Adds all IDs from an Elements-list to {@link IdCrawlerChefkoch#allRecipeIds} as long
+     * Adds all IDs from an Elements-list to {@link UnknownIdCrawlerChefkoch#allRecipeIds} as long
      * as they represent a recipe and are not stored in the database yet.
      *
      * @since 24.10.2018

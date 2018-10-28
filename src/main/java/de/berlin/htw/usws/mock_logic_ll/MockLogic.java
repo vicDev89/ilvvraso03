@@ -1,7 +1,7 @@
 package de.berlin.htw.usws.mock_logic_ll;
 
 
-import de.berlin.htw.usws.webCrawlers.IdCrawlerChefkoch;
+import de.berlin.htw.usws.webCrawlers.UnknownIdCrawlerChefkoch;
 import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class MockLogic {
 
     /** Used for collecting IDs of recipes. */
-    private IdCrawlerChefkoch idCrawler;
+    private UnknownIdCrawlerChefkoch idCrawler;
 
     /** Used for collecting recipes. */
     private RecipeCrawlerChefkoch recipeCrawler;
@@ -25,7 +25,7 @@ public class MockLogic {
      * Crawls all unknown IDs and the recipe connected to each ID afterwards.
      * Whereas the IDs are collected from newest to oldest, the recipes are
      * parsed starting with the last added ID (= oldest recipe). This algorithm is
-     * based on the logic of {@link IdCrawlerChefkoch#crawlRecipePages()}:
+     * based on the logic of {@link UnknownIdCrawlerChefkoch#crawlRecipePages()}:
      * The last added recipe will be the newest in the database.
      * So in case of an error, only newer IDs will be collected (and the recipes
      * connected to them).
@@ -34,7 +34,9 @@ public class MockLogic {
      * @author Lucas Larisch
      */
     public void start() {
-        idCrawler = new IdCrawlerChefkoch();
+        idCrawler = new UnknownIdCrawlerChefkoch();
+
+        // TODO: Rename ID Crawler
 
         try {
             LinkedList<String> unknownIds = idCrawler.crawlRecipePages();
