@@ -5,6 +5,7 @@ import de.berlin.htw.usws.webCrawlers.UnknownIdCrawlerChefkoch;
 import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -40,7 +41,7 @@ public class CrawlerService {
         // TODO: Rename ID Crawler
 
         try {
-            LinkedList<String> unknownIds = idCrawler.crawlRecipePages();
+            ArrayList<Long> unknownIds = idCrawler.crawlRecipePages();
             recipeCrawler = new RecipeCrawlerChefkoch();
             for (int i = unknownIds.size()-1; i >= 0; i--) {
                 recipeCrawler.scrapRecipe(unknownIds.get(i));
