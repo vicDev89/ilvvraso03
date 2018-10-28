@@ -1,6 +1,5 @@
 package de.berlin.htw.usws.webCrawlers;
 
-import de.berlin.htw.usws.mock_logic_ll.MockDbLogic;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -75,7 +74,8 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
             String id = e.id();
             if(id.matches(ID_REGEX)) {
                 String idNumber = id.replace("recipe-","");
-                if (MockDbLogic.dataBaseContainsId(idNumber)) {
+                if (true) {
+                    // TODO prüft gegen DB
                     isKnownIdFound = true;
                     break;
                 } else {

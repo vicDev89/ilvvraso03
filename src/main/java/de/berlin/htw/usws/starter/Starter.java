@@ -3,6 +3,7 @@ package de.berlin.htw.usws.starter;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
 import de.berlin.htw.usws.webCrawlers.EdekaCrawler;
+import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,7 +28,8 @@ public class Starter {
     }
 
     public static void main(String[] args) {
-
+        //  new CrawlerService().start();
+        new RecipeCrawlerChefkoch().scrapRecipe("3593891540449959");
 
         List<Product> edekaProducts = EdekaCrawler.getAllProducts();
 

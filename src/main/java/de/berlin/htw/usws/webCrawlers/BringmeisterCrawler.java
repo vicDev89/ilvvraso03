@@ -15,7 +15,7 @@ public class BringmeisterCrawler {
 
     private final static String EDEKA_URL = "https://www.bringmeister.de/catalogsearch/results?q=";
 
-    public static final String PRODUCT_DIV_CLASS = "_2nciZ";
+    public static final String PRODUCT_DIV_CLASS = "_1lp36";
     public static final String PRODUCT_PRICE_CLASS = "_1aMgV BGQpt";
     public static final String PRODUCT_PICTURE = "_2PXqC";
     public static final String PRODUCT_NAME = "MTKh1";

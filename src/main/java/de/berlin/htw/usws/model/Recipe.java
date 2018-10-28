@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Recipe {
+public class Recipe extends BaseEntity {
 
-    // TODO: Recipe ID? (String) , time in minutes?
+    // TODO: (Vic) ID von BaseEntity mit Recipe-ID überschreiben
 
     private String title;
 
@@ -22,18 +23,19 @@ public class Recipe {
     private String preparation;
 
     @OneToMany
-    @Column
+    @JoinColumn
     private List<Ingredient> ingredients;
 
+    // in minutes
     @Column
-    private int cookingTime;
+    private int cookingTimeInMin;
+
+    // in minutes
+    @Column
+    private int preparationTimeInMin;
 
     @Column
-    private int preparationTime;
-
-    @OneToMany
-    @Column
-    private List<Opinion> opinions;
+    private Double rate;
 
     @Column
     private DifficultyLevel difficultyLevel;

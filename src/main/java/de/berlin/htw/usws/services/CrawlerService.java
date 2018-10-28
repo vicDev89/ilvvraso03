@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.mock_logic_ll;
+package de.berlin.htw.usws.services;
 
 
 import de.berlin.htw.usws.webCrawlers.UnknownIdCrawlerChefkoch;
@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * @since 24.10.2018
  * @author Lucas Larisch
  */
-public class MockLogic {
+public class CrawlerService {
 
     /** Used for collecting IDs of recipes. */
     private UnknownIdCrawlerChefkoch idCrawler;
@@ -33,6 +33,7 @@ public class MockLogic {
      * @since 24.10.2018
      * @author Lucas Larisch
      */
+
     public void start() {
         idCrawler = new UnknownIdCrawlerChefkoch();
 
