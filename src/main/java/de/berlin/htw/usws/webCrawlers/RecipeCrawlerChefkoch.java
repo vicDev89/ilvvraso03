@@ -20,7 +20,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
 
     private Recipe recipe;
 
-    public Recipe scrapRecipe(Long recipeId) {
+    public Recipe scrapRecipe(long recipeId) {
         super.appendToBaseUrl(RECIPES_APPEND_BEFORE_ID + recipeId + ONE_PORTION_APPEND);
 
         recipe = null; // TODO: maintain?
@@ -40,13 +40,10 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
         String title = recipePage.select("h1").text();
         String preparation = recipePage.select("div#rezept-zubereitung").text();
 
-        // TODO: Continue here, prevent from deleting * between first and last strong tag. Should use next strong.
         String preparationInfo = recipePage.select("p#preparation-info").first().toString();
         for (String s : preparationInfo.split("<\\/strong>.*<strong>"))
             System.out.println(s);
-
-
-
+        
         return recipe;
     }
 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Lucas Larisch
  * @return Newest ID of a recipe stored in the database.
  */
-public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
+public class UnknownIdsCrawlerChefkoch extends ChefkochCrawler {
 
     /** Regex for (real) recipe IDs. */
     private final String ID_REGEX="recipe\\-[0-9]*";
@@ -25,21 +25,19 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
     private ArrayList<Long> allRecipeIds = new ArrayList<Long>();
 
     /**
-     * Parses all pages for recipe IDs and adds the IDs to {@link UnknownIdCrawlerChefkoch#allRecipeIds}
+     * Parses all pages for recipe IDs and adds the IDs to {@link UnknownIdsCrawlerChefkoch#allRecipeIds}
      * (List that will be returned). This method will run as long as there are (new) pages
      * containing recipes and as long as an ID to be added is not stored in the database yet.
      *
      * @since 24.10.2018
      * @author Lucas Larisch
      * @return List of all IDs representing recipes not yet stored.
-     *         ({@link UnknownIdCrawlerChefkoch#allRecipeIds})
+     *         ({@link UnknownIdsCrawlerChefkoch#allRecipeIds})
      * @throws IOException
      */
     public ArrayList<Long> crawlRecipePages() throws IOException {
 
         super.appendToBaseUrl(RECIPES_URL);
-
-        // TODO: Set list to null?
 
         boolean isLastKnownIdFound = false;
         boolean isLastPage = false;
@@ -60,7 +58,7 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
     }
 
     /**
-     * Adds all IDs from an Elements-list to {@link UnknownIdCrawlerChefkoch#allRecipeIds} as long
+     * Adds all IDs from an Elements-list to {@link UnknownIdsCrawlerChefkoch#allRecipeIds} as long
      * as they represent a recipe and are not stored in the database yet.
      *
      * @since 24.10.2018
@@ -73,14 +71,14 @@ public class UnknownIdCrawlerChefkoch extends ChefkochCrawler {
         for (Element e : recipesIdList) {
             String id = e.id();
             if(id.matches(ID_REGEX)) {
-                String idNumber = id.replace("recipe-","");
-                if (true) {
-                    // TODO prüft gegen DB
+                id = id.replace("recipe-","");
+                long idNumber = Long.parseLong(id);
+                if (false) {
+                    // TODO prüft gegen DB | Lucas: if-Anweisung ist zu ersetzen, nachdem DB eingerichtet wurde: if(Id ist bekannt)
                     isKnownIdFound = true;
                     break;
                 } else {
-                    // TODO: If null -> list = new?
-                    allRecipeIds.add(Long.valueOf(idNumber));
+                    allRecipeIds.add(idNumber);
                 }
             }
         }
