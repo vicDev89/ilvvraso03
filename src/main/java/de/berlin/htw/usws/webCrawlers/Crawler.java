@@ -13,6 +13,8 @@ import java.io.IOException;
  */
 abstract class Crawler {
 
+    // TODO: [Lucas] Vorschlag: Definieren finaler CSS-Queries in dieser Klasse. (z.B. "a", "href", "li", ...). So könnte man sich das Deklarieren solcher Queries in den Subklassen sparen (siehe UnknownIdsCrawler)
+
     /** Whole URL of a web page to be parsed. */
     private String url;
 

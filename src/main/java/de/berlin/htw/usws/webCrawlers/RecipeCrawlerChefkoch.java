@@ -18,6 +18,10 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     private final String RECIPES_APPEND_BEFORE_ID = "/rezepte/";
     private final String ONE_PORTION_APPEND = "?portionen=1";
 
+    private final String CSS_QUERY_RECIPE_PRERARATION = "div#rezept-zubereitung";
+    private final String CSS_QUERY_H1 = "h1";
+    private final String CSS_QUERY_PREPARATION_INFO = "p#preparation-info";
+
     private Recipe recipe;
 
     public Recipe scrapRecipe(long recipeId) {
@@ -37,13 +41,13 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
 
     private Recipe addBasicContentToRecipe(Document recipePage) {
         // ID!
-        String title = recipePage.select("h1").text();
-        String preparation = recipePage.select("div#rezept-zubereitung").text();
+        String title = recipePage.select(CSS_QUERY_H1).text();
+        String preparation = recipePage.select(CSS_QUERY_RECIPE_PRERARATION).text();
 
-        String preparationInfo = recipePage.select("p#preparation-info").first().toString();
+        String preparationInfo = recipePage.select(CSS_QUERY_PREPARATION_INFO).first().toString();
         for (String s : preparationInfo.split("<\\/strong>.*<strong>"))
             System.out.println(s);
-        
+
         return recipe;
     }
 

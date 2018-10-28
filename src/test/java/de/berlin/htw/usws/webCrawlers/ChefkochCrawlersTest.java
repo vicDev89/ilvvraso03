@@ -13,8 +13,12 @@ public class ChefkochCrawlersTest {
         UnknownIdsCrawlerChefkoch idCrawler = new UnknownIdsCrawlerChefkoch();
         RecipeCrawlerChefkoch recipeCrawler = new RecipeCrawlerChefkoch();
 
-        ArrayList<Long> idList = idCrawler.crawlRecipePages();
-        for (long id : idList) {
+        ArrayList<Long> idList = new ArrayList<Long>();
+        idList.add(3292121488810516L);
+        idList.add(3586591539033463L);
+//      ArrayList<Long> idList = idCrawler.crawlRecipePages();
+
+         for (long id : idList) {
             Recipe recipe = recipeCrawler.scrapRecipe(id);
         }
     }
