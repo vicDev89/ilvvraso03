@@ -1,6 +1,7 @@
 package de.berlin.htw.usws.webCrawlers;
 
 import de.berlin.htw.usws.model.Product;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 public class BringmeisterCrawlerTest {
 
     @Test
+    @Ignore
     public void testEmptytest() throws IOException {
 
         String name = "apfel";

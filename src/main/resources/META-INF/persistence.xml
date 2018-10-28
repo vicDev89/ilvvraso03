@@ -4,8 +4,6 @@
         version="2.0">
     <persistence-unit name="ingrEatDB_unit">
 
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-
         <class>de.berlin.htw.usws.model.Ingredient</class>
         <class>de.berlin.htw.usws.model.Recipe</class>
         <class>de.berlin.htw.usws.model.IngredientsInRecipe</class>
@@ -13,20 +11,25 @@
 
         <shared-cache-mode>ALL</shared-cache-mode>
 
-
         <properties>
             <!-- database connection -->
+
+            <!--Projektserver-DB-->
+            <!--<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />-->
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://db.f4.htw-berlin.de:3306/_s0558332_ingrEatDB" />-->
+            <!--<property name="javax.persistence.jdbc.user" value="s0558332" />-->
+            <!--<property name="javax.persistence.jdbc.password" value="mysql2018!" />-->
+
+            <!--localhost-DB-->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://db.f4.htw-berlin.de:3306/_s0558332_ingrEatDB" />
-            <property name="javax.persistence.jdbc.user" value="s0558332" />
-            <property name="javax.persistence.jdbc.password" value="mysql2018!" />
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-            <property name="hibernate.show_sql" value="true" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ingrEatDB" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="ZCE6nHTnN9NB9p5C" />
+
+            <property name="javax.persistence.schema-generation.database.action" value="create" />
+            <property name = "hibernate.show_sql" value = "true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-
         </properties>
-
-
     </persistence-unit>
 
 </persistence>

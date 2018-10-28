@@ -1,22 +1,16 @@
 package de.berlin.htw.usws.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
 @Setter
 @MappedSuperclass
 public abstract class BaseEntity {
-
-
-	@Setter(value = AccessLevel.NONE)
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created")
@@ -25,24 +19,17 @@ public abstract class BaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated")
 	private Date lastModifiedOn;
-	public final boolean isNew() {
-        return this.id == null;
-    }
 
     @PrePersist
     public void prePersist() {
-        this.audit();
+        createdOn = new Date();
+        lastModifiedOn = new Date();
     }
-
     @PreUpdate
-    public void preUpdate() {
-        this.audit();
+    public void preUpdate()
+    {
+        lastModifiedOn = new Date();
     }
     
-    private void audit() {
-        if (this.isNew()) {
-            this.createdOn = new Date();
-        }
-        this.lastModifiedOn = new Date();
-    }
+
 }

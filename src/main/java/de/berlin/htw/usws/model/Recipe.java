@@ -3,27 +3,32 @@ package de.berlin.htw.usws.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Recipe.BY_ID,
+                query = "select r from Recipe r where r.id=?1")
+})
 public class Recipe extends BaseEntity {
 
-    // TODO: (Vic) ID von BaseEntity mit Recipe-ID (long) überschreiben
+    public static final String BY_ID = "recipeById";
 
+    @Id
+    @Column( updatable = false, nullable = false)
+    private Long id;
+
+    @Column
     private String title;
 
     @Column
     private String preparation;
 
     @OneToMany
-    @JoinColumn
     private List<Ingredient> ingredients;
 
     // in minutes
