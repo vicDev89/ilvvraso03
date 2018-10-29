@@ -140,13 +140,6 @@
             <version>0.16</version>
         </dependency>
 
-        <!-- für wildfly-server start-->
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
-            <scope>provided</scope>
-        </dependency>
 
     </dependencies>
 
