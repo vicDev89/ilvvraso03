@@ -1,0 +1,55 @@
+@startuml
+
+
+
+class Ingredient {
+    id : Long
+    name : String
+}
+
+class Recipe {
+    id : Long
+    title : String
+    preparation : String
+    cookingTimeInMin : int
+    preparationTimeInMin : int
+    restingTimeInMin : int
+    rate : Double
+    difficultyLevel : DifficultyLevel
+    pictureUrl : String
+}
+
+class IngredientsInRecipe{
+    id : Long
+    recipe_id : Long
+    ingredient_id : Long
+    quantity : Double
+    measurement : String
+}
+
+class Product {
+    id : Long
+    name : String
+    supermarket : Supermarket
+    pricemin : Double
+    pricemax : Double
+}
+
+enum Supermarket {
+REWE
+EDEKA
+BRINGMEISTER
+}
+
+enum DifficultyLevel {
+EASY
+MEDIUM
+DIFFICULT
+}
+
+Supermarket --- Product
+DifficultyLevel --- Recipe
+Ingredient --- IngredientsInRecipe
+Recipe --- IngredientsInRecipe
+
+@enduml

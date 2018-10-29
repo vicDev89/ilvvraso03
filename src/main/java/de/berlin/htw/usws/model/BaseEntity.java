@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,11 +12,11 @@ import java.util.Date;
 public abstract class BaseEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created")
+	@Column
 	private Date createdOn;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated")
+	@Column
 	private Date lastModifiedOn;
 
     @PrePersist

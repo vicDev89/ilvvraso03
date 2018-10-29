@@ -25,7 +25,7 @@ public class IngredientsInRecipe extends BaseEntity{
     private Recipe recipe;
 
     @Column
-    private double quantity;
+    private Double quantity;
 
     @Column
     private String measure;

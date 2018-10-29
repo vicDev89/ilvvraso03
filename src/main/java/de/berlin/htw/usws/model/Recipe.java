@@ -28,26 +28,22 @@ public class Recipe extends BaseEntity {
     @Column
     private String preparation;
 
-    @OneToMany
-    private List<Ingredient> ingredients;
-
-    // in minutes
     @Column
     private int cookingTimeInMin;
 
-    // in minutes
     @Column
     private int preparationTimeInMin;
 
-    // TODO: Für Victor, von Lucas: Wir brauchen noch eine Datenbankspalte "Ruhezeit" für tolle Gerichte wie dieses: https://www.chefkoch.de/rezepte/3292121488810516 (Im Übrigen sollten wir das finde ich beim nächsten Meeting kochen)
+    @Column
+    private int restingTimeInMin;
 
     @Column
     private Double rate;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
-    // Saved as URL
     @Column
-    private String picture;
+    private String pictureUrl;
 }

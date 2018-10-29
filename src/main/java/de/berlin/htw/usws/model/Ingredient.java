@@ -14,13 +14,12 @@ public class Ingredient extends BaseEntity{
 
     @Setter(value = AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ingredient_generator")
+    @SequenceGenerator(name="ingredient_generator", sequenceName = "ingredient_seq", allocationSize=50)
     @Column(updatable = false, nullable = false)
     private Long id;
 
     @Column
     private String name;
 
-    @ManyToOne
-    private Recipe recipe;
 }

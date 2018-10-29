@@ -3,7 +3,7 @@
         xmlns="http://java.sun.com/xml/ns/persistence"
         version="2.0">
     <persistence-unit name="ingrEatDB_unit">
-
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>de.berlin.htw.usws.model.Ingredient</class>
         <class>de.berlin.htw.usws.model.Recipe</class>
         <class>de.berlin.htw.usws.model.IngredientsInRecipe</class>
@@ -16,9 +16,9 @@
 
             <!--Projektserver-DB-->
             <!--<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />-->
-            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://db.f4.htw-berlin.de:3306/_s0558332_ingrEatDB" />-->
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://db.f4.htw-berlin.de:3306/ingrEatDB" />-->
             <!--<property name="javax.persistence.jdbc.user" value="s0558332" />-->
-            <!--<property name="javax.persistence.jdbc.password" value="mysql2018!" />-->
+            <!--<property name="javax.persistence.jdbc.password" value="Mysql2018!" />-->
 
             <!--localhost-DB-->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -27,8 +27,7 @@
             <property name="javax.persistence.jdbc.password" value="ZCE6nHTnN9NB9p5C" />
 
             <property name="javax.persistence.schema-generation.database.action" value="create" />
-            <property name = "hibernate.show_sql" value = "true" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
         </properties>
     </persistence-unit>
 
