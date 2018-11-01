@@ -1,18 +1,14 @@
-package de.berlin.htw.usws.starter;
+package de.berlin.htw.usws.webCrawlers;
 
-import de.berlin.htw.usws.model.Product;
-import de.berlin.htw.usws.model.Supermarket;
-import de.berlin.htw.usws.util.FakerProducer;
-import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
-import lombok.extern.slf4j.Slf4j;
-
+import org.junit.Ignore;
+import testutils.FakerProducer;
+import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-@Slf4j
-public class Starter {
+public class DatenmodelTest {
 
     private static final EntityManagerFactory entityManagerFactory;
     private static final String PERSISTENCE_UNIT_NAME = "ingrEatDB_unit";
@@ -30,20 +26,21 @@ public class Starter {
 
     }
 
-    public static void main(String[] args) {
+    @Test
+    @Ignore
+    public void checkPerstenceUnit() {
 
-		EntityManager entityManager = getEntityManager();
-		entityManager.getTransaction().begin();
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
 
         for(int i = 0; i<10; i++) {
             entityManager.persist(FakerProducer.createFakeRecipe());
             entityManager.persist(FakerProducer.createFakeProduct());
             entityManager.persist(FakerProducer.createFakeIngredient());
         }
-		entityManager.getTransaction().commit();
+        entityManager.getTransaction().commit();
 
-		entityManager.clear();
-
+        entityManager.clear();
 
     }
 }

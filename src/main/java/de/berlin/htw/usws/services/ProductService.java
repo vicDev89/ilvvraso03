@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 public class ProductService {
 
-
     @Inject
     private ProductRepository productRepository;
 

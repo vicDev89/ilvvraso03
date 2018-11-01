@@ -1,9 +1,14 @@
 package de.berlin.htw.usws.services;
 
 
+import de.berlin.htw.usws.repositories.RecipeRepository;
 import de.berlin.htw.usws.webCrawlers.UnknownIdsCrawlerChefkoch;
 import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
+import org.apache.logging.log4j.core.config.Scheduled;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,6 +19,8 @@ import java.util.ArrayList;
  * @author Lucas Larisch
  */
 public class CrawlerService {
+
+
 
     /** Used for collecting IDs of recipes. */
     private UnknownIdsCrawlerChefkoch idsCrawler;

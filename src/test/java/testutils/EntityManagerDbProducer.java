@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.util;
+package testutils;
 
 import javax.enterprise.context.ApplicationScoped;
 

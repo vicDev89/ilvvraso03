@@ -10,7 +10,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name = IngredientsInRecipe.BY_RECIPE_ID,
+                query = "select count(ir) from IngredientsInRecipe ir inner join Recipe r on ir.recipe=r.id where r.id=?1")
+})
 public class IngredientsInRecipe extends BaseEntity{
+
+    public static final String BY_RECIPE_ID = "ingredientsNumberByRecipeId";
 
     @Setter(value = AccessLevel.NONE)
     @Id

@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.util;
+package testutils;
 
 import com.github.javafaker.Faker;
 import de.berlin.htw.usws.model.*;

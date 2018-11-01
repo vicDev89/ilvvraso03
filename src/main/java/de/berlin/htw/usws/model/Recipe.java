@@ -46,4 +46,7 @@ public class Recipe extends BaseEntity {
 
     @Column
     private String pictureUrl;
+
+    @ManyToMany
+    private List<IngredientsInRecipe> ingredientsInRecipes;
 }
