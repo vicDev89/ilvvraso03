@@ -1,5 +1,6 @@
 package de.berlin.htw.usws.webCrawlers;
 
+import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
 import org.jsoup.Jsoup;
@@ -46,7 +47,7 @@ public class BringmeisterCrawler {
 
         Collections.sort(pricesList);
 
-        return new Product(ingredientName, Supermarket.BRINGMEISTER, pricesList.get(0), pricesList.get(pricesList.size() - 1));
+        return new Product(ingredientName, Supermarket.BRINGMEISTER, pricesList.get(0), pricesList.get(pricesList.size() - 1), new Ingredient());
 
     }
 }

@@ -4,7 +4,6 @@
         version="2.0">
     <persistence-unit name="ingrEatDB_unit">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <jta-data-source>java:jboss/datasources/ingrEatDbDs</jta-data-source>
         <class>de.berlin.htw.usws.model.Ingredient</class>
         <class>de.berlin.htw.usws.model.Recipe</class>
         <class>de.berlin.htw.usws.model.IngredientsInRecipe</class>
@@ -29,7 +28,6 @@
 
             <property name="javax.persistence.schema-generation.database.action" value="create" />
             <property name="eclipselink.logging.level.sql" value="FINE"/>
-            <property name="jboss.entity.manager.factory.jndi.name" value="java:/dtsEntityManagerFactory" />
         </properties>
     </persistence-unit>
 

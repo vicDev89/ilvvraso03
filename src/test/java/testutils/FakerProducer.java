@@ -16,6 +16,7 @@ public class FakerProducer {
          product.setName(faker.food().ingredient());
          product.setPriceMin(Double.parseDouble(faker.commerce().price(0.0, 5.0).replace(",", ".")));
         product.setPriceMax(Double.parseDouble(faker.commerce().price(5.1, 10.0).replace(",", ".")));
+        product.setIngredient(createFakeIngredient());
         return product;
     }
 
