@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.repositories;
+package de.berlin.htw.usws.repositories.product;
 
 import de.berlin.htw.usws.model.Product;
 import org.apache.deltaspike.data.api.AbstractFullEntityRepository;

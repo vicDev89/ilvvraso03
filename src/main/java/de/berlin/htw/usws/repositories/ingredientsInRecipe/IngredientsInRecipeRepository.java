@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.repositories;
+package de.berlin.htw.usws.repositories.ingredientsInRecipe;
 
 import de.berlin.htw.usws.model.IngredientsInRecipe;
 import de.berlin.htw.usws.model.Recipe;

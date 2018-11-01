@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.rest;
+package de.berlin.htw.usws.repositories.core;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -6,6 +6,6 @@ import javax.ws.rs.core.Application;
 /**
  * RestEasy context
  */
-@ApplicationPath("/api")
+@ApplicationPath("/")
 public class RestServiceConfig extends Application {
 }

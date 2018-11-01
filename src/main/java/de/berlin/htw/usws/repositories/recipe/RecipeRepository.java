@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.repositories;
+package de.berlin.htw.usws.repositories.recipe;
 
 import de.berlin.htw.usws.metamodel.Ingredient_;
 import de.berlin.htw.usws.metamodel.IngredientsInRecipe_;
@@ -6,6 +6,7 @@ import de.berlin.htw.usws.metamodel.Recipe_;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientsInRecipe;
 import de.berlin.htw.usws.model.Recipe;
+import de.berlin.htw.usws.repositories.ingredientsInRecipe.IngredientsInRecipeRepository;
 import org.apache.deltaspike.data.api.*;
 
 import javax.inject.Inject;
