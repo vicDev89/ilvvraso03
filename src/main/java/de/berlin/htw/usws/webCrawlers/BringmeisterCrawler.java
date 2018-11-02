@@ -47,7 +47,7 @@ public class BringmeisterCrawler {
 
         Collections.sort(pricesList);
 
-        return new Product(ingredientName, Supermarket.BRINGMEISTER, pricesList.get(0), pricesList.get(pricesList.size() - 1), new Ingredient());
+        return new Product(ingredientName, Supermarket.BRINGMEISTER, pricesList.get(0), pricesList.get(pricesList.size() - 1));
 
     }
 }

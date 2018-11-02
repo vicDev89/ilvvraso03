@@ -3,6 +3,7 @@ package de.berlin.htw.usws.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Ingredient extends BaseEntity{
 
     @Setter(value = AccessLevel.NONE)
@@ -21,5 +23,9 @@ public class Ingredient extends BaseEntity{
 
     @Column
     private String name;
+
+    public Ingredient(String name) {
+        this.name = name;
+    }
 
 }

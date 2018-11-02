@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
 public class DatenmodelTest {
 
     private static final EntityManagerFactory entityManagerFactory;
-    private static final String PERSISTENCE_UNIT_NAME = "ingrEatDB_unit";
+    private static final String PERSISTENCE_UNIT_NAME = "ingrEatDBPg";
 
 
     static {
@@ -27,7 +27,6 @@ public class DatenmodelTest {
     }
 
     @Test
-    @Ignore
     public void checkPerstenceUnit() {
 
         EntityManager entityManager = getEntityManager();

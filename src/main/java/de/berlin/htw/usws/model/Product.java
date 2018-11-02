@@ -38,15 +38,12 @@ public class Product extends BaseEntity{
     @Column
     private Double priceMax;
 
-    @JoinColumn
-    private Ingredient ingredient;
 
-    public Product(final String name, final Supermarket supermarket, final Double priceMin, final Double priceMax, final Ingredient ingredient) {
+    public Product(final String name, final Supermarket supermarket, final Double priceMin, final Double priceMax) {
         this.name = name;
         this.supermarket = supermarket;
         this.priceMin = priceMin;
         this.priceMax = priceMax;
-        this.ingredient = ingredient;
     }
 
     // This no-arg-constructor needed for persistence-unit and entity-annotation
