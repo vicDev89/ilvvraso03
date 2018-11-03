@@ -286,6 +286,8 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     /**
      * Converts a string to a double and returns it.
      *
+     * @since 02.11.2018
+     * @author Lucas Larisch
      * @param string String to be retuned.
      * @return value of the string as double.
      */
