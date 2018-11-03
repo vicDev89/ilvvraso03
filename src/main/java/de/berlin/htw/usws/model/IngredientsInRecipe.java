@@ -30,9 +30,12 @@ public class IngredientsInRecipe extends BaseEntity{
     @OneToOne
     private Recipe recipe;
 
+    // TODO: Problem: zum Teil String als quantity.
     @Column
     private Double quantity;
 
     @Column
     private String measure;
+
+    // TODO: Warum Ingredients und nicht Ingredient?
 }

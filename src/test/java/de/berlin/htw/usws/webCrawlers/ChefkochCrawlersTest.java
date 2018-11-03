@@ -17,7 +17,9 @@ public class ChefkochCrawlersTest {
 
         ArrayList<Long> idList = new ArrayList<Long>();
         idList.add(3292121488810516L);
-        idList.add(3586591539033463L);
+     //   idList.add(3586591539033463L);
+      //  idList.add(601821159946812L);
+//        idList.add(1413701246265716L);
 //      ArrayList<Long> idList = idCrawler.crawlRecipePages();
 
          for (long id : idList) {
