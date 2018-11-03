@@ -52,6 +52,10 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     private final String REGEX_AVG_RATING = "Ø[1-5],[0-9]{2}";
     private final String REGEX_STRONG_TAGS = "<strong>.+?<\\/strong>";
 
+    // TODO Same as in ID-Crawler
+    /** Regex for checking if a string is a (no point) number. */
+    private final String REGEX_NUMBER = "[0-9]*";
+
     private final String KEY_COOKING_TIME = "Koch-/Backzeit:";
     private final String KEY_PREPARATION_TIME = "Arbeitszeit:";
     private final String KEY_RESTING_TIME = "Ruhezeit:";
@@ -194,7 +198,13 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
         String[] amountArray = amountText.split(" ", 2);
 
         if (amountArray.length > 0 && !amountText.trim().isEmpty()) {
-            ingredientInRecipe.setQuantity(Double.parseDouble(amountArray[0]));
+            String amountToCheck = amountArray[0].replaceAll(",","");
+            if (amountToCheck.matches(REGEX_NUMBER) && !amountToCheck.isEmpty()) {
+                ingredientInRecipe.setQuantity(Double.parseDouble(amountArray[0].replaceAll(",", ".")));
+            } else {
+                // TODO Discuss this error
+                System.err.println("'"+amountArray[0]+"' leads to problems. (no amount/double)");
+            }
         }
         if (amountArray.length > 1 ) {
             ingredientInRecipe.setMeasure(amountArray[1]);
