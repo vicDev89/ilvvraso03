@@ -21,9 +21,12 @@ public class BringmeisterProductAPI {
 
     private static final String ZIP_CODE = "13355";
 
+    private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
+
     Product getProduct(String productName){
         BringmeisterProductPage bringmeisterProductPage = null;
         ArrayList<Double> pricesList = new ArrayList<Double>();
+        int counter = 0;
 
         try {
             bringmeisterProductPage = getBringmeisterProductPageForProduct(productName);
@@ -33,7 +36,10 @@ public class BringmeisterProductAPI {
 
         if(bringmeisterProductPage != null){
             for (BringmeisterProduct product : bringmeisterProductPage.getProducts()) {
-                pricesList.add(product.getPrice());
+                if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
+                    pricesList.add(product.getPrice());
+                    counter++;
+                }
             }
         }
 
