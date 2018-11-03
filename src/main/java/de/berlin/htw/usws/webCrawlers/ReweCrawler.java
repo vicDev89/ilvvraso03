@@ -1,6 +1,5 @@
 package de.berlin.htw.usws.webCrawlers;
 
-import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
 import org.jsoup.Jsoup;
@@ -17,15 +16,17 @@ import java.util.Collections;
 public class ReweCrawler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReweCrawler.class);
-    public static final String PRODUCT_TILE_CLASS = "search-service-ProductTileContent";
-    public static final String PRODUCT_EURO_CLASS = "search-service-ProductPriceInteger";
-    public static final String PRODUCT_CENT_CLASS = "search-service-ProductPriceDecimal";
+    private static final String PRODUCT_TILE_CLASS = "search-service-ProductTileContent";
+    private static final String PRODUCT_EURO_CLASS = "search-service-ProductPriceInteger";
+    private static final String PRODUCT_CENT_CLASS = "search-service-ProductPriceDecimal";
 
     private final String REWE_URL = "https://shop.rewe.de/productList?search=";
 
+    private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
+
     //TODO: Filter irrelevant products
     //TODO: access multiple pages
-    public Product getProductForIngredientREWE(String ingredientName) throws IOException {
+    Product getProductForIngredientREWE(String ingredientName) throws IOException {
 
         String searchURL = REWE_URL + ingredientName;
 
@@ -35,14 +36,20 @@ public class ReweCrawler {
 
         Elements ProductsContent = doc.getElementsByClass(PRODUCT_TILE_CLASS);
 
+        int counter = 0;
+
         for (Element element : ProductsContent) {
-            Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
-            String euroString = euro.first().text();
+            if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
+                Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
+                String euroString = euro.first().text();
 
-            Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
-            String centString = cent.first().text();
+                Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
+                String centString = cent.first().text();
 
-            pricesList.add(Double.parseDouble(euroString + "." + centString));
+                pricesList.add(Double.parseDouble(euroString + "." + centString));
+
+                counter ++;
+            }
         }
 
         Collections.sort(pricesList);
