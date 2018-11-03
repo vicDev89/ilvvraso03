@@ -18,8 +18,8 @@ import java.util.List;
 @Path("/")
 public class RecipeController {
 
-    @Inject
-    private RecipeRepository recipeRepository;
+//    @Inject
+//    private RecipeRepository recipeRepository;
 
     @POST
     @Path("/getRecipes")
@@ -36,8 +36,8 @@ public class RecipeController {
             ingredients.add(new Ingredient(ingredientName));
         }
 
-        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredients);
+//        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredients);
 
-        return Response.ok().entity(recipes).build();
+        return Response.ok().entity(null).build();
     }
 }

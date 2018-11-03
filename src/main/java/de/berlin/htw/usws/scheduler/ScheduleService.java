@@ -26,18 +26,23 @@ public class ScheduleService {
     public void initialisiereTasks() {
 
         // TODO create cron for Crawler-Service
-        String taskCron = "********";
-        final TimerConfig timerConfig = new TimerConfig("Recipe Task", false);
+        // Beispiel mit Ausführungen in jeder Sekunde
+        String taskCron = "* * * * * * *";
+        final TimerConfig timerConfig = new TimerConfig("Recipe Crawling Task", false);
         final Timer timer = this.timerService.createCalendarTimer(Cron.create(taskCron).asScheduleExpression(), timerConfig);
         log.debug("Timer eingestellt {}", timer.getInfo());
         log.debug("Naechste Ausfuehrung {}", timer.getNextTimeout());
+
+
     }
 
     @Timeout
     public void timeoutHandler(final Timer timer) {
 
+        System.out.println("##### " + timer.getInfo() + " #####");
+        System.out.println("#### Timer struck ####");
         // When time is out, start crawler
-        (new CrawlerService()).start();
+        //(new CrawlerService()).start();
     }
 
 }
