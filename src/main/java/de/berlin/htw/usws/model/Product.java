@@ -49,4 +49,15 @@ public class Product extends BaseEntity{
     // This no-arg-constructor needed for persistence-unit and entity-annotation
     public Product() {
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", supermarket=" + supermarket +
+                ", priceMin=" + priceMin +
+                ", priceMax=" + priceMax +
+                '}';
+    }
 }
