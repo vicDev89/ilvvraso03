@@ -1,8 +1,8 @@
 package de.berlin.htw.usws.services;
 
 
-import de.berlin.htw.usws.webCrawlers.UnknownIdsCrawlerChefkoch;
-import de.berlin.htw.usws.webCrawlers.RecipeCrawlerChefkoch;
+import de.berlin.htw.usws.webcrawlers.UnknownIdsCrawlerChefkoch;
+import de.berlin.htw.usws.webcrawlers.RecipeCrawlerChefkoch;
 
 import java.io.IOException;
 import java.util.ArrayList;

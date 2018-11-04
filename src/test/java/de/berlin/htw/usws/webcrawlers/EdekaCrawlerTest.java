@@ -1,21 +1,24 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
+
+
 
 import de.berlin.htw.usws.model.Product;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
 
-public class BringmeisterCrawlerTest {
+
+public class EdekaCrawlerTest
+{
 
     @Test
-    @Ignore
     public void testEmptytest() throws IOException {
 
-        String name = "apfel";
+        String name = "Tomate";
 
-        Product product =  BringmeisterCrawler.getProductForIngredientBRINGMEISTER(name);
+        Product product =  NewEdekaCrawler.getProductForIngredientEDEKA(name);
 
         System.out.println(product.getSupermarket().name() + ". Product: " + product.getName() + ". Price_min: " + product.getPriceMin() + ". Price_max: " + product.getPriceMax());
     }
+
 }

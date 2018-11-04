@@ -11,10 +11,10 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = IngredientsInRecipe.BY_RECIPE_ID,
-                query = "select count(ir) from IngredientsInRecipe ir inner join Recipe r on ir.recipe=r.id where r.id=?1")
+        @NamedQuery(name = IngredientInRecipe.BY_RECIPE_ID,
+                query = "select count(ir) from IngredientInRecipe ir inner join Recipe r on ir.recipe=r.id where r.id=?1")
 })
-public class IngredientsInRecipe extends BaseEntity{
+public class IngredientInRecipe extends BaseEntity{
 
     public static final String BY_RECIPE_ID = "ingredientsNumberByRecipeId";
 
@@ -30,12 +30,10 @@ public class IngredientsInRecipe extends BaseEntity{
     @OneToOne
     private Recipe recipe;
 
-    // TODO: Problem: zum Teil String als quantity.
     @Column
     private Double quantity;
 
     @Column
     private String measure;
 
-    // TODO: Warum Ingredients und nicht Ingredient?
 }

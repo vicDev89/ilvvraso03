@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;

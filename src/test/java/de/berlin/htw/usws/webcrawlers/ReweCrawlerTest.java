@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.Product;
 import org.junit.Test;

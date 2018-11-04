@@ -1,6 +1,5 @@
 package de.berlin.htw.usws.scheduler;
 
-import de.berlin.htw.usws.services.CrawlerService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;

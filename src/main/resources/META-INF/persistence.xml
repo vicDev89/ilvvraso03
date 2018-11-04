@@ -9,7 +9,7 @@
 
         <class>de.berlin.htw.usws.model.Ingredient</class>
         <class>de.berlin.htw.usws.model.Recipe</class>
-        <class>de.berlin.htw.usws.model.IngredientsInRecipe</class>
+        <class>de.berlin.htw.usws.model.IngredientInRecipe</class>
         <class>de.berlin.htw.usws.model.Product</class>
 
         <shared-cache-mode>ALL</shared-cache-mode>

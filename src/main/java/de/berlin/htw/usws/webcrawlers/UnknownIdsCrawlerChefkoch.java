@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -96,6 +96,7 @@ public class UnknownIdsCrawlerChefkoch extends ChefkochCrawler {
                 long idNumber = Long.parseLong(id);
                 if (false) {
                     // TODO prüft gegen DB | Lucas: if-Anweisung ist zu ersetzen, nachdem DB eingerichtet wurde: if(Id ist bekannt)
+
                     isKnownIdFound = true;
                     break;
                 } else {

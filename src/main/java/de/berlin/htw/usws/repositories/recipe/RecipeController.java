@@ -27,7 +27,6 @@ public class RecipeController {
     @Produces("application/json")
     public Response getRecipes(final String ingredientsJson) {
 
-        // TODO Convert JSON with ingredients to ArrayList
         final GsonBuilder builder = new GsonBuilder();
         final ArrayList<String> listeIngredients = builder.create().fromJson(ingredientsJson, ArrayList.class);
 
@@ -36,7 +35,7 @@ public class RecipeController {
             ingredients.add(new Ingredient(ingredientName));
         }
 
-//        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredients);
+//       List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredients);
 
         return Response.ok().entity(null).build();
     }

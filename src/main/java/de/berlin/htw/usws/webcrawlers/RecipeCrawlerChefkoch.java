@@ -1,8 +1,8 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.DifficultyLevel;
 import de.berlin.htw.usws.model.Ingredient;
-import de.berlin.htw.usws.model.IngredientsInRecipe;
+import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -192,7 +192,7 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
      */
     private void addIngredientsToRecipe(Document recipePage) {
         Elements ingredientsTable = recipePage.select(CSS_QUERY_INGREDIENTS_TD);
-        List<IngredientsInRecipe> ingredientsInRecipeList = null;
+        List<IngredientInRecipe> ingredientInRecipeList = null;
 
         for (int i = 0; i < ingredientsTable.size(); i++) {
             if (ingredientsTable.get(i).className().equals(CSS_QUERY_CLASS_AMOUNT)) {
@@ -201,15 +201,15 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
                     Element amountElement = ingredientsTable.get(i);
                     Element ingredientElement = ingredientsTable.get(i+1);
 
-                    if(ingredientsInRecipeList == null) {
-                        ingredientsInRecipeList = new ArrayList<IngredientsInRecipe>();
+                    if(ingredientInRecipeList == null) {
+                        ingredientInRecipeList = new ArrayList<IngredientInRecipe>();
                     }
 
-                    ingredientsInRecipeList.add(createIngredientInRecipe(amountElement, ingredientElement));
+                    ingredientInRecipeList.add(createIngredientInRecipe(amountElement, ingredientElement));
                 }
             }
         }
-        recipe.setIngredientsInRecipes(ingredientsInRecipeList);
+        recipe.setIngredientInRecipes(ingredientInRecipeList);
     }
 
     /**
@@ -254,8 +254,8 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
      * @param ingredientElement Element representing the ingredient itself.
      * @return Scrapped ingredient with converted values.
      */
-    private IngredientsInRecipe createIngredientInRecipe(Element amountElement, Element ingredientElement) {
-        IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
+    private IngredientInRecipe createIngredientInRecipe(Element amountElement, Element ingredientElement) {
+        IngredientInRecipe ingredientInRecipe = new IngredientInRecipe();
 
         Ingredient ingredient = new Ingredient();
         ingredient.setName(ingredientElement.text());

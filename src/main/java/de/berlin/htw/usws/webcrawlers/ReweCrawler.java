@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
@@ -24,8 +24,7 @@ public class ReweCrawler {
 
     private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
 
-    //TODO: Filter irrelevant products
-    //TODO: access multiple pages
+
     Product getProductForIngredientREWE(String ingredientName) throws IOException {
 
         String searchURL = REWE_URL + ingredientName;

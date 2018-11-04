@@ -1,6 +1,6 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
-import de.berlin.htw.usws.model.IngredientsInRecipe;
+import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,9 +38,9 @@ public class ChefkochCrawlersTest {
              System.out.println("Preparation (char length): "+recipe.getPreparation().length());
              System.out.println("Ingredients: ");
 
-             List<IngredientsInRecipe> ingredients = recipe.getIngredientsInRecipes();
+             List<IngredientInRecipe> ingredients = recipe.getIngredientInRecipes();
 
-             for (IngredientsInRecipe i : ingredients) {
+             for (IngredientInRecipe i : ingredients) {
                  System.out.println(" - " + i.getId());
                  System.out.println("   " + i.getIngredient().getName());
                  System.out.println("   Measure: " + i.getMeasure());

@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

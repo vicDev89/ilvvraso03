@@ -1,7 +1,7 @@
 package de.berlin.htw.usws.metamodel;
 
 import de.berlin.htw.usws.model.DifficultyLevel;
-import de.berlin.htw.usws.model.IngredientsInRecipe;
+import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 
 import javax.annotation.Generated;
@@ -13,7 +13,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Recipe.class)
 public abstract class Recipe_ extends BaseEntity_ {
 
-	public static volatile ListAttribute<Recipe, IngredientsInRecipe> ingredientsInRecipes;
+	public static volatile ListAttribute<Recipe, IngredientInRecipe> ingredientsInRecipes;
 	public static volatile SingularAttribute<Recipe, Integer> preparationTimeInMin;
 	public static volatile SingularAttribute<Recipe, Double> rate;
 	public static volatile SingularAttribute<Recipe, Integer> cookingTimeInMin;

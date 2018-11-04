@@ -1,6 +1,5 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
-import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
 import org.jsoup.Jsoup;

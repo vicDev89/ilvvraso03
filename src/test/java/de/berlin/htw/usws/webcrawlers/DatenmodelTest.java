@@ -1,6 +1,5 @@
-package de.berlin.htw.usws.webCrawlers;
+package de.berlin.htw.usws.webcrawlers;
 
-import org.junit.Ignore;
 import testutils.FakerProducer;
 import org.junit.Test;
 
