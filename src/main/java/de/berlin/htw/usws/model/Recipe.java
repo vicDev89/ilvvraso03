@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public class Recipe extends BaseEntity {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String preparation;
 
     @Column
@@ -47,6 +48,7 @@ public class Recipe extends BaseEntity {
     @Column
     private String pictureUrl;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "recipe", orphanRemoval = true)
     private List<IngredientInRecipe> ingredientInRecipes;
 }

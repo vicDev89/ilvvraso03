@@ -1,37 +1,35 @@
 package de.berlin.htw.usws.scheduler;
 
-import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.*;
 
 
-/**
- * Service für das Management und die Zeitablaufsteuerung von Hintergrundjobs.
- */
 @Startup
 @Singleton
-@Slf4j
 public class ScheduleService {
 
     @Resource
     private TimerService timerService;
 
-    /**
-     * Initialisiert die zeitgesteuerten Tasks
-     */
     @PostConstruct
     public void initialisiereTasks() {
 
-        // TODO create cron for Crawler-Service
-        // Beispiel mit Ausführungen in jeder Sekunde
-        String taskCron = "* * * * * * *";
         final TimerConfig timerConfig = new TimerConfig("Recipe Crawling Task", false);
-        final Timer timer = this.timerService.createCalendarTimer(Cron.create(taskCron).asScheduleExpression(), timerConfig);
-        log.debug("Timer eingestellt {}", timer.getInfo());
-        log.debug("Naechste Ausfuehrung {}", timer.getNextTimeout());
 
+        // Beispiel mit Ausführungen jede 10 Sekunden
+        String taskCron = "10 * * * * * *";
+        ScheduleExpression scheduleExpression = new ScheduleExpression();
+        scheduleExpression.second("10");
+        scheduleExpression.minute("*");
+        scheduleExpression.hour("*");
+        scheduleExpression.dayOfMonth("*");
+        scheduleExpression.dayOfWeek("*");
+        scheduleExpression.month("*");
+        scheduleExpression.year("*");
+
+        final Timer timer = this.timerService.createCalendarTimer(scheduleExpression, timerConfig);
 
     }
 
