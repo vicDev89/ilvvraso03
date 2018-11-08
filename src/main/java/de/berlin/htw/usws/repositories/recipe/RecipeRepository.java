@@ -30,7 +30,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
      * @return
      */
     @Query(named = Recipe.BY_ID, singleResult = SingleResultType.OPTIONAL)
-    //@EntityGraph(paths = {"ingredients"})
+  //  @EntityGraph(paths = {"ingredients"})
     public abstract Recipe findBy(final Long id);
 
     /**
@@ -67,7 +67,6 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         }
         return recipes;
     }
-
     /**
      * Find recipes that contain given ingredients
      * @param ingredients
@@ -96,7 +95,5 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
 
         return this.entityManager().createQuery(cQuery).getResultList();
     }
-
-
 
 }

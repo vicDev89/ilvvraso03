@@ -6,6 +6,6 @@ import javax.ws.rs.core.Application;
 /**
  * RestEasy context
  */
-@ApplicationPath("/")
+@ApplicationPath("api")
 public class RestServiceConfig extends Application {
 }

@@ -3,14 +3,12 @@ package de.berlin.htw.usws.repositories.recipe;
 import com.google.gson.GsonBuilder;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Recipe;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import javax.inject.Inject;
 
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,15 @@ public class RecipeController {
 
 //    @Inject
 //    private RecipeRepository recipeRepository;
+
+    @GET
+    @Path("/test")
+    @Consumes("application/json")
+    public Response test() {
+        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
+        return Response.ok().build();
+    }
+
 
     @POST
     @Path("/getRecipes")
@@ -35,8 +42,10 @@ public class RecipeController {
             ingredients.add(new Ingredient(ingredientName));
         }
 
-//       List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredients);
+        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
 
-        return Response.ok().entity(null).build();
+       List<Recipe> recipes = recipeRepository.findRecipesByIngredients(ingredients); //this.recipeRepository.findRecipesByIngredients(ingredients);
+
+        return Response.ok().entity(recipes).build();
     }
 }

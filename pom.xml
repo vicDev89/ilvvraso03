@@ -10,8 +10,10 @@
     <packaging>war</packaging>
     <name>ingrEatService</name>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <resteasy.version>3.0.19.Final</resteasy.version>
     </properties>
 
     <dependencyManagement>
@@ -179,11 +181,17 @@
             <version>2.0</version>
         </dependency>
 
-        <!-- Jboss REST-Client -->
+        <!-- Jboss RestEasy -->
+
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <version>3.6.1.Final</version>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-servlet-initializer</artifactId>
+            <version>${resteasy.version}</version>
         </dependency>
 
         <!-- javaee -->
