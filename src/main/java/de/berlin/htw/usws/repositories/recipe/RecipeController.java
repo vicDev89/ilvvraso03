@@ -25,11 +25,13 @@ public class RecipeController {
     @Consumes("application/json")
     public Response test() {
 
-        RecipeService recipeService = new RecipeService();
-        Recipe recipe = recipeService.getRecipe();
+//        RecipeService recipeService = new RecipeService();
+//        Recipe recipe = recipeService.getRecipe();
+
+
 //        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
 //        Recipe recipe = recipeRepository.findBy(1L);
-        return Response.ok(recipe).build();
+        return Response.ok(null).build();
     }
 
 
