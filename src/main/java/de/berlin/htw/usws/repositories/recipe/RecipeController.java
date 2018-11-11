@@ -29,9 +29,11 @@ public class RecipeController {
 //        Recipe recipe = recipeService.getRecipe();
 
 
-//        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
-//        Recipe recipe = recipeRepository.findBy(1L);
-        return Response.ok(null).build();
+        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
+        Recipe recipe = recipeRepository.findBy(1L);
+
+//        Recipe recipe = this.recipeRepository.findBy(1L);
+        return Response.ok(recipe).build();
     }
 
 

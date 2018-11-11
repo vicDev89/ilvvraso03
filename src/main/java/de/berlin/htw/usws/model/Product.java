@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,6 +38,9 @@ public class Product extends BaseEntity{
 
     @Column
     private Double priceMax;
+
+    @ManyToOne
+    private Ingredient ingredient;
 
 
     public Product(final String name, final Supermarket supermarket, final Double priceMin, final Double priceMax) {

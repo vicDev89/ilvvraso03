@@ -1,25 +1,60 @@
 package de.berlin.htw.usws.webcrawlers;
 
+
+import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 import org.junit.Ignore;
 import org.junit.Test;
-import testutils.FakerProducer;
+
 
 import javax.persistence.EntityManager;
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChefkochCrawlersTest extends PersistTestBase{
+
+public class ChefkochCrawlersTest extends PersistTestBase {
 
     @Test
     @Ignore
-    public void crawlOnerecipeAndPersist() {
+    public void crawlOnerecipeAndPersist()  {
+        EntityManager entityManager = getEntityManager();
+
         RecipeCrawlerChefkoch recipeCrawler = new RecipeCrawlerChefkoch();
         Recipe recipe = recipeCrawler.scrapRecipe(3292121488810516L);
 
-        EntityManager entityManager = getEntityManager();
+        List<Ingredient> listeIngredients = new ArrayList<>();
+
+
+        for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+            listeIngredients.add(ingredientInRecipe.getIngredient());
+        }
+
+        for (Ingredient ingredient : listeIngredients) {
+
+            List<Object> results =  entityManager.createQuery("SELECT i FROM Ingredient i where i.name=:name").setParameter("name", ingredient.getName()).getResultList();
+
+            if(results.isEmpty()) {
+                entityManager.getTransaction().begin();
+
+                entityManager.persist(ingredient);
+
+                entityManager.getTransaction().commit();
+
+                entityManager.clear();
+            }
+        }
+
+        for(IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+
+            List<Object> results =  entityManager.createQuery("SELECT i FROM Ingredient i where i.name=:name").setParameter("name", ingredientInRecipe.getIngredient().getName()).getResultList();
+
+            ingredientInRecipe.setIngredient((Ingredient) results.get(0));
+        }
+
         entityManager.getTransaction().begin();
 
         entityManager.persist(recipe);
@@ -29,6 +64,7 @@ public class ChefkochCrawlersTest extends PersistTestBase{
         entityManager.clear();
 
     }
+
 
 
     @Test
@@ -44,32 +80,32 @@ public class ChefkochCrawlersTest extends PersistTestBase{
         idList.add(1413701246265716L);
 //      ArrayList<Long> idList = idCrawler.crawlRecipePages();
 
-         for (long id : idList) {
-             Recipe recipe = recipeCrawler.scrapRecipe(id);
+        for (long id : idList) {
+            Recipe recipe = recipeCrawler.scrapRecipe(id);
 
-             System.out.println(recipe.getTitle());
-             System.out.println(recipe.getId());
-             System.out.println("Picture: "+recipe.getPictureUrl());
-             System.out.println("Rate: "+recipe.getRate());
-             System.out.println("Difficulty: "+recipe.getDifficultyLevel());
-             System.out.println("Prep. time: "+recipe.getPreparationTimeInMin());
-             System.out.println("Rest. time: "+recipe.getRestingTimeInMin());
-             System.out.println("Cook. time: "+recipe.getCookingTimeInMin());
-             System.out.println("Preparation (char length): "+recipe.getPreparation().length());
-             System.out.println("Ingredients: ");
+            System.out.println(recipe.getTitle());
+            System.out.println(recipe.getId());
+            System.out.println("Picture: " + recipe.getPictureUrl());
+            System.out.println("Rate: " + recipe.getRate());
+            System.out.println("Difficulty: " + recipe.getDifficultyLevel());
+            System.out.println("Prep. time: " + recipe.getPreparationTimeInMin());
+            System.out.println("Rest. time: " + recipe.getRestingTimeInMin());
+            System.out.println("Cook. time: " + recipe.getCookingTimeInMin());
+            System.out.println("Preparation (char length): " + recipe.getPreparation().length());
+            System.out.println("Ingredients: ");
 
-             List<IngredientInRecipe> ingredients = recipe.getIngredientInRecipes();
+            List<IngredientInRecipe> ingredients = recipe.getIngredientInRecipes();
 
-             for (IngredientInRecipe i : ingredients) {
-                 System.out.println(" - " + i.getId());
-                 System.out.println("   " + i.getIngredient().getName());
-                 System.out.println("   Measure: " + i.getMeasure());
-                 System.out.println("   Quantity: " + i.getQuantity());
-             }
+            for (IngredientInRecipe i : ingredients) {
+                System.out.println(" - " + i.getId());
+                System.out.println("   " + i.getIngredient().getName());
+                System.out.println("   Measure: " + i.getMeasure());
+                System.out.println("   Quantity: " + i.getQuantity());
+            }
 
-             System.out.println();
+            System.out.println();
 
-         }
+        }
 
     }
 }

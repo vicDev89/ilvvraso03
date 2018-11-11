@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(uniqueConstraints=@UniqueConstraint(columnNames="name"))
 public class Ingredient extends BaseEntity{
 
     @Setter(value = AccessLevel.NONE)
@@ -28,6 +29,9 @@ public class Ingredient extends BaseEntity{
     @OneToMany(cascade = CascadeType.PERSIST,
             mappedBy = "ingredient", orphanRemoval = true)
     private List<IngredientInRecipe> ingredientsInRecipe;
+
+    @OneToMany
+    private List<Product> products;
 
     public Ingredient(String name) {
         this.name = name;

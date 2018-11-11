@@ -14,30 +14,58 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resteasy.version>3.0.19.Final</resteasy.version>
+        <deltaspike.version>1.8.2</deltaspike.version>
+        <weld.version>2.3.3.Final</weld.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Deltaspike -->
-            <!-- Deltaspike API. We use compile scope as we need it to compile the project against the API -->
             <dependency>
-                <groupId>org.apache.deltaspike.core</groupId>
-                <artifactId>deltaspike-core-api</artifactId>
-                <version>1.9.0</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <!-- Deltaspike Impl. We use runtime scope as we only need the implementation classes at runtime -->
-            <dependency>
-                <groupId>org.apache.deltaspike.core</groupId>
-                <artifactId>deltaspike-core-impl</artifactId>
-                <scope>runtime</scope>
-                <version>1.9.0</version>
+                <groupId>org.apache.deltaspike.distribution</groupId>
+                <artifactId>distributions-bom</artifactId>
+                <version>${deltaspike.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+
     <dependencies>
+        <!-- Deltaspike CDI -->
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Deltaspike API. We use compile scope as we need it to compile the project against the API -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Deltaspike Impl. We use runtime scope as we only need the implementation classes at runtime -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Deltaspike weld injection-->
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- JBoss Weld-->
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se</artifactId>
+            <version>${weld.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- JUnit -->
         <dependency>
