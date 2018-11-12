@@ -49,4 +49,8 @@ abstract class Crawler {
     protected void setBaseUrl(String baseUrl){
         this.baseUrl = baseUrl;
     }
+
+    protected String getUrl() {
+        return url;
+    }
 }
