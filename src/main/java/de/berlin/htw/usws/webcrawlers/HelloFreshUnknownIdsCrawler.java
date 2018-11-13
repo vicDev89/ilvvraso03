@@ -2,12 +2,26 @@ package de.berlin.htw.usws.webcrawlers;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class used for scrapping URLs of recipes from hellofresh.de that have an ID
+ * that is not stored in the database yet.
+ *
+ * @since 12.11.2018
+ * @author Lucas Larisch
+ */
 public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
+
+    /** Name of the web driver to be used for scrapping the URLs. */
+    private final String WEB_DRIVER_NAME = "webdriver.chrome.driver";
+
+    /** Path to the web driver to be used for scrapping the URLs. */
+    private final String WEB_DRIVER_PATH = "target/classes/ChromeDriver/chromedriver.exe";
 
     /** CSS query for the total number of recipes. */
     private final String CSS_QUERY_TOTAL_NUMBER = "div.fela-1abvmfr div span:not([data-translation-id])";
@@ -18,23 +32,17 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
     /** CSS query for an href-attribute. */
     private final String CSS_QUERY_ATTRIBUTE_HREF = "href";
 
-    /** CSS query for a div to be clicked on in order to close a popup. */
-    private final String CSS_QUERY_CLOSE_DIV = "div.dy-lb-close";
-
     /** CSS query for the button to be clicked on in order to show more recipes. */
     private final String CSS_QUERY_BUTTON_SHOW_MORE = "button[data-kind=\"green\"]";
 
-    /** Name of the web driver to be used for scrapping the URLs. */
-    private final String WEB_DRIVER_NAME = "webdriver.chrome.driver";
-
-    /** Path to the web driver to be used for scrapping the URLs. */
-    private final String WEB_DRIVER_PATH = "target/classes/ChromeDriver/chromedriver.exe";
+    /** CSS query for a div to be clicked on in order to close a popup. */
+    private final String CSS_QUERY_CLOSE_DIV = "div.dy-lb-close";
 
     /** Relative URL holding the newest recipes. */
     private final String RECIPES_URL = "recipes/search/?order=-date";
 
     /** Pause after clicking on "MEHR ANZEIGEN". */
-    private final int SLEEP_INTERVAL = 6;
+    private final int SLEEP_INTERVAL = 4;
 
     /** List all unknown IDs are to be added to. */
     private ArrayList<String> allRecipeUrls = new ArrayList<>();
@@ -53,10 +61,9 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
      */
     public ArrayList<String> crawlRecipePage() {
         appendToBaseUrl(RECIPES_URL);
-        System.setProperty(WEB_DRIVER_NAME, WEB_DRIVER_PATH);
-        WebDriver driver = new ChromeDriver();
-        driver.get(getUrl());
 
+        WebDriver driver = initHeadlessChromeDriver();
+        driver.get(getUrl());
         int countRecipes = 0;
 
         while(countRecipes < totalRecipes(driver)) {
@@ -74,6 +81,23 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
         }
         driver.close();
         return allRecipeUrls;
+    }
+
+    /**
+     * Returns a headless Chrome Web Driver.
+     *
+     * @since 13.11.2018
+     * @author Lucas Larisch
+     * @return Headless Chrome Web Driver.
+     */
+    protected WebDriver initHeadlessChromeDriver(){
+        System.setProperty(WEB_DRIVER_NAME, WEB_DRIVER_PATH);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("start-maximized");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--disable-extensions");
+        return new ChromeDriver(chromeOptions);
     }
 
     /**
@@ -106,13 +130,12 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
 
         for (int i = nrOfKnownUrls; i < recipeLinks.size(); i++) {
             String url = recipeLinks.get(i).getAttribute(CSS_QUERY_ATTRIBUTE_HREF);
-            String[] splittedUrl = url.split("\\?")[0].split("-");
-            String id = splittedUrl[splittedUrl.length-1];
+            String id = getRecipeIdFromUrl(url);
             // TODO: if !Id in DB:
             if(!false) {
                 allRecipeUrls.add(url);
             } else {
-                System.out.println(allRecipeUrls.size()-nrOfKnownUrls+" URLs have been added (total: "+allRecipeUrls.size()+").");
+                System.out.println(allRecipeUrls.size()-nrOfKnownUrls+" URLs have been added (total: "+allRecipeUrls.size()+"). A known ID has been found.");
                 return -1;
             }
         }
@@ -137,6 +160,7 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
 
     /**
      * Checks whether a pop up has appeared. If so, it is closed.
+     * If not, an error message is printed out.
      *
      * @since 12.11.2018
      * @author Lucas Larisch
@@ -145,6 +169,8 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
     private void closePopUpIfExisting(WebDriver driver) {
         if (driver.findElements(By.cssSelector(CSS_QUERY_CLOSE_DIV)).size() != 0) {
             driver.findElement(By.cssSelector(CSS_QUERY_CLOSE_DIV)).click();
+        } else {
+            System.err.println("An error occurred that could not be solved by closing an appearing pop up.");
         }
     }
 

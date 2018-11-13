@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Class used for scrapping recipes.
+ * Class used for scrapping recipes from chefkoch.de.
  *
  * @since 24.10.2018
  * @author Lucas Larisch

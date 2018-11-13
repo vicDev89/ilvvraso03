@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Class used for scrapping unknown recipe-IDs.
+ * Class used for scrapping unknown recipe-IDs from chefkoch.de.
  *
+ * @since 24.10.2018
  * @author Lucas Larisch
- * @return Newest ID of a recipe stored in the database.
  */
 public class UnknownIdsCrawlerChefkoch extends ChefkochCrawler {
 
@@ -96,7 +96,6 @@ public class UnknownIdsCrawlerChefkoch extends ChefkochCrawler {
                 long idNumber = Long.parseLong(id);
                 if (false) {
                     // TODO prüft gegen DB | Lucas: if-Anweisung ist zu ersetzen, nachdem DB eingerichtet wurde: if(Id ist bekannt)
-
                     isKnownIdFound = true;
                     break;
                 } else {
