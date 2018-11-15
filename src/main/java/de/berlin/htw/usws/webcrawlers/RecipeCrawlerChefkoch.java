@@ -25,10 +25,10 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     /** String to append to an URL in order to get the ingredients for one portion. */
     private final String ONE_PORTION_APPEND = "?portionen=1";
 
-    /** CSS Query for Headlines */
+    /** CSS Query for headlines */
     private final String CSS_QUERY_H1 = "h1";
 
-    /** CSS Query for sources. */
+    /** CSS Query for getting the value of a src-attribute. */
     private final String CSS_QUERY_SRC = "src";
 
     /** CSS Query for strong tags. */
@@ -61,7 +61,6 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
     /** Regex for a text surrounded by the strong tag. */
     private final String REGEX_INSIDE_STRONG_TAG = "<strong>.+?<\\/strong>";
 
-    // TODO Same as in ID-Crawler
     /** Regex for checking if a string is a (no point) number. */
     private final String REGEX_NUMBER = "[0-9]*";
 
@@ -270,7 +269,6 @@ public class RecipeCrawlerChefkoch extends ChefkochCrawler {
             if (amountToCheck.matches(REGEX_NUMBER) && !amountToCheck.isEmpty()) {
                 ingredientInRecipe.setQuantity(stringToDouble(amountArray[0]));
             } else {
-                // TODO Discuss this error
                 System.err.println("'"+amountArray[0]+"' leads to problems. (no amount/double)");
             }
         }

@@ -8,8 +8,6 @@ package de.berlin.htw.usws.webcrawlers;
  */
 abstract class HelloFreshCrawler extends Crawler {
 
-    // TODO: Remove Driver from HelloFreshCrawler (put to Unknown Id Crawler instead) if not used in recipe crawler
-
     /** Base URL of the "Chefkoch" page */
     private final String BASE_URL  = "https://www.hellofresh.de/";
 
