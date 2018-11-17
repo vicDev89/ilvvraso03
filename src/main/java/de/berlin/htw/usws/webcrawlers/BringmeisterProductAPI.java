@@ -43,9 +43,12 @@ public class BringmeisterProductAPI {
             }
         }
 
-        Collections.sort(pricesList);
-
-        return new Product(productName, Supermarket.BRINGMEISTER, pricesList.get(0), pricesList.get(pricesList.size()-1));
+        if(pricesList.size()>0) {
+            Collections.sort(pricesList);
+            return new Product(productName, Supermarket.EDEKA, pricesList.get(0), pricesList.get(pricesList.size()-1));
+        } else {
+            return null;
+        }
     }
 
     private BringmeisterProductPage getBringmeisterProductPageForProduct(String productName) throws IOException {

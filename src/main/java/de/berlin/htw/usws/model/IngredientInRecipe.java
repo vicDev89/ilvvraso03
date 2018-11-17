@@ -24,7 +24,7 @@ public class IngredientInRecipe extends BaseEntity{
     @Column( updatable = false, nullable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Ingredient ingredient;
 
     @ManyToOne

@@ -222,7 +222,7 @@
             <version>${resteasy.version}</version>
         </dependency>
 
-        <!-- javaee -->
+        <!-- javaee for Scheduler -->
 
         <dependency>
             <groupId>javax</groupId>

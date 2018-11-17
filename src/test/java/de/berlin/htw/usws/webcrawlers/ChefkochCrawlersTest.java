@@ -3,6 +3,7 @@ package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
+import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Recipe;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,7 +20,6 @@ import java.util.List;
 public class ChefkochCrawlersTest extends PersistTestBase {
 
     @Test
-    @Ignore
     public void crawlOnerecipeAndPersist()  {
         EntityManager entityManager = getEntityManager();
 
@@ -62,6 +62,34 @@ public class ChefkochCrawlersTest extends PersistTestBase {
         entityManager.getTransaction().commit();
 
         entityManager.clear();
+
+        ReweCrawler reweCrawler = new ReweCrawler();
+        BringmeisterProductAPI edekaCrawler = new BringmeisterProductAPI();
+
+
+
+        List<Object> results =  entityManager.createQuery("SELECT i FROM Ingredient i").getResultList();
+        for(Object o : results) {
+            Ingredient i = (Ingredient)o;
+            try {
+                Product productRewe = reweCrawler.getProductForIngredientREWE(i.getName());
+                Product productEdeka = edekaCrawler.getProduct(i.getName());
+                entityManager.getTransaction().begin();
+                if(productRewe != null) {
+                    productRewe.setIngredient(i);
+                    entityManager.persist(productRewe);
+                }
+                if(productEdeka != null) {
+                    productEdeka.setIngredient(i);
+                    entityManager.persist(productEdeka);
+                }
+                entityManager.getTransaction().commit();
+                entityManager.clear();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

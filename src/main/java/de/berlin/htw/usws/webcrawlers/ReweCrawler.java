@@ -35,27 +35,28 @@ public class ReweCrawler {
 
         Elements ProductsContent = doc.getElementsByClass(PRODUCT_TILE_CLASS);
 
-        int counter = 0;
+        if(!ProductsContent.isEmpty()) {
+            int counter = 0;
 
-        for (Element element : ProductsContent) {
-            if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
-                Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
-                String euroString = euro.first().text();
+            for (Element element : ProductsContent) {
+                if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
+                    Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
+                    String euroString = euro.first().text();
 
-                Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
-                String centString = cent.first().text();
+                    Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
+                    String centString = cent.first().text();
 
-                pricesList.add(Double.parseDouble(euroString + "." + centString));
+                    pricesList.add(Double.parseDouble(euroString + "." + centString));
 
-                counter ++;
+                    counter ++;
+                }
             }
+
+            Collections.sort(pricesList);
+
+            return new Product(ingredientName,Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size()-1));
+        } else {
+            return null;
         }
-
-        Collections.sort(pricesList);
-
-        return new Product(ingredientName,Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size()-1));
-
     }
-
-
 }
