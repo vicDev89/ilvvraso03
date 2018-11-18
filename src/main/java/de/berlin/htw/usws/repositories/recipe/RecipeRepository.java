@@ -21,8 +21,8 @@ import java.util.List;
 @Repository(forEntity = Recipe.class)
 public abstract class RecipeRepository extends AbstractFullEntityRepository<Recipe, Long> {
 
-    @Inject
-    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
+//    @Inject
+//    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
 
     /**
      * Search for a recipe by ID
@@ -56,7 +56,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
 
         // Create Hashmap with recipes and its number of ingredients
         for(Recipe recipe : recipes) {
-            mapNumberIngredientsInRecipe.put(recipe, ingredientsInRecipeRepository.getNumberIngredients(recipe));
+      //      mapNumberIngredientsInRecipe.put(recipe, ingredientsInRecipeRepository.getNumberIngredients(recipe));
         }
 
         // Wenn Anzahl Zutaten nicht mit der übergebenen Zutaten-Anzahl übereinstimmt, Recipe weg

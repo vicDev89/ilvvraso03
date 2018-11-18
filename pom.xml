@@ -14,58 +14,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resteasy.version>3.0.19.Final</resteasy.version>
-        <deltaspike.version>1.8.2</deltaspike.version>
-        <weld.version>2.3.3.Final</weld.version>
+        <deltaspike.version>1.9.0</deltaspike.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.deltaspike.distribution</groupId>
-                <artifactId>distributions-bom</artifactId>
-                <version>${deltaspike.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 
     <dependencies>
-        <!-- Deltaspike CDI -->
-        <dependency>
-            <groupId>org.apache.deltaspike.cdictrl</groupId>
-            <artifactId>deltaspike-cdictrl-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Deltaspike API. We use compile scope as we need it to compile the project against the API -->
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <!-- Deltaspike Impl. We use runtime scope as we only need the implementation classes at runtime -->
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Deltaspike weld injection-->
-        <dependency>
-            <groupId>org.apache.deltaspike.cdictrl</groupId>
-            <artifactId>deltaspike-cdictrl-weld</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- JBoss Weld-->
-        <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
-            <version>${weld.version}</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <!-- JUnit -->
         <dependency>
@@ -125,12 +78,25 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!-- Import the CDI API, we use provided scope as the API is included in WildFly 10 -->
+        <!-- Deltaspike API. We use compile scope as we need it to compile the project against the API -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Deltaspike Impl. We use runtime scope as we only need the implementation classes at runtime -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-api</artifactId>
+            <version>${deltaspike.version}</version>
         </dependency>
 
 
@@ -160,39 +126,14 @@
         </dependency>
 
 
-        <!-- Selenium for Web-Driver-Simulation -->
-        <!-- selenium-standalone-server not in central repository, but added as jar to build path-->
-        <!--<dependency>-->
-        <!--<groupId>org.seleniumhq.selenium</groupId>-->
-        <!--<artifactId>selenium-server-standalone</artifactId>-->
-        <!--<version>2.46.0</version>-->
-        <!--</dependency>-->
+        <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
             <version>2.47.1</version>
         </dependency>
 
-        <!-- Deltaspike API. we use compile scope as we need its API -->
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
 
-        <!-- Deltaspike Impl. we use runtime scope as we its implementation
-            dependencies only on runtime -->
-        <dependency>
-            <groupId>org.apache.deltaspike.core</groupId>
-            <artifactId>deltaspike-core-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-api</artifactId>
-            <version>1.9.0</version>
-        </dependency>
 
         <!-- Faker -->
         <dependency>
@@ -227,7 +168,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <version>8.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -249,13 +190,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
-        </dependency>
-
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>4.0.3.RELEASE</version>
         </dependency>
 
     </dependencies>

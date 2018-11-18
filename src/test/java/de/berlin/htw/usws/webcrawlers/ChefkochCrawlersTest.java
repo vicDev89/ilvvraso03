@@ -5,10 +5,13 @@ import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Recipe;
+import de.berlin.htw.usws.repositories.core.EntityManagerDbProducer;
+import de.berlin.htw.usws.repositories.recipe.RecipeRepository;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ import java.util.List;
 public class ChefkochCrawlersTest extends PersistTestBase {
 
     @Test
+    @Ignore
     public void crawlOnerecipeAndPersist()  {
         EntityManager entityManager = getEntityManager();
 

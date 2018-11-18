@@ -6,9 +6,6 @@ import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.services.RecipeService;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
-import javax.inject.Inject;
-
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -17,22 +14,15 @@ import java.util.List;
 @Path("/")
 public class RecipeController {
 
-//    @Inject
-//    private RecipeRepository recipeRepository;
 
     @GET
     @Path("/test")
     @Consumes("application/json")
     public Response test() {
 
-//        RecipeService recipeService = new RecipeService();
-//        Recipe recipe = recipeService.getRecipe();
+        RecipeService recipeService = new RecipeService();
+        Recipe recipe = recipeService.getRecipe();
 
-
-        RecipeRepository recipeRepository = BeanProvider.getContextualReference(RecipeRepository.class);
-        Recipe recipe = recipeRepository.findBy(1L);
-
-//        Recipe recipe = this.recipeRepository.findBy(1L);
         return Response.ok(recipe).build();
     }
 
