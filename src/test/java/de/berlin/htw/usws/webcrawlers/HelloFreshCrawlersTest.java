@@ -10,7 +10,7 @@ public class HelloFreshCrawlersTest {
     @Test
     @Ignore
     public void crawl() {
-        // ArrayList<String> urls = new HelloFreshUnknownIdsCrawler().crawlRecipePage();
+        // ArrayList<String> urls = new HelloFreshUnknownUrlsCrawler().crawlRecipePage();
 
         ArrayList<String> urls = new ArrayList<>();
         urls.add("https://www.hellofresh.de/recipes/wunderbar-saftiges-putengulasch-568cd65cf8b25ee91f8b4567?locale=de-DE");

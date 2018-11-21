@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @since 12.11.2018
  * @author Lucas Larisch
  */
-public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
+public class HelloFreshUnknownUrlsCrawler extends HelloFreshCrawler {
 
     /** Name of the web driver to be used for scrapping the URLs. */
     private final String WEB_DRIVER_NAME = "webdriver.chrome.driver";
@@ -49,7 +49,7 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
 
     /**
      * Opens a (Chrome) Web Driver in order to scrap all URLs to recipes of
-     * Hello Fresh and adds them to {@link HelloFreshUnknownIdsCrawler#allRecipeUrls}
+     * Hello Fresh and adds them to {@link HelloFreshUnknownUrlsCrawler#allRecipeUrls}
      * (List that will be returned). This method will run as long as there are (new)
      * recipes and as long as an URL to be added does not belong to a recipe already
      * stored in the database.
@@ -114,7 +114,7 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
     }
 
     /**
-     * Adds URLs to {@link HelloFreshUnknownIdsCrawler#allRecipeUrls} as long as the
+     * Adds URLs to {@link HelloFreshUnknownUrlsCrawler#allRecipeUrls} as long as the
      * recipe they belong to is not stored in the database yet.
      *
      * @since 12.11.2018
@@ -122,7 +122,7 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
      * @param driver WebDriver to be used for scrapping information.
      * @param nrOfKnownUrls Number of URLs that have already been scrapped before
      *                      calling this method. (used for performance and logging)
-     * @return Size of {@link HelloFreshUnknownIdsCrawler#allRecipeUrls} after having
+     * @return Size of {@link HelloFreshUnknownUrlsCrawler#allRecipeUrls} after having
      *         added new URLs.
      */
     private int addUrlsToList(WebDriver driver, int nrOfKnownUrls) {
@@ -145,7 +145,7 @@ public class HelloFreshUnknownIdsCrawler extends HelloFreshCrawler {
 
     /**
      * Pauses the current execution/thread for as many seconds as specified
-     * in {@link HelloFreshUnknownIdsCrawler#SLEEP_INTERVAL}.
+     * in {@link HelloFreshUnknownUrlsCrawler#SLEEP_INTERVAL}.
      *
      * @since 12.11.2018
      * @author Lucas Larisch
