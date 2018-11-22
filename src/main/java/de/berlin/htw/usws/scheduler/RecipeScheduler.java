@@ -8,7 +8,7 @@ import org.quartz.JobExecutionException;
 
 import javax.inject.Inject;
 
-@Scheduled(cronExpression = "10 0 0 0 0 0")
+@Scheduled(cronExpression = "10 * * * * ?")
 public class RecipeScheduler implements org.quartz.Job{
 
     @Inject

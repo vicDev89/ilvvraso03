@@ -15,7 +15,6 @@ public class PersistTestBase {
         entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
     }
-
     public static EntityManager getEntityManager() {
 
         return entityManagerFactory.createEntityManager();

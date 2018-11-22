@@ -4,10 +4,8 @@ package de.berlin.htw.usws.services;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
 import de.berlin.htw.usws.webcrawlersOld.UnknownIdsCrawlerChefkoch;
-import de.berlin.htw.usws.webcrawlersOld.RecipeCrawlerChefkoch;
 
 import javax.ejb.Stateless;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

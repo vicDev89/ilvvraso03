@@ -78,6 +78,7 @@
             <version>2.0.0</version>
         </dependency>
 
+        <!-- DS CORE -->
         <!-- Deltaspike API. We use compile scope as we need it to compile the project against the API -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
@@ -93,13 +94,38 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- DS DATA -->
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-api</artifactId>
             <version>${deltaspike.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <!-- prevent you from inadvertently depending on an implementation -->
+            <artifactId>deltaspike-data-module-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
+
+        <!-- DS JPA -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <!-- prevent you from inadvertently depending on an implementation -->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Deltaspike scheduler-->
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-scheduler-module-api</artifactId>
@@ -114,6 +140,21 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- CDI control for Scheduler Deltaspike-->
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-api</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
 
         <!-- For Deltaspike Scheduler-->
         <dependency>
@@ -122,6 +163,13 @@
             <version>2.3.0</version>
         </dependency>
 
+        <!-- EJB -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
 
 
         <!-- Hibernate -->
@@ -185,15 +233,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-servlet-initializer</artifactId>
             <version>${resteasy.version}</version>
-        </dependency>
-
-        <!-- javaee for Scheduler -->
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- JSON -->
