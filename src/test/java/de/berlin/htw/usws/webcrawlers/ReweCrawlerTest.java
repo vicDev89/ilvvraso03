@@ -1,6 +1,7 @@
 package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.Product;
+import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
 import org.junit.Test;
 
 import java.io.IOException;

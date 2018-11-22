@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.repositories.core;
+package de.berlin.htw.usws.config;
 
 
 import javax.enterprise.context.ApplicationScoped;

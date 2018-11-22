@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webcrawlers;
+package de.berlin.htw.usws.webcrawlers.hellofresh;
 
 import de.berlin.htw.usws.model.DifficultyLevel;
 import de.berlin.htw.usws.model.Ingredient;

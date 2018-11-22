@@ -1,5 +1,7 @@
 package de.berlin.htw.usws.webcrawlers;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -11,7 +13,9 @@ import java.io.IOException;
  * @since 24.10.2018
  * @author Lucas Larisch
  */
-abstract class Crawler {
+@Setter
+@Getter
+public abstract class Crawler {
 
     // TODO: [Lucas] Vorschlag: Definieren finaler CSS-Queries in dieser Klasse. (z.B. "a", "href", "li", h1 ...). So könnte man sich das Deklarieren solcher Queries in den Subklassen sparen (siehe UnknownIdsCrawler)
 
@@ -46,15 +50,4 @@ abstract class Crawler {
         this.url = baseUrl+append;
     }
 
-    protected void setBaseUrl(String baseUrl){
-        this.baseUrl = baseUrl;
-    }
-
-    protected String getUrl() {
-        return url;
-    }
-
-    protected void setUrl(String url) {
-        this.url = url;
-    }
 }

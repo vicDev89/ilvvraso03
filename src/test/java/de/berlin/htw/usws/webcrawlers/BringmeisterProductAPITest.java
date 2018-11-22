@@ -1,6 +1,7 @@
 package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.model.Product;
+import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import org.junit.Test;
 
 public class BringmeisterProductAPITest {

@@ -1,4 +1,6 @@
-package de.berlin.htw.usws.webcrawlers;
+package de.berlin.htw.usws.webcrawlersOld;
+
+import de.berlin.htw.usws.webcrawlers.Crawler;
 
 /**
  * Abstract class for all Chefkoch-Crawlers.

@@ -1,5 +1,6 @@
 package de.berlin.htw.usws.webcrawlers;
 
+import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import org.junit.Ignore;
 import org.junit.Test;
 

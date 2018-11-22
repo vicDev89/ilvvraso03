@@ -5,13 +5,14 @@ import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Recipe;
-import de.berlin.htw.usws.repositories.core.EntityManagerDbProducer;
-import de.berlin.htw.usws.repositories.recipe.RecipeRepository;
+import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
+import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
+import de.berlin.htw.usws.webcrawlersOld.RecipeCrawlerChefkoch;
+import de.berlin.htw.usws.webcrawlersOld.UnknownIdsCrawlerChefkoch;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import java.io.IOException;

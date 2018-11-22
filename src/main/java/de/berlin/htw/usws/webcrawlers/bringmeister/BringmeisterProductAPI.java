@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webcrawlers;
+package de.berlin.htw.usws.webcrawlers.bringmeister;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,7 +23,7 @@ public class BringmeisterProductAPI {
 
     private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
 
-    Product getProduct(String productName){
+    public Product getProduct(String productName){
         BringmeisterProductPage bringmeisterProductPage = null;
         ArrayList<Double> pricesList = new ArrayList<Double>();
         int counter = 0;
