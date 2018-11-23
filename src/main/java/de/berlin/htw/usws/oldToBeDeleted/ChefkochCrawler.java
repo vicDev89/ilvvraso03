@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webcrawlersOld;
+package de.berlin.htw.usws.oldToBeDeleted;
 
 import de.berlin.htw.usws.webcrawlers.Crawler;
 

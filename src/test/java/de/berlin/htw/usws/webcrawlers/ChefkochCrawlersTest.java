@@ -7,8 +7,8 @@ import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
-import de.berlin.htw.usws.webcrawlersOld.RecipeCrawlerChefkoch;
-import de.berlin.htw.usws.webcrawlersOld.UnknownIdsCrawlerChefkoch;
+import de.berlin.htw.usws.oldToBeDeleted.RecipeCrawlerChefkoch;
+import de.berlin.htw.usws.oldToBeDeleted.UnknownIdsCrawlerChefkoch;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -1,30 +1,31 @@
 package de.berlin.htw.usws.services;
 
-import de.berlin.htw.usws.webcrawlersOld.RecipeCrawlerChefkoch;
-import de.berlin.htw.usws.webcrawlersOld.UnknownIdsCrawlerChefkoch;
+import de.berlin.htw.usws.model.Recipe;
+import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
+import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
 
 import javax.ejb.Stateless;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 public class HellofreshCrawlerService {
 
-    private UnknownIdsCrawlerChefkoch idsCrawler;
+    private HelloFreshUnknownUrlsCrawler urlCrawler;
 
-    private RecipeCrawlerChefkoch recipeCrawler;
+    private HelloFreshRecipeCrawler recipeCrawler;
 
-    public void start() {
-        idsCrawler = new UnknownIdsCrawlerChefkoch();
+    public List<Recipe> start() {
+        urlCrawler = new HelloFreshUnknownUrlsCrawler();
 
-        try {
-            ArrayList<Long> unknownIds = idsCrawler.crawlRecipePages();
-            recipeCrawler = new RecipeCrawlerChefkoch();
-            for (int i = unknownIds.size()-1; i >= 0; i--) {
-                recipeCrawler.scrapRecipe(unknownIds.get(i));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<Recipe> recipes = new ArrayList<>();
+
+        ArrayList<String> unknownUrls = urlCrawler.crawlRecipePage();
+        recipeCrawler = new HelloFreshRecipeCrawler();
+        for (int i = unknownUrls.size() - 1; i >= 0; i--) {
+            recipes.add(recipeCrawler.scrapRecipe(unknownUrls.get(i)));
         }
+
+        return recipes;
     }
 }

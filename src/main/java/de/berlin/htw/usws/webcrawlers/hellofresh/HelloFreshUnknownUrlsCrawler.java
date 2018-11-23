@@ -1,6 +1,6 @@
 package de.berlin.htw.usws.webcrawlers.hellofresh;
 
-import de.berlin.htw.usws.webcrawlersOld.UnknownIdsCrawlerChefkoch;
+import de.berlin.htw.usws.oldToBeDeleted.UnknownIdsCrawlerChefkoch;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;

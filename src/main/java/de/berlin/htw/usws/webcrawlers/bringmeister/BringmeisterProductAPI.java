@@ -8,6 +8,7 @@ import de.berlin.htw.usws.model.BringmeisterProductPage;
 import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.model.Supermarket;
 
+import javax.ejb.Stateless;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+@Stateless
 public class BringmeisterProductAPI {
 
     private static final String ZIP_CODE = "13355";

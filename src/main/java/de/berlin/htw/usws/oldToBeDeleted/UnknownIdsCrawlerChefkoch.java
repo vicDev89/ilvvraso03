@@ -1,4 +1,4 @@
-package de.berlin.htw.usws.webcrawlersOld;
+package de.berlin.htw.usws.oldToBeDeleted;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

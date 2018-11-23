@@ -7,6 +7,7 @@ import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 import org.apache.deltaspike.data.api.*;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -17,27 +18,11 @@ import java.util.List;
  * Recipe-Repository mit Funktionen, die für alle Services aufrufbar sind
  */
 @Repository(forEntity = Recipe.class)
+@Transactional
 public abstract class RecipeRepository extends AbstractFullEntityRepository<Recipe, Long> {
 
 //    @Inject
 //    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
-
-    /**
-     * Search for a recipe by ID
-     * @param id
-     * @return
-     */
-    @Query(named = Recipe.BY_ID, singleResult = SingleResultType.OPTIONAL)
-  //  @EntityGraph(paths = {"ingredients"})
-    public abstract Recipe findBy(final Long id);
-
-    /**
-     * Remove a recipe
-     * @param id
-     */
-    public void deleteById(final Long id) {
-        this.remove(this.findBy(id));
-    }
 
 
     /**

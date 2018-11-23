@@ -14,7 +14,14 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(uniqueConstraints=@UniqueConstraint(columnNames="name"))
+@NamedQueries({
+        @NamedQuery(name = Ingredient.BY_NAME,
+                query = "select i from Ingredient i where i.name=?1")
+})
 public class Ingredient extends BaseEntity{
+
+
+    public static final String BY_NAME = "ingredientByName";
 
     @Setter(value = AccessLevel.NONE)
     @Id

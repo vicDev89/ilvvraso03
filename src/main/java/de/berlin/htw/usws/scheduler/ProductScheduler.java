@@ -7,9 +7,8 @@ import org.quartz.JobExecutionException;
 
 import javax.inject.Inject;
 
-@Scheduled(cronExpression = "15 * * * * ?")
+//@Scheduled(cronExpression = "15 * * * * ?")
 public class ProductScheduler implements org.quartz.Job {
-
 
     @Inject
     private ProductService productService;

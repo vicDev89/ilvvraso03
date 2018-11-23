@@ -10,13 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Recipe.BY_ID,
-                query = "select r from Recipe r where r.id=?1")
-})
 public class Recipe extends BaseEntity {
-
-    public static final String BY_ID = "recipeById";
 
     @Id
     @Column( updatable = false, nullable = false)
