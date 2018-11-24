@@ -9,6 +9,7 @@ import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.repositories.IngredientRepository;
 import de.berlin.htw.usws.repositories.ProductRepository;
 import de.berlin.htw.usws.repositories.RecipeRepository;
+import de.berlin.htw.usws.services.ChefkochCrawlerService;
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
@@ -25,12 +26,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 7 18 ? * * *")
+@Scheduled(cronExpression = "0 5 20 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
     @Inject
     private HellofreshCrawlerService hellofreshCrawlerService;
+
+    @Inject
+    private ChefkochCrawlerService chefkochCrawlerService;
 
     @Inject
     private BringmeisterProductAPI bringmeisterProductAPI;
@@ -54,30 +58,30 @@ public class RecipeScheduler implements org.quartz.Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        Stopwatch swRecipeScrapper = Stopwatch.createStarted();
+
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
+        Stopwatch swChefkochRecipeScrapper = Stopwatch.createStarted();
         recipes = this.hellofreshCrawlerService.start();
+        log.info("#### All Chefkoch recipes scrapped. Duration: ####" + swChefkochRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        log.info("#### All recipes scrapped. Duration: ####" + swRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
+        recipes.addAll(this.chefkochCrawlerService.start());
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swRecipePersister = Stopwatch.createStarted();
         // Persist first all ingredients
         persistIngredients();
-
         // Set DB ingredients to recipes
         saveIngredientsOnRecipes();
-
         // Persist all recipes
         persistAllRecipes();
-
         log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
         // Look for products for the new ingredients
         crawlProducts();
         log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
-
 
     }
 
