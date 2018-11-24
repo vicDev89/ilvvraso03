@@ -1,6 +1,6 @@
 package de.berlin.htw.usws.metamodel;
 
-import de.berlin.htw.usws.model.DifficultyLevel;
+import de.berlin.htw.usws.model.enums.DifficultyLevel;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 

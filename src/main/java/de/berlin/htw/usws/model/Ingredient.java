@@ -1,7 +1,6 @@
 package de.berlin.htw.usws.model;
 
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,22 +12,15 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(uniqueConstraints=@UniqueConstraint(columnNames="name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @NamedQueries({
         @NamedQuery(name = Ingredient.BY_NAME,
                 query = "select i from Ingredient i where i.name=?1")
 })
-public class Ingredient extends BaseEntity{
+public class Ingredient extends BaseEntity {
 
 
     public static final String BY_NAME = "ingredientByName";
-
-    @Setter(value = AccessLevel.NONE)
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ingredient_generator")
-    @SequenceGenerator(name="ingredient_generator", sequenceName = "ingredient_seq", allocationSize=50)
-    @Column(updatable = false, nullable = false)
-    private Long id;
 
     @Column
     private String name;

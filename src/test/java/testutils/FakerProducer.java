@@ -2,6 +2,8 @@ package testutils;
 
 import com.github.javafaker.Faker;
 import de.berlin.htw.usws.model.*;
+import de.berlin.htw.usws.model.enums.DifficultyLevel;
+import de.berlin.htw.usws.model.enums.Supermarket;
 
 import java.util.Locale;
 import java.util.Random;
@@ -28,10 +30,7 @@ public class FakerProducer {
     public static Recipe createFakeRecipe() {
         Faker faker = new Faker(new Locale("de"));
         Recipe recipe = new Recipe();
-        recipe.setId(faker.number().numberBetween(0L, 380000));
-        recipe.setCookingTimeInMin(faker.number().numberBetween(30, 240));
         recipe.setPreparationTimeInMin(faker.number().numberBetween(30, 240));
-        recipe.setRestingTimeInMin(faker.number().numberBetween(30, 240));
         recipe.setPreparation(faker.dragonBall().character());
         recipe.setDifficultyLevel(DifficultyLevel.values()[new Random().nextInt(DifficultyLevel.values().length)]);
         recipe.setPictureUrl(faker.internet().url());

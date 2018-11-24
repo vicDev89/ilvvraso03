@@ -6,7 +6,10 @@ import de.berlin.htw.usws.metamodel.Recipe_;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
-import org.apache.deltaspike.data.api.*;
+import org.apache.deltaspike.data.api.AbstractFullEntityRepository;
+import org.apache.deltaspike.data.api.Query;
+import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.SingleResultType;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.criteria.*;
@@ -25,8 +28,15 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
 //    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
 
 
+    @Query(named = Recipe.BY_IDENTIFIER, singleResult = SingleResultType.OPTIONAL)
+    public abstract Recipe findByIdentifier(final String identifier);
+
+    @Query(named = Recipe.BY_TITLE, singleResult = SingleResultType.OPTIONAL)
+    public abstract Recipe findByTitle(final String title);
+
     /**
      * Find recipes that ONLY contain  given ingredients
+     *
      * @param ingredients
      * @return
      */
@@ -38,20 +48,22 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         HashMap<Recipe, Integer> mapNumberIngredientsInRecipe = new HashMap<>();
 
         // Create Hashmap with recipes and its number of ingredients
-        for(Recipe recipe : recipes) {
-      //      mapNumberIngredientsInRecipe.put(recipe, ingredientsInRecipeRepository.getNumberIngredients(recipe));
+        for (Recipe recipe : recipes) {
+            //      mapNumberIngredientsInRecipe.put(recipe, ingredientsInRecipeRepository.getNumberIngredients(recipe));
         }
 
         // Wenn Anzahl Zutaten nicht mit der übergebenen Zutaten-Anzahl übereinstimmt, Recipe weg
-        for(Recipe recipe : mapNumberIngredientsInRecipe.keySet()) {
-            if(mapNumberIngredientsInRecipe.get(recipe) != ingredients.size()) {
+        for (Recipe recipe : mapNumberIngredientsInRecipe.keySet()) {
+            if (mapNumberIngredientsInRecipe.get(recipe) != ingredients.size()) {
                 recipes.remove(recipe);
             }
         }
         return recipes;
     }
+
     /**
      * Find recipes that contain given ingredients
+     *
      * @param ingredients
      * @return
      */
@@ -69,7 +81,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         final List<Predicate> predicates = new ArrayList<>();
 
         // Add precidate pro Ingredient übergeben
-        for(Ingredient ingredient : ingredients) {
+        for (Ingredient ingredient : ingredients) {
             predicates.add(builder.equal(joinIngredient.get(Ingredient_.name), ingredient.getName()));
         }
 

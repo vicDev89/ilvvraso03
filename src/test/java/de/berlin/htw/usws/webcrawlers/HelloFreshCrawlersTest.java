@@ -1,12 +1,15 @@
 package de.berlin.htw.usws.webcrawlers;
 
+import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 public class HelloFreshCrawlersTest {
+
 
     @Test
     @Ignore
@@ -24,5 +27,13 @@ public class HelloFreshCrawlersTest {
             helloFreshRecipeCrawler.scrapRecipe(recipeUrl);
         }
 
+    }
+
+    @Test
+    @Ignore
+    public void crawlAllRecipes() {
+
+        HellofreshCrawlerService service = new HellofreshCrawlerService();
+        service.start();
     }
 }

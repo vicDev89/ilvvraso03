@@ -1,7 +1,7 @@
 package de.berlin.htw.usws.webcrawlers.rewe;
 
 import de.berlin.htw.usws.model.Product;
-import de.berlin.htw.usws.model.Supermarket;
+import de.berlin.htw.usws.model.enums.Supermarket;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,11 +37,11 @@ public class ReweCrawler {
 
         Elements ProductsContent = doc.getElementsByClass(PRODUCT_TILE_CLASS);
 
-        if(!ProductsContent.isEmpty()) {
+        if (!ProductsContent.isEmpty()) {
             int counter = 0;
 
             for (Element element : ProductsContent) {
-                if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
+                if (counter < NUMBER_OF_SCRAPPED_PRODUCTS) {
                     Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
                     String euroString = euro.first().text();
 
@@ -50,13 +50,13 @@ public class ReweCrawler {
 
                     pricesList.add(Double.parseDouble(euroString + "." + centString));
 
-                    counter ++;
+                    counter++;
                 }
             }
 
             Collections.sort(pricesList);
 
-            return new Product(ingredientName,Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size()-1));
+            return new Product(ingredientName, Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size() - 1));
         } else {
             return null;
         }

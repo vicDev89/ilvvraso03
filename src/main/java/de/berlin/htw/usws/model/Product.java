@@ -1,30 +1,21 @@
 package de.berlin.htw.usws.model;
 
-import lombok.AccessLevel;
+import de.berlin.htw.usws.model.enums.Supermarket;
 import lombok.Getter;
-
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Product.BY_ID,
-                query = "select p from Product p where p.id=?1")
+        @NamedQuery(name = Product.BY_NAME_AND_SUPERMARKET,
+                query = "select p from Product p where p.name=?1 and p.supermarket=?2")
 })
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
-    public static final String BY_ID = "productById";
-
-    @Setter(value = AccessLevel.NONE)
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
-    @SequenceGenerator(name="product_generator", sequenceName = "product_seq", allocationSize=50)
-    @Column
-    private Long id;
+    public static final String BY_NAME_AND_SUPERMARKET = "productByNameAndSupermarket";
 
     @Column
     private String name;
@@ -57,7 +48,7 @@ public class Product extends BaseEntity{
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", supermarket=" + supermarket +
                 ", priceMin=" + priceMin +

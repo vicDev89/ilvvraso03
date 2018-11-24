@@ -3,17 +3,14 @@ package de.berlin.htw.usws.webcrawlers.bringmeister;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.berlin.htw.usws.model.BringmeisterProduct;
-import de.berlin.htw.usws.model.BringmeisterProductPage;
 import de.berlin.htw.usws.model.Product;
-import de.berlin.htw.usws.model.Supermarket;
+import de.berlin.htw.usws.model.enums.Supermarket;
 
 import javax.ejb.Stateless;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +22,7 @@ public class BringmeisterProductAPI {
 
     private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
 
-    public Product getProduct(String productName){
+    public Product getProduct(String productName) {
         BringmeisterProductPage bringmeisterProductPage = null;
         ArrayList<Double> pricesList = new ArrayList<Double>();
         int counter = 0;
@@ -36,25 +33,27 @@ public class BringmeisterProductAPI {
             e.printStackTrace();
         }
 
-        if(bringmeisterProductPage != null){
+        if (bringmeisterProductPage != null) {
             for (BringmeisterProduct product : bringmeisterProductPage.getProducts()) {
-                if(counter < NUMBER_OF_SCRAPPED_PRODUCTS){
+                if (counter < NUMBER_OF_SCRAPPED_PRODUCTS) {
                     pricesList.add(product.getPrice());
                     counter++;
                 }
             }
         }
 
-        if(pricesList.size()>0) {
+        if (pricesList.size() > 0) {
             Collections.sort(pricesList);
-            return new Product(productName, Supermarket.EDEKA, pricesList.get(0), pricesList.get(pricesList.size()-1));
+            return new Product(productName, Supermarket.EDEKA, pricesList.get(0), pricesList.get(pricesList.size() - 1));
         } else {
             return null;
         }
     }
 
     private BringmeisterProductPage getBringmeisterProductPageForProduct(String productName) throws IOException {
-        URL url = new URL("https://www.bringmeister.de/api/products?limit=60&offset=0&q="+ productName + "&sorting=default&zipcode=" + ZIP_CODE);
+        productName = productName.replaceAll(" ", "%20");
+        URL url = new URL("https://www.bringmeister.de/api/products?limit=60&offset=0&q=" + productName + "&sorting=default&zipcode=" + ZIP_CODE);
+        System.out.println("Bringmeister url: " + url);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 

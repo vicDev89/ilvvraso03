@@ -5,22 +5,23 @@ import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
 public class HellofreshCrawlerService {
 
+    @Inject
     private HelloFreshUnknownUrlsCrawler urlCrawler;
 
     private HelloFreshRecipeCrawler recipeCrawler;
 
     public List<Recipe> start() {
-        urlCrawler = new HelloFreshUnknownUrlsCrawler();
 
         List<Recipe> recipes = new ArrayList<>();
 
-        ArrayList<String> unknownUrls = urlCrawler.crawlRecipePage();
+        ArrayList<String> unknownUrls = this.urlCrawler.crawlRecipePage();
         recipeCrawler = new HelloFreshRecipeCrawler();
         for (int i = unknownUrls.size() - 1; i >= 0; i--) {
             recipes.add(recipeCrawler.scrapRecipe(unknownUrls.get(i)));

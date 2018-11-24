@@ -1,5 +1,7 @@
 package de.berlin.htw.usws.model;
 
+import de.berlin.htw.usws.model.enums.DifficultyLevel;
+import de.berlin.htw.usws.model.enums.RecipeSite;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +12,17 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Recipe.BY_IDENTIFIER,
+                query = "select r from Recipe r where r.identifier=?1"),
+        @NamedQuery(name = Recipe.BY_TITLE,
+                query = "select r from Recipe r where r.title=?1")
+})
 public class Recipe extends BaseEntity {
 
-    @Id
-    @Column( updatable = false, nullable = false)
-    private Long id;
+    public static final String BY_IDENTIFIER = "recipeByIdentifier";
+
+    public static final String BY_TITLE = "recipeByTitle";
 
     @Column
     private String title;
@@ -23,13 +31,7 @@ public class Recipe extends BaseEntity {
     private String preparation;
 
     @Column
-    private int cookingTimeInMin;
-
-    @Column
     private int preparationTimeInMin;
-
-    @Column
-    private int restingTimeInMin;
 
     @Column
     private Double rate;
@@ -44,4 +46,11 @@ public class Recipe extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "recipe", orphanRemoval = true)
     private List<IngredientInRecipe> ingredientInRecipes;
+
+    @Column
+    private String identifier;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private RecipeSite recipeSite;
 }

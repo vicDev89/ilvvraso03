@@ -12,8 +12,6 @@ import de.berlin.htw.usws.services.RecipeService;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -47,38 +45,35 @@ public class RecipeController {
     @Path("/test")
     @Consumes("application/json")
     public Response test() {
-    //    Recipe recipe = this.recipeService.getRecipeTest();
 
-        String url = "https://www.hellofresh.de/recipes/himmel-und-erde-5be99f04ae08b522d8532fa2?locale=de-DE";
+        String url = "https://www.hellofresh.de/recipes/gefullte-hahnchenbrust-mit-mozzarella-5bf2ca8b30006c743304cc42?locale=de-DE";
 
         HelloFreshRecipeCrawler helloFreshRecipeCrawler = new HelloFreshRecipeCrawler();
 
-
         Recipe recipe = helloFreshRecipeCrawler.scrapRecipe(url);
 
-        for(IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+        for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
             this.ingredientRepository.save(ingredientInRecipe.getIngredient());
         }
 
-        for(IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+        for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
             ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
         }
 
         this.recipeRepository.save(recipe);
 
-
         List<Ingredient> ingredients = this.ingredientRepository.findAll();
 
-        for(Ingredient ingredient:ingredients) {
+        for (Ingredient ingredient : ingredients) {
             Product productBringmeister = this.bringmeisterProductAPI.getProduct(ingredient.getName());
-            if(productBringmeister !=null) {
+            if (productBringmeister != null) {
                 productBringmeister.setIngredient(ingredient);
                 this.productRepository.save(productBringmeister);
             }
             Product productRewe = null;
             try {
                 productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
-                if(productRewe!=null) {
+                if (productRewe != null) {
                     productRewe.setIngredient(ingredient);
                     this.productRepository.save(productRewe);
                 }
@@ -86,9 +81,6 @@ public class RecipeController {
                 e.printStackTrace();
             }
         }
-
-
-
         return Response.ok(null).build();
     }
 

@@ -1,5 +1,6 @@
 package de.berlin.htw.usws.scheduler;
 
+
 import com.google.common.base.Stopwatch;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
@@ -24,24 +25,24 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 0 0 * * ?")
+@Scheduled(cronExpression = "0 7 18 ? * * *")
 @Slf4j
-public class RecipeScheduler implements org.quartz.Job{
+public class RecipeScheduler implements org.quartz.Job {
 
     @Inject
     private HellofreshCrawlerService hellofreshCrawlerService;
-
-    @Inject
-    private RecipeRepository recipeRepository;
-
-    @Inject
-    private IngredientRepository ingredientRepository;
 
     @Inject
     private BringmeisterProductAPI bringmeisterProductAPI;
 
     @Inject
     private ReweCrawler reweCrawler;
+
+    @Inject
+    private IngredientRepository ingredientRepository;
+
+    @Inject
+    private RecipeRepository recipeRepository;
 
     @Inject
     private ProductRepository productRepository;
@@ -51,14 +52,16 @@ public class RecipeScheduler implements org.quartz.Job{
 
     private List<Ingredient> newIngredients = new ArrayList<>();
 
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        Stopwatch sw = Stopwatch.createStarted();
-        System.out.println("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
+        Stopwatch swRecipeScrapper = Stopwatch.createStarted();
+        log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
-        // TODO check how it works with unknown urls
         recipes = this.hellofreshCrawlerService.start();
+
+        log.info("#### All recipes scrapped. Duration: ####" + swRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+
+        Stopwatch swRecipePersister = Stopwatch.createStarted();
         // Persist first all ingredients
         persistIngredients();
 
@@ -68,60 +71,64 @@ public class RecipeScheduler implements org.quartz.Job{
         // Persist all recipes
         persistAllRecipes();
 
-        log.info("Hellofresh Recipe Crawler ended. Duration: " + sw.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
+        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
         // Look for products for the new ingredients
         crawlProducts();
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
+
 
     }
 
     private void crawlProducts() {
 
-        for(Ingredient ingredient : newIngredients) {
+        for (Ingredient ingredient : newIngredients) {
             Product productBringmeister = this.bringmeisterProductAPI.getProduct(ingredient.getName());
-           Product productRewe = null;
-            try {
-                productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }
-            if(productBringmeister!=null) {
+            if (productBringmeister != null && this.productRepository.findByNameAndSupermarket(productBringmeister.getName(), productBringmeister.getSupermarket()) == null) {
+                productBringmeister.setIngredient(ingredient);
                 this.productRepository.save(productBringmeister);
             }
-
-            if(productRewe!=null) {
-                this.productRepository.save(productRewe);
+            try {
+                Product productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
+                if (productRewe != null && this.productRepository.findByNameAndSupermarket(productRewe.getName(), productRewe.getSupermarket()) == null) {
+                    productRewe.setIngredient(ingredient);
+                    this.productRepository.save(productRewe);
+                }
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
             }
         }
     }
 
     private void persistAllRecipes() {
-        for(Recipe recipe : recipes) {
-            this.recipeRepository.save(recipe);
+        for (Recipe recipe : recipes) {
+            if (this.recipeRepository.findByTitle(recipe.getTitle()) == null)
+                this.recipeRepository.save(recipe);
         }
     }
 
-    private void saveIngredientsOnRecipes () {
-        for(Recipe recipe : recipes) {
-            for(IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+    private void saveIngredientsOnRecipes() {
+        for (Recipe recipe : recipes) {
+            for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                 // Find ingredient by name
-                Ingredient ingredient = this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName());
-                ingredientInRecipe.setIngredient(ingredient);
+                ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
             }
         }
     }
 
     private void persistIngredients() {
 
-        for(Recipe recipe : recipes) {
-            for(IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
+        for (Recipe recipe : recipes) {
+            for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                 Ingredient ingredient = ingredientInRecipe.getIngredient();
-                if(this.ingredientRepository.findByName(ingredient.getName()) == null) {
-                    newIngredients.add(ingredient);
+                if (this.ingredientRepository.findByName(ingredient.getName()) == null) {
                     this.ingredientRepository.save(ingredient);
+                    newIngredients.add(ingredient);
                 }
+
             }
         }
-
     }
 }
+
