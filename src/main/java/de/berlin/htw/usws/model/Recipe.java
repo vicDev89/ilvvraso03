@@ -16,13 +16,17 @@ import java.util.List;
         @NamedQuery(name = Recipe.BY_IDENTIFIER,
                 query = "select r from Recipe r where r.identifier=?1"),
         @NamedQuery(name = Recipe.BY_TITLE,
-                query = "select r from Recipe r where r.title=?1")
+                query = "select r from Recipe r where r.title=?1"),
+        @NamedQuery(name = Recipe.BY_COUNT,
+                query = "select count(r) from Recipe r where r.recipeSite=?1")
 })
 public class Recipe extends BaseEntity {
 
     public static final String BY_IDENTIFIER = "recipeByIdentifier";
 
     public static final String BY_TITLE = "recipeByTitle";
+
+    public static final String BY_COUNT = "recipeByCount";
 
     @Column
     private String title;

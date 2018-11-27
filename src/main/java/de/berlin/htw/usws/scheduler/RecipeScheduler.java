@@ -51,7 +51,6 @@ public class RecipeScheduler implements org.quartz.Job {
     @Inject
     private ProductRepository productRepository;
 
-
     private List<Recipe> recipes = new ArrayList<>();
 
     private List<Ingredient> newIngredients = new ArrayList<>();
