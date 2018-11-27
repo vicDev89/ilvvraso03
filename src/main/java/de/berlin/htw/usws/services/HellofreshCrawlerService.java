@@ -2,7 +2,7 @@ package de.berlin.htw.usws.services;
 
 import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
-import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
+import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawlerOld;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,7 +13,7 @@ import java.util.List;
 public class HellofreshCrawlerService {
 
     @Inject
-    private HelloFreshUnknownUrlsCrawler urlCrawler;
+    private HelloFreshUnknownUrlsCrawlerOld urlCrawler;
 
     private HelloFreshRecipeCrawler recipeCrawler;
 

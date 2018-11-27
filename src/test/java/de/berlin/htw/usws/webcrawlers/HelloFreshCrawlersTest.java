@@ -2,6 +2,9 @@ package de.berlin.htw.usws.webcrawlers;
 
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
+import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
+import org.jsoup.nodes.Document;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -14,7 +17,7 @@ public class HelloFreshCrawlersTest {
     @Test
     @Ignore
     public void crawl() {
-        // ArrayList<String> urls = new HelloFreshUnknownUrlsCrawler().crawlRecipePage();
+        // ArrayList<String> urls = new HelloFreshUnknownUrlsCrawlerOld().crawlRecipePage();
 
         ArrayList<String> urls = new ArrayList<>();
         urls.add("https://www.hellofresh.de/recipes/wunderbar-saftiges-putengulasch-568cd65cf8b25ee91f8b4567?locale=de-DE");
@@ -27,6 +30,13 @@ public class HelloFreshCrawlersTest {
             helloFreshRecipeCrawler.scrapRecipe(recipeUrl);
         }
 
+    }
+
+    @Test
+    @Ignore
+    public void getAuthHeaderWithToken() {
+         Document urls = new HelloFreshUnknownUrlsCrawler().getAuthHeaderWithToken();
+        Assert.assertTrue(true);
     }
 
     @Test

@@ -6,7 +6,7 @@ import de.berlin.htw.usws.metamodel.Recipe_;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
-import de.berlin.htw.usws.model.enums.Supermarket;
+import de.berlin.htw.usws.model.enums.RecipeSite;
 import org.apache.deltaspike.data.api.AbstractFullEntityRepository;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
@@ -36,7 +36,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
     public abstract Recipe findByTitle(final String title);
 
     @Query(named = Recipe.BY_COUNT, singleResult = SingleResultType.OPTIONAL)
-    public abstract int countRecipesBySite(final Supermarket supermarket);
+    public abstract int countRecipesBySite(final RecipeSite recipeSite);
 
 
     /**
