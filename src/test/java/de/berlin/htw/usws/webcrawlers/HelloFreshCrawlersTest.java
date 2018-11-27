@@ -3,13 +3,13 @@ package de.berlin.htw.usws.webcrawlers;
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshRecipeCrawler;
 import de.berlin.htw.usws.webcrawlers.hellofresh.HelloFreshUnknownUrlsCrawler;
-import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import javax.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HelloFreshCrawlersTest {
 
@@ -35,7 +35,15 @@ public class HelloFreshCrawlersTest {
     @Test
     @Ignore
     public void getAuthHeaderWithToken() {
-         Document urls = new HelloFreshUnknownUrlsCrawler().getAuthHeaderWithToken();
+        String token = new HelloFreshUnknownUrlsCrawler().getAuthTokenFromHelloFresh();
+        System.out.println(token);
+        Assert.assertTrue(true);
+    }
+
+    @Test
+    @Ignore
+    public void getUrls() throws IOException {
+        List<String> token = new HelloFreshUnknownUrlsCrawler().getUrlsForNewRecipes();
         Assert.assertTrue(true);
     }
 
