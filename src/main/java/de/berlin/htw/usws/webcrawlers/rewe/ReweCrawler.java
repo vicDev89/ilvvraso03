@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Stateless
 public class ReweCrawler {
@@ -21,19 +22,20 @@ public class ReweCrawler {
     private static final String PRODUCT_TILE_CLASS = "search-service-ProductTileContent";
     private static final String PRODUCT_EURO_CLASS = "search-service-ProductPriceInteger";
     private static final String PRODUCT_CENT_CLASS = "search-service-ProductPriceDecimal";
+    private static final String PRODUCT_NAME_CLASS = "search-service-productTitle";
 
     private final String REWE_URL = "https://shop.rewe.de/productList?search=";
 
     private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
 
 
-    public Product getProductForIngredientREWE(String ingredientName) throws IOException {
+    public List<Product> getProductForIngredientREWE(String ingredientName) throws IOException {
+
+        List<Product> products = new ArrayList<>();
 
         String searchURL = REWE_URL + ingredientName;
 
         Document doc = Jsoup.connect(searchURL).get();
-
-        ArrayList<Double> pricesList = new ArrayList<Double>();
 
         Elements ProductsContent = doc.getElementsByClass(PRODUCT_TILE_CLASS);
 
@@ -42,23 +44,28 @@ public class ReweCrawler {
 
             for (Element element : ProductsContent) {
                 if (counter < NUMBER_OF_SCRAPPED_PRODUCTS) {
+
+                    String productName = element.getElementsByClass(PRODUCT_NAME_CLASS).text();
+
                     Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
                     String euroString = euro.first().text();
 
                     Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
                     String centString = cent.first().text();
 
-                    pricesList.add(Double.parseDouble(euroString + "." + centString));
+                    double price = Double.parseDouble(euroString + "." + centString);
+                    products.add(new Product(productName, Supermarket.REWE, price));
 
                     counter++;
                 }
             }
 
-            Collections.sort(pricesList);
+            return products;
 
-            return new Product(ingredientName, Supermarket.REWE, pricesList.get(0), pricesList.get(pricesList.size() - 1));
         } else {
             return null;
         }
+
     }
+
 }

@@ -5,6 +5,7 @@ import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ReweCrawlerTest {
 
@@ -13,8 +14,10 @@ public class ReweCrawlerTest {
     @Test
     public void testGetProductForIngredientREWE() throws IOException {
 
-        Product banane = reweCrawler.getProductForIngredientREWE("Banane");
+        List<Product> bananeProducts = reweCrawler.getProductForIngredientREWE("Banane");
 
-        System.out.print(banane.toString());
+        for(Product product : bananeProducts) {
+            System.out.println(product.toString());
+        }
     }
 }

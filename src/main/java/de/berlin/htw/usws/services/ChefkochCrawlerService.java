@@ -48,14 +48,16 @@ public class ChefkochCrawlerService {
         List<Recipe> recipes = new ArrayList<>();
 
         recipeCrawler = new ChefkochRecipeCrawler();
-
+        ArrayList<Long> unknownIds = new ArrayList<>();
         try {
-            ArrayList<Long> unknownIds = this.unknownIdsCrawler.crawlRecipePages();
-            for (int i = unknownIds.size() - 1; i >= 0; i--) {
-                recipes.add(recipeCrawler.scrapRecipe(unknownIds.get(i)));
-            }
+            unknownIds = this.unknownIdsCrawler.crawlRecipePages();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        for (int i = unknownIds.size() - 1; i >= 0; i--) {
+            recipes.add(recipeCrawler.scrapRecipe(unknownIds.get(i)));
+            System.out.print("New recipe crawled. Id: " + unknownIds.get(i) + ". Remaining: " + (unknownIds.size()-i));
         }
 
         return recipes;

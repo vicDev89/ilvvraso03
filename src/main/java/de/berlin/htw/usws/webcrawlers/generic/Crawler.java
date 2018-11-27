@@ -2,6 +2,7 @@ package de.berlin.htw.usws.webcrawlers.generic;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -39,7 +40,14 @@ public abstract class Crawler {
      * @since 24.10.2018
      */
     protected Document getUnlimitedDocument() throws IOException {
-        return Jsoup.connect(url).maxBodySize(0).get();
+
+        Connection con = Jsoup.connect(url).timeout(10000);
+        Connection.Response resp = con.execute();
+        if (resp.statusCode() == 200) {
+            return con.maxBodySize(0).get();
+        } else {
+            return null;
+        }
     }
 
     /**

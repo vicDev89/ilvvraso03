@@ -16,9 +16,8 @@ public class FakerProducer {
          Product product = new Product();
          product.setSupermarket(Supermarket.EDEKA);
          product.setName(faker.food().ingredient());
-         product.setPriceMin(Double.parseDouble(faker.commerce().price(0.0, 5.0).replace(",", ".")));
-        product.setPriceMax(Double.parseDouble(faker.commerce().price(5.1, 10.0).replace(",", ".")));
-        return product;
+         product.setPrice(Double.parseDouble(faker.commerce().price(0.0, 5.0).replace(",", ".")));
+       return product;
     }
 
     public static Ingredient createFakeIngredient() {

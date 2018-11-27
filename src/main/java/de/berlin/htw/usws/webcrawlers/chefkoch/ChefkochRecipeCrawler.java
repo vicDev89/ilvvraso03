@@ -225,17 +225,22 @@ public class ChefkochRecipeCrawler extends ChefkochCrawler {
      * @param value Time to be added.
      */
     private int getTimeForRecipe(String description, String value) {
-        value = value.replace("ca.","");
-        value = value.replace("/", "");
-        value = value.trim();
-        String[] valueArray = value.split(" ");
-        int minutes = 0;
-        for (int i = 0; i<valueArray.length-1; i+=2) {
-            int valueNumber = Integer.parseInt(valueArray[i]);
-            int convValue = TIME_CONVERSION.get(valueArray[i+1]);
-            minutes += valueNumber * convValue;
+        if(value != null) {
+            value = value.replace("ca.","");
+            value = value.replace("/", "");
+            value = value.trim();
+            String[] valueArray = value.split(" ");
+            int minutes = 0;
+            for (int i = 0; i<valueArray.length-1; i+=2) {
+                int valueNumber = Integer.parseInt(valueArray[i]);
+//                int convValue = TIME_CONVERSION.get(valueArray[i+1]);
+                minutes += valueNumber * 1;
+            }
+            return minutes;
+        } else {
+            return 0;
         }
-        return minutes;
+
 
 //        if (description.equals(KEY_COOKING_TIME)) {
 //            recipe.setCookingTimeInMin(minutes);

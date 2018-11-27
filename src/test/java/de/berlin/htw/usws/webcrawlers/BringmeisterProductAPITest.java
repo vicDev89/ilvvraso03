@@ -4,6 +4,8 @@ import de.berlin.htw.usws.model.Product;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import org.junit.Test;
 
+import java.util.List;
+
 public class BringmeisterProductAPITest {
 
     BringmeisterProductAPI bringmeisterProductAPI = new BringmeisterProductAPI();
@@ -11,11 +13,16 @@ public class BringmeisterProductAPITest {
     @Test
     public void getProduct() {
 
-            Product test = bringmeisterProductAPI.getProduct("banane");
+            List<Product> bananeProducts = bringmeisterProductAPI.getProducts("banane");
 
-            Product test2 = bringmeisterProductAPI.getProduct("Erdbeeren");
+            List<Product> erdbeerenProducts = bringmeisterProductAPI.getProducts("Erdbeeren");
 
-            System.out.println(test.toString());
-            System.out.println(test2.toString());
+            for(Product product: bananeProducts) {
+                System.out.println(product);
+            }
+
+            for(Product product: erdbeerenProducts) {
+                System.out.println(product);
+            }
     }
 }

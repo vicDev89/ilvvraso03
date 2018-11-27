@@ -25,20 +25,16 @@ public class Product extends BaseEntity {
     private Supermarket supermarket;
 
     @Column
-    private Double priceMin;
-
-    @Column
-    private Double priceMax;
+    private Double price;
 
     @ManyToOne
     private Ingredient ingredient;
 
 
-    public Product(final String name, final Supermarket supermarket, final Double priceMin, final Double priceMax) {
+    public Product(final String name, final Supermarket supermarket, final Double price) {
         this.name = name;
         this.supermarket = supermarket;
-        this.priceMin = priceMin;
-        this.priceMax = priceMax;
+        this.price = price;
     }
 
     // This no-arg-constructor needed for persistence-unit and entity-annotation
@@ -51,8 +47,7 @@ public class Product extends BaseEntity {
                 "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", supermarket=" + supermarket +
-                ", priceMin=" + priceMin +
-                ", priceMax=" + priceMax +
+                ", price=" + price +
                 '}';
     }
 }

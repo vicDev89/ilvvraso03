@@ -70,17 +70,26 @@ public class ChefkochUnknownIdsCrawler extends ChefkochCrawler {
         boolean isLastKnownIdFound = false;
         boolean isLastPage = false;
 
+        int numberPages = 0;
         // Crawls pages as long as the ID is not found and it is not the last page.
         while(!isLastKnownIdFound && !isLastPage){
-            Document document = getUnlimitedDocument();
+            if(numberPages != 100) {
+                Document document = getUnlimitedDocument();
+                if(document != null) {
+                    // Crawls recipes
+                    Elements recipeIdsList = document.select(CSS_QUERY_SEARCH_LIST).select(CSS_QUERY_LISTED_ITEM);
+                    isLastKnownIdFound = scrapRecipesIdsFromList(recipeIdsList);
 
-            // Crawls recipes
-            Elements recipeIdsList = document.select(CSS_QUERY_SEARCH_LIST).select(CSS_QUERY_LISTED_ITEM);
-            isLastKnownIdFound = scrapRecipesIdsFromList(recipeIdsList);
-
-            if (!isLastKnownIdFound) {
-                isLastPage = setUrlForNextPage(document);
+                    if (!isLastKnownIdFound) {
+                        isLastPage = setUrlForNextPage(document);
+                    }
+                }
+                numberPages++;
+            } else {
+                break;
             }
+
+
         }
         return allRecipeIds;
     }

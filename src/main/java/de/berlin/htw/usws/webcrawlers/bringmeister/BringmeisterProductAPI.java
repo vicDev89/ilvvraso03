@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Stateless
 public class BringmeisterProductAPI {
@@ -22,9 +23,11 @@ public class BringmeisterProductAPI {
 
     private final Integer NUMBER_OF_SCRAPPED_PRODUCTS = 3;
 
-    public Product getProduct(String productName) {
+    public List<Product> getProducts(String productName) {
+        List<Product> products = new ArrayList<>();
+
         BringmeisterProductPage bringmeisterProductPage = null;
-        ArrayList<Double> pricesList = new ArrayList<Double>();
+
         int counter = 0;
 
         try {
@@ -36,18 +39,14 @@ public class BringmeisterProductAPI {
         if (bringmeisterProductPage != null) {
             for (BringmeisterProduct product : bringmeisterProductPage.getProducts()) {
                 if (counter < NUMBER_OF_SCRAPPED_PRODUCTS) {
-                    pricesList.add(product.getPrice());
+                    products.add(new Product(product.getName(), Supermarket.EDEKA, product.getPrice()));
                     counter++;
                 }
             }
         }
 
-        if (pricesList.size() > 0) {
-            Collections.sort(pricesList);
-            return new Product(productName, Supermarket.EDEKA, pricesList.get(0), pricesList.get(pricesList.size() - 1));
-        } else {
-            return null;
-        }
+        return products;
+
     }
 
     private BringmeisterProductPage getBringmeisterProductPageForProduct(String productName) throws IOException {

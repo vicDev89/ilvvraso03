@@ -74,16 +74,22 @@ public class RecipeController {
 
 
         for (Ingredient ingredient : newIngredients) {
-            Product productBringmeister = this.bringmeisterProductAPI.getProduct(ingredient.getName());
-            if (productBringmeister != null && this.productRepository.findByNameAndSupermarket(productBringmeister.getName(), productBringmeister.getSupermarket()) == null) {
-                productBringmeister.setIngredient(ingredient);
-                this.productRepository.save(productBringmeister);
+            List<Product> productBringmeister = this.bringmeisterProductAPI.getProducts(ingredient.getName());
+            for(Product product : productBringmeister) {
+                if (product != null && this.productRepository.findByNameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
+                    product.setIngredient(ingredient);
+                    this.productRepository.save(product);
+                }
             }
+
             try {
-                Product productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
-                if (productRewe != null && this.productRepository.findByNameAndSupermarket(productRewe.getName(), productRewe.getSupermarket()) == null) {
-                    productRewe.setIngredient(ingredient);
-                    this.productRepository.save(productRewe);
+
+                List<Product> productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
+                for(Product product : productRewe) {
+                    if (product != null && this.productRepository.findByNameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
+                        product.setIngredient(ingredient);
+                        this.productRepository.save(product);
+                    }
                 }
             } catch (IOException e) {
                 e.getStackTrace();
