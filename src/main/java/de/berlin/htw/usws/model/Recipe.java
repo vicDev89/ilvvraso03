@@ -18,7 +18,9 @@ import java.util.List;
         @NamedQuery(name = Recipe.BY_TITLE,
                 query = "select r from Recipe r where r.title=?1"),
         @NamedQuery(name = Recipe.BY_COUNT,
-                query = "select count(r) from Recipe r where r.recipeSite=?1")
+                query = "select count(r) from Recipe r where r.recipeSite=?1"),
+        @NamedQuery(name = Recipe.BY_IDENTIFIER_AND_TITLE,
+                query = "select r from Recipe r where r.identifier=?1 and r.title=?2")
 })
 public class Recipe extends BaseEntity {
 
@@ -27,6 +29,8 @@ public class Recipe extends BaseEntity {
     public static final String BY_TITLE = "recipeByTitle";
 
     public static final String BY_COUNT = "recipeByCount";
+
+    public static final String BY_IDENTIFIER_AND_TITLE = "recipeByIdentifierAndTitle";
 
     @Column
     private String title;

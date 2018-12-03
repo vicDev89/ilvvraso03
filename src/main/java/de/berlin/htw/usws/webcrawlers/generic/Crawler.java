@@ -46,6 +46,7 @@ public abstract class Crawler {
         if (resp.statusCode() == 200) {
             return con.maxBodySize(0).get();
         } else {
+            System.err.println("Recipe " + url + " could not be reached");
             return null;
         }
     }

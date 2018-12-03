@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 55 18 ? * * *")
+@Scheduled(cronExpression = "0 25 19 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -58,15 +58,12 @@ public class RecipeScheduler implements org.quartz.Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
+        Stopwatch swGesamt = Stopwatch.createStarted();
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
-//        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
-//        recipes = this.hellofreshCrawlerService.start();
-//        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
-
-        Stopwatch swChefkochRecipeScrapper = Stopwatch.createStarted();
-        recipes.addAll(this.chefkochCrawlerService.start());
-        log.info("#### All Chefkoch recipes scrapped. Duration: ####" + swChefkochRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
+        recipes = this.hellofreshCrawlerService.start();
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swRecipePersister = Stopwatch.createStarted();
         // Persist first all ingredients
@@ -82,28 +79,28 @@ public class RecipeScheduler implements org.quartz.Job {
         crawlProducts();
         log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
+        log.info("#### Hellofresh Crawler-Service ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
+
     }
 
-    private void crawlProducts() {
-
-        for (Ingredient ingredient : newIngredients) {
-            List<Product> productBringmeister = this.bringmeisterProductAPI.getProducts(ingredient.getName());
-            for(Product product : productBringmeister) {
+    private void persistProducts(List<Product> products, Ingredient ingredient) {
+        if (products != null) {
+            for (Product product : products) {
                 if (product != null && this.productRepository.findByNameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
                     product.setIngredient(ingredient);
                     this.productRepository.save(product);
                 }
             }
+        }
+    }
 
+    private void crawlProducts() {
+        for (Ingredient ingredient : newIngredients) {
+            List<Product> productBringmeister = this.bringmeisterProductAPI.getProducts(ingredient.getName());
+            persistProducts(productBringmeister, ingredient);
             try {
                 List<Product> productRewe = this.reweCrawler.getProductForIngredientREWE(ingredient.getName());
-                for(Product product: productRewe) {
-                    if (product != null && this.productRepository.findByNameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
-                        product.setIngredient(ingredient);
-                        this.productRepository.save(product);
-                    }
-                }
-
+                persistProducts(productRewe, ingredient);
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
             }
@@ -112,14 +109,18 @@ public class RecipeScheduler implements org.quartz.Job {
 
     private void persistAllRecipes() {
         for (Recipe recipe : recipes) {
-            if (this.recipeRepository.findByTitle(recipe.getTitle()) == null)
+            if (this.recipeRepository.findByTitle(recipe.getTitle()) == null) {
                 this.recipeRepository.save(recipe);
+            } else {
+                log.info("Recipe " + recipe.getTitle() + " already exists");
+            }
+
         }
     }
 
     private void saveIngredientsOnRecipes() {
         for (Recipe recipe : recipes) {
-            if(recipe.getIngredientInRecipes()!=null) {
+            if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     // Find ingredient by name
                     ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
@@ -131,7 +132,7 @@ public class RecipeScheduler implements org.quartz.Job {
     private void persistIngredients() {
 
         for (Recipe recipe : recipes) {
-            if(recipe.getIngredientInRecipes() != null) {
+            if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     Ingredient ingredient = ingredientInRecipe.getIngredient();
                     if (this.ingredientRepository.findByName(ingredient.getName()) == null) {

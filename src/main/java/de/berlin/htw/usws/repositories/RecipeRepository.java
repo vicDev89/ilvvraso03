@@ -38,6 +38,9 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
     @Query(named = Recipe.BY_COUNT, singleResult = SingleResultType.OPTIONAL)
     public abstract int countRecipesBySite(final RecipeSite recipeSite);
 
+    @Query(named = Recipe.BY_IDENTIFIER_AND_TITLE, singleResult = SingleResultType.OPTIONAL)
+    public abstract Recipe findByIdentifierAndTitle(final String identifier, final String title);
+
 
     /**
      * Find recipes that ONLY contain  given ingredients

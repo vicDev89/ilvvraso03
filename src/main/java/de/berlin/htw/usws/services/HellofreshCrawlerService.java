@@ -24,9 +24,13 @@ public class HellofreshCrawlerService {
         List<String> unknownUrls = this.urlCrawler.getUrlsForNewRecipes();
         recipeCrawler = new HelloFreshRecipeCrawler();
         for (int i = unknownUrls.size() - 1; i >= 0; i--) {
-            recipes.add(recipeCrawler.scrapRecipe(unknownUrls.get(i)));
+            System.out.println("\n#### Recipe ul: " + unknownUrls.get(i) + " ####");
+            Recipe recipe = recipeCrawler.scrapRecipe(unknownUrls.get(i));
+            if(recipe!=null) {
+                System.err.println("\n#### Recipe url: " + unknownUrls.get(i) + " was null ####");
+                recipes.add(recipe);
+            }
         }
-
         return recipes;
     }
 }

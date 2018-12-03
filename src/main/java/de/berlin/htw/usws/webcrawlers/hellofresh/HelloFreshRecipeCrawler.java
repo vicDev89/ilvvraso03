@@ -164,15 +164,16 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
         try {
             setUrl(url);
             Document recipePage = getUnlimitedDocument();
-            determinePortions(recipePage);
-            recipe = new Recipe();
-            recipe.setIdentifier(getRecipeIdFromUrl(url));
-            recipe.setRecipeSite(RecipeSite.HELLOFRESH);
-            scrapAllRecipeInformation(recipePage);
+            if(recipePage != null) {
+                determinePortions(recipePage);
+                recipe = new Recipe();
+                recipe.setIdentifier(getRecipeIdFromUrl(url));
+                recipe.setRecipeSite(RecipeSite.HELLOFRESH);
+                scrapAllRecipeInformation(recipePage);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Recipe " + url + " could not be scrapped");
         }
-        System.out.print("Recipe successfully scrapped: " + recipe.getTitle());
         return recipe;
     }
 
@@ -215,7 +216,7 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
      * @author Lucas Larisch
      * @since 13.11.2018
      */
-    private void scrapAllRecipeInformation(Document recipePage) {
+    private void scrapAllRecipeInformation(Document recipePage) throws NumberFormatException {
         scrapTitle(recipePage);
         scrapPictureUrl(recipePage);
         scrapDifficultyAndDuration(recipePage);
@@ -266,11 +267,15 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
     private void scrapDifficultyAndDuration(Document recipePage) {
         Elements difficultyAndDuration = recipePage.select(CSS_QUERY_DURATION_AND_DIFFICULTY);
         if (difficultyAndDuration.size() > 0) {
-            int durationInMinutes = Integer.parseInt(difficultyAndDuration.get(0).text().replace(TO_REPLACE_MINUTES, ""));
-            recipe.setPreparationTimeInMin(durationInMinutes);
-            // TODO: [DB] Difficulty levels: 1-3 / Discuss assumption: 1 = EASY, 2 = MEDIUM, 3 = DIFFICULT?
-            DifficultyLevel difficulty = DIFFICULTY_LEVEL_CONVERSION.get(difficultyAndDuration.get(1).text());
-            recipe.setDifficultyLevel(difficulty);
+            try {
+                int durationInMinutes = Integer.parseInt(difficultyAndDuration.get(0).text().replace(TO_REPLACE_MINUTES, ""));
+                recipe.setPreparationTimeInMin(durationInMinutes);
+                // TODO: [DB] Difficulty levels: 1-3 / Discuss assumption: 1 = EASY, 2 = MEDIUM, 3 = DIFFICULT?
+                DifficultyLevel difficulty = DIFFICULTY_LEVEL_CONVERSION.get(difficultyAndDuration.get(1).text());
+                recipe.setDifficultyLevel(difficulty);
+            } catch (NumberFormatException e) {
+                System.err.println("Duration couldn't be parsed");
+            }
         }
     }
 
@@ -364,10 +369,15 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
 
             if (quantityAndMeasure.matches(REGEX_QUANTITY_MEASURE)) {
                 String[] quantityAndMeasureSplitted = quantityAndMeasure.trim().split(" ", 2);
-                double quantity = Double.parseDouble(quantityAndMeasureSplitted[0]);
-                String measure = quantityAndMeasureSplitted[1].trim();
-                ingredientInRecipe.setQuantity(quantity / portions); // for one person
-                ingredientInRecipe.setMeasure(measure);
+                try {
+                    double quantity = Double.parseDouble(quantityAndMeasureSplitted[0]);
+                    String measure = quantityAndMeasureSplitted[1].trim();
+                    ingredientInRecipe.setQuantity(quantity / portions); // for one person
+                    ingredientInRecipe.setMeasure(measure);
+                } catch(NumberFormatException e) {
+                    System.err.println("Portion can't be parsed");
+                }
+
             } else {
                 System.err.println("'" + ingredientName + "' will be saved as ingredient without quantity and measure ('" + quantityAndMeasure + "' does not match regex).");
             }
