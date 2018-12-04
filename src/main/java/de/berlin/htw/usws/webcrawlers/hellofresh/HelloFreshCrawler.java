@@ -11,7 +11,7 @@ import de.berlin.htw.usws.webcrawlers.generic.Crawler;
 abstract class HelloFreshCrawler extends Crawler {
 
     /**
-     * Base URL of the "Chefkoch" page
+     * Base URL of the "Chefkoch" page.
      */
     private final String BASE_URL = "https://www.hellofresh.de/";
 

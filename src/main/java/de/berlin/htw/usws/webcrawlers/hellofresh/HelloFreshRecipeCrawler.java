@@ -223,7 +223,6 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
         scrapPreparationInstruction(recipePage);
         scrapRating(recipePage);
         scrapIngredients(recipePage);
-
     }
 
     /**
