@@ -1,11 +1,6 @@
 package de.berlin.htw.usws.repositories;
 
-import de.berlin.htw.usws.metamodel.Ingredient_;
-import de.berlin.htw.usws.metamodel.IngredientsInRecipe_;
-import de.berlin.htw.usws.metamodel.Recipe_;
-import de.berlin.htw.usws.model.Ingredient;
-import de.berlin.htw.usws.model.IngredientInRecipe;
-import de.berlin.htw.usws.model.Recipe;
+import de.berlin.htw.usws.model.*;
 import de.berlin.htw.usws.model.enums.RecipeSite;
 import org.apache.deltaspike.data.api.AbstractFullEntityRepository;
 import org.apache.deltaspike.data.api.Query;
@@ -82,9 +77,9 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         // Root Recipe da wir Rezepte holen
         final Root<Recipe> rootRecipe = cQuery.from(Recipe.class);
         // Join mit IngredientInRecipe
-        final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientsInRecipes);
+        final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
         // Join mit Ingredients
-        final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientsInRecipe_.ingredient);
+        final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
         // Liste von predicates vorbereiten
         final List<Predicate> predicates = new ArrayList<>();
 

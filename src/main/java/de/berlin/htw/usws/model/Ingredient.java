@@ -29,7 +29,7 @@ public class Ingredient extends BaseEntity {
             mappedBy = "ingredient", orphanRemoval = true)
     private List<IngredientInRecipe> ingredientsInRecipe;
 
-    @OneToMany(cascade = CascadeType.PERSIST,
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER,
             mappedBy = "ingredient", orphanRemoval = true)
     private List<Product> products;
 
