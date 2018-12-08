@@ -1,5 +1,6 @@
 package de.berlin.htw.usws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.berlin.htw.usws.model.enums.Supermarket;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Product extends BaseEntity {
     @Column
     private Double price;
 
+    @JsonIgnore
     @ManyToOne
     private Ingredient ingredient;
 

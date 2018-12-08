@@ -52,7 +52,7 @@ public class Recipe extends BaseEntity {
     private String pictureUrl;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
-            mappedBy = "recipe", orphanRemoval = true)
+            mappedBy = "recipe",orphanRemoval = true)
     private List<IngredientInRecipe> ingredientInRecipes;
 
     @Column

@@ -10,7 +10,6 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,10 +18,6 @@ import java.util.List;
 @Repository(forEntity = Recipe.class)
 @Transactional
 public abstract class RecipeRepository extends AbstractFullEntityRepository<Recipe, Long> {
-
-//    @Inject
-//    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
-
 
     @Query(named = Recipe.BY_IDENTIFIER, singleResult = SingleResultType.OPTIONAL)
     public abstract Recipe findByIdentifier(final String identifier);
@@ -33,59 +28,29 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
     @Query(named = Recipe.BY_COUNT, singleResult = SingleResultType.OPTIONAL)
     public abstract int countRecipesBySite(final RecipeSite recipeSite);
 
-    @Query(named = Recipe.BY_IDENTIFIER_AND_TITLE, singleResult = SingleResultType.OPTIONAL)
-    public abstract Recipe findByIdentifierAndTitle(final String identifier, final String title);
-
-
-    /**
-     * Find recipes that ONLY contain  given ingredients
-     *
-     * @param ingredients
-     * @return
-     */
-    public List<Recipe> findRecipesByIngredients(final List<Ingredient> ingredients) {
-
-        // Hole alle Rezepte, die die Zutaten enthalten
-        final List<Recipe> recipes = this.findRecipesContainingIngredients(ingredients);
-
-        HashMap<Recipe, Integer> mapNumberIngredientsInRecipe = new HashMap<>();
-
-        // Create Hashmap with recipes and its number of ingredients
-        for (Recipe recipe : recipes) {
-            //      mapNumberIngredientsInRecipe.put(recipe, ingredientsInRecipeRepository.getNumberIngredients(recipe));
-        }
-
-        // Wenn Anzahl Zutaten nicht mit der übergebenen Zutaten-Anzahl übereinstimmt, Recipe weg
-        for (Recipe recipe : mapNumberIngredientsInRecipe.keySet()) {
-            if (mapNumberIngredientsInRecipe.get(recipe) != ingredients.size()) {
-                recipes.remove(recipe);
-            }
-        }
-        return recipes;
-    }
-
     /**
      * Find recipes that contain given ingredients
      *
      * @param ingredients
      * @return
      */
-    public List<Recipe> findRecipesContainingIngredients(final List<Ingredient> ingredients) {
+    public List<Recipe> findRecipesContainingIngredients(final List<String> ingredients) {
 
         final CriteriaBuilder builder = this.entityManager().getCriteriaBuilder();
         final CriteriaQuery<Recipe> cQuery = builder.createQuery(Recipe.class);
         // Root Recipe da wir Rezepte holen
         final Root<Recipe> rootRecipe = cQuery.from(Recipe.class);
-        // Join mit IngredientInRecipe
-        final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
-        // Join mit Ingredients
-        final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
+
         // Liste von predicates vorbereiten
         final List<Predicate> predicates = new ArrayList<>();
 
         // Add precidate pro Ingredient übergeben
-        for (Ingredient ingredient : ingredients) {
-            predicates.add(builder.equal(joinIngredient.get(Ingredient_.name), ingredient.getName()));
+        for (String ingredient : ingredients) {
+            // Join mit IngredientInRecipe
+            final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
+            // Join mit Ingredients
+            final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
+            predicates.add(builder.equal(joinIngredient.get(Ingredient_.name), ingredient));
         }
 
         // Create query
@@ -93,5 +58,4 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
 
         return this.entityManager().createQuery(cQuery).getResultList();
     }
-
 }
