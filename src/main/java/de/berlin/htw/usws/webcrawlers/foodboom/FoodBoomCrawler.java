@@ -2,6 +2,12 @@ package de.berlin.htw.usws.webcrawlers.foodboom;
 
 import de.berlin.htw.usws.webcrawlers.generic.Crawler;
 
+/**
+ * Class extending each FoodBoom-Crawler.
+ *
+ * @author Lucas Larisch
+ * @since 04.12.2018
+ */
 public abstract class FoodBoomCrawler extends Crawler {
 
     /**
@@ -14,8 +20,17 @@ public abstract class FoodBoomCrawler extends Crawler {
         setBaseUrl(BASE_URL);
     }
 
-    public String getRecipeIdFromUrl(String url){
-        return url.replace(BASE_URL + "rezept/", "");
+    /**
+     * Returns an identifier (FoodBoom) read from a relative URL.
+     *
+     * @param url Relate URL to the recipe.
+     * @return Identifier read from the relative URL.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
+    protected String getRecipeIdFromRelativeUrl(String url){
+        final String TO_REPLACE_FOR_ID = "/rezept/";
+        return url.replace(TO_REPLACE_FOR_ID, "");
     }
 
 }

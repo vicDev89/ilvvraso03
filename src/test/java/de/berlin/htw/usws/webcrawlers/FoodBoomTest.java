@@ -3,6 +3,7 @@ package de.berlin.htw.usws.webcrawlers;
 import de.berlin.htw.usws.model.IngredientInRecipe;
 import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.webcrawlers.foodboom.FoodBoomRecipeCrawler;
+import de.berlin.htw.usws.webcrawlers.foodboom.FoodBoomUnknownUrlsCrawler;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,28 +14,32 @@ public class FoodBoomTest {
     @Ignore
     @Test
     public void testScrapRecipe() {
+        FoodBoomUnknownUrlsCrawler foodBoomUnknownUrlsCrawler= new FoodBoomUnknownUrlsCrawler();
+        foodBoomUnknownUrlsCrawler.getUrlsForNewRecipes();
+        /*
+
         FoodBoomRecipeCrawler foodBoomRecipeCrawler = new FoodBoomRecipeCrawler();
 
         ArrayList<Recipe> al = new ArrayList();
-
-        al.add(foodBoomRecipeCrawler.scrapRecipe("https://www.foodboom.de/rezept/schneller-tomatensalat"));
-        al.add(foodBoomRecipeCrawler.scrapRecipe("https://www.foodboom.de/rezept/kaesespaetzle"));
+        al.add(foodBoomRecipeCrawler.scrapRecipe("/rezept/schneller-tomatensalat"));
+        al.add(foodBoomRecipeCrawler.scrapRecipe("/rezept/kaesespaetzle"));
 
         for(Recipe r : al) {
-            System.out.println(r.getTitle());
-            System.out.println(r.getPictureUrl());
-            System.out.println(r.getIdentifier());
-            System.out.println(r.getDifficultyLevel());
-            System.out.println(r.getRate());
-            System.out.println(r.getPreparationTimeInMin());
-            System.out.println(r.getRecipeSite());
-            System.out.println(r.getPreparation());
+            System.out.println("Titel:\t\t\t" + r.getTitle());
+            System.out.println("Bild:\t\t\t" + r.getPictureUrl());
+            System.out.println("Identifier:\t\t" + r.getIdentifier());
+            System.out.println("Difficulty:\t\t" + r.getDifficultyLevel());
+            System.out.println("Bewertung:\t\t" + r.getRate());
+            System.out.println("Zeit:\t\t\t" + r.getPreparationTimeInMin());
+            System.out.println("Seite:\t\t\t" + r.getRecipeSite());
+            System.out.println("Vorbereitung:\t" + r.getPreparation());
+            System.out.println("Zutaten:\t\t");
             for (IngredientInRecipe i : r.getIngredientInRecipes()) {
-                System.out.println(" - " + i.getIngredient().getName());
-                System.out.println("   " + i.getQuantity() + " " + i.getMeasure());
-                System.out.println("   " + i.getRecipe().getTitle());
+                System.out.println("\t\t\t\t- " + i.getIngredient().getName());
+                System.out.println("\t\t\t\t  " + i.getQuantity() + " " + i.getMeasure());
             }
         }
+        */
     }
 
 }

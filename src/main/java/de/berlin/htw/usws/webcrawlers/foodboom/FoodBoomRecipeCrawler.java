@@ -14,9 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class for crawling information of a FoodBoom-recipe.
+ *
+ * @author Lucas Larisch
+ * @since 04.12.2018
+ */
 public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
-
-    // TODO Comment all
 
     /**
      * CSS Query for headlines.
@@ -24,7 +28,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
     private final String CSS_QUERY_H1 = "h1";
 
     /**
-     * CSS Query for recipe image.
+     * CSS Query for getting the recipe image.
      */
     private final String CSS_QUERY_RECIPE_IMAGE = "img.card-image__img";
 
@@ -33,22 +37,49 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
      */
     private final String CSS_QUERY_ATTRIBUTE_SRC = "src";
 
+    /**
+     * CSS Query for tables in the recipe page.
+     */
     private final String CSS_QUERY_TABLE_IN_PAGE = "table.table.table--with-line.node.node--type-recipe.node--view-mode-full";
 
+    /**
+     * CSS Query for the ingredient table.
+     */
     private final String CSS_QUERY_TABLE_INGREDIENTS = "table.table.table--no-spacing.table--checkboxes";
 
+    /**
+     * CSS Query for getting an table body.
+     */
     private final String CSS_QUERY_TBODY = "tbody";
 
+    /**
+     * CSS Query for getting table rows.
+     */
     private final String CSS_QUERY_TR = "tr";
 
+    /**
+     * CSS Query for getting table cells.
+     */
     private final String CSS_QUERY_TD = "td";
 
+    /**
+     * CSS Query for getting divs.
+     */
     private final String CSS_QUERY_DIV = "div";
 
+    /**
+     * CSS Query for getting spans.
+     */
     private final String CSS_QUERY_SPAN = "span";
 
+    /**
+     * CSS Query for getting an ng-init attribute.
+     */
     private final String CSS_QUERY_ATTRIBUTE_NG_INIT = "ng-init";
 
+    /**
+     * CSS Query for getting divs containing preparation instructions.
+     */
     private final String CSS_QUERY_P_INSTRUCTION = "div.box.box-with-counter.box--large p";
 
     /**
@@ -60,28 +91,52 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         put("Schwer", DifficultyLevel.DIFFICULT);
     }};
 
+    /**
+     * String to append to an url of a recipe page in order to get the ingredients calculated to one portion.
+     */
     private final String TO_APPEND_ONE_PORTION = "?portions=1";
 
+    /**
+     * To be set as measure if no measure is stated.
+     */
     private final String MEASURE_IF_NULL = "Stück";
 
+    /**
+     * Recipe to be finally returned.
+     */
     private Recipe recipe;
 
-    public Recipe scrapRecipe(String url) {
+    /**
+     * Returns a {@link Recipe} scrapped from foodboom.de and converted to one portion.
+     *
+     * @param relativeUrl The relative url to the recipe page.
+     * @return A recipe scrapped from foodboom.de (one portion).
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
+    public Recipe scrapRecipe(String relativeUrl) {
         recipe = null;
         try {
-            setUrl(url + TO_APPEND_ONE_PORTION);
+            appendToBaseUrl(relativeUrl + TO_APPEND_ONE_PORTION);
             Document recipePage = getUnlimitedDocument();
             recipe = new Recipe();
-            recipe.setIdentifier(getRecipeIdFromUrl(url));
+            recipe.setIdentifier(getRecipeIdFromRelativeUrl(relativeUrl));
             recipe.setRecipeSite(RecipeSite.FOODBOOM);
             scrapAllRecipeInformation(recipePage);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print("Recipe successfully scrapped: " + recipe.getTitle());
+        System.out.println("Recipe successfully scrapped: " + recipe.getTitle());
         return recipe;
     }
 
+    /**
+     * Calls all methods that scrap information and set it for {@link FoodBoomRecipeCrawler#recipe}.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapAllRecipeInformation(Document recipePage) {
         scrapTitle(recipePage);
         scrapPictureUrl(recipePage);
@@ -90,6 +145,13 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         scrapIngredients(recipePage);
     }
 
+    /**
+     * Scraps the title of the recipe and sets it for {@link FoodBoomRecipeCrawler#recipe}.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapTitle(Document recipePage) {
         Elements elements = recipePage.select(CSS_QUERY_H1);
         if (elements.size() > 0) {
@@ -98,6 +160,13 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         }
     }
 
+    /**
+     * Scraps the URL for the picture of the recipe and sets it for {@link FoodBoomRecipeCrawler#recipe}.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapPictureUrl(Document recipePage) {
         Elements elements = recipePage.select(CSS_QUERY_RECIPE_IMAGE);
         if (elements.size() > 0) {
@@ -106,6 +175,14 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         }
     }
 
+    /**
+     * Scraps both difficulty (normed) and the duration for preparing the recipe
+     * and sets it for {@link FoodBoomRecipeCrawler#recipe}.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapDifficultyAndDuration(Document recipePage){
         Elements tables = recipePage.select(CSS_QUERY_TABLE_IN_PAGE);
         if(tables.size() > 0) {
@@ -131,7 +208,16 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         }
     }
 
-    // TODO: Make smaller?
+    /**
+     * Scraps all ingredients of the recipe and sets them for {@link FoodBoomRecipeCrawler#recipe}.
+     * {@link FoodBoomRecipeCrawler#MEASURE_IF_NULL} will be set as measure if no measure, but a
+     * quantity is stated. In case of none given, the ingredient will be saved without quantity/measure.
+     * All ingredients will be saved in singular.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapIngredients(Document recipePage) {
         List<IngredientInRecipe> ingredientsInRecipe = new ArrayList<IngredientInRecipe>();
         Elements ingredientTables = recipePage.select(CSS_QUERY_TABLE_INGREDIENTS);
@@ -180,6 +266,14 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         }
     }
 
+    /**
+     * Reads a quantity set in the document via ng-init.
+     *
+     * @param ngInitAttribute Attribute containing ng-init.
+     * @return Quantity taken out of the attribute.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private double readQuantityOfAttribute(String ngInitAttribute) {
         double quantity = 0;
         String firstOperation = ngInitAttribute.split(";")[0];
@@ -191,6 +285,14 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         return quantity;
     }
 
+    /**
+     * Scraps a measure for an ingredient and returns it (always singular).
+     *
+     * @param quantityInformation Element containing information concerning quantity and measure.
+     * @return The measure of an ingredient (always singular).
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private String readMeasureOfIngredient(Element quantityInformation) {
         String measure = null;
         // TODO: Discus: Always sg!
@@ -201,11 +303,22 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         return measure;
     }
 
+    /**
+     * Scraps all preparation instructions, puts them in one string and
+     * which is finally set for {@link FoodBoomRecipeCrawler#recipe}.
+     *
+     * @param recipePage Recipe page.
+     * @author Lucas Larisch
+     * @since 04.12.2018
+     */
     private void scrapPreparationInstruction(Document recipePage) {
         Elements instructions = recipePage.select(CSS_QUERY_P_INSTRUCTION);
         String instructionsString = "";
         if (instructions.size() > 0) {
             for (Element instruction : instructions) {
+                if(!instructionsString.isEmpty() && instructionsString.charAt(instructionsString.length()-1) != ' ' && !instruction.text().isEmpty()) {
+                    instructionsString += " ";
+                }
                 instructionsString += instruction.text();
             }
             recipe.setPreparation(instructionsString);
