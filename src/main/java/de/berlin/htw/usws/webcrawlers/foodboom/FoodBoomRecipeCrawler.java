@@ -60,7 +60,9 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         put("Schwer", DifficultyLevel.DIFFICULT);
     }};
 
-    private String TO_APPEND_ONE_PORTION = "?portions=1";
+    private final String TO_APPEND_ONE_PORTION = "?portions=1";
+
+    private final String MEASURE_IF_NULL = "Stück";
 
     private Recipe recipe;
 
@@ -156,11 +158,12 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
                                 double quantity = readQuantityOfAttribute(ngInitAttribute);
                                 if (quantity > 0) {
                                     String measure = readMeasureOfIngredient(quantityInformation.first());
+                                    ingredientInRecipe.setQuantity(quantity);
                                     if (measure != null && !measure.isEmpty()) {
-                                        ingredientInRecipe.setQuantity(quantity);
                                         ingredientInRecipe.setMeasure(measure);
                                     } else {
-                                        System.err.println("ERROR: '" + ingredientInRecipe.getIngredient().getName() + "' has a quantity of " + quantity + " but no measure. Neither quantity nor measure have been saved.");
+                                        ingredientInRecipe.setMeasure(MEASURE_IF_NULL);
+                                        System.err.println("No measure stated for recipe '" + ingredientInRecipe.getIngredient().getName() + "'. Instead of not saving any measure, '" + MEASURE_IF_NULL + "' will be set as measure. Note: Adjustable by changing the final 'MEASURE_IF_NULL' in FoodBoomRecipeCrawler.");
                                     }
                                 } else {
                                     System.err.println("'" + ingredientInRecipe.getIngredient().getName() + "' will be saved as ingredient without quantity and measure.");
