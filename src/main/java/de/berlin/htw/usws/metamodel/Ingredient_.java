@@ -1,8 +1,10 @@
 package de.berlin.htw.usws.metamodel;
 
 import de.berlin.htw.usws.model.Ingredient;
+import de.berlin.htw.usws.model.Product;
 
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -11,7 +13,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Ingredient_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Ingredient, String> name;
-	public static volatile SingularAttribute<Ingredient, Long> id;
+	public static volatile ListAttribute<Ingredient, Product> products;
 
 }
 

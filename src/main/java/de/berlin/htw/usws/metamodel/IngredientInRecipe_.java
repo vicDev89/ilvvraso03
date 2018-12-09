@@ -10,13 +10,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(IngredientInRecipe.class)
-public abstract class IngredientsInRecipe_ extends BaseEntity_ {
+public abstract class IngredientInRecipe_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<IngredientInRecipe, Ingredient> ingredient;
 	public static volatile SingularAttribute<IngredientInRecipe, Double> quantity;
 	public static volatile SingularAttribute<IngredientInRecipe, String> measure;
 	public static volatile SingularAttribute<IngredientInRecipe, Recipe> recipe;
-	public static volatile SingularAttribute<IngredientInRecipe, Long> id;
 
 }
 

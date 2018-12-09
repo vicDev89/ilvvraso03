@@ -51,8 +51,8 @@ public class Recipe extends BaseEntity {
     @Column
     private String pictureUrl;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "recipe", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "recipe",orphanRemoval = true)
     private List<IngredientInRecipe> ingredientInRecipes;
 
     @Column

@@ -1,5 +1,6 @@
 package de.berlin.htw.usws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class IngredientInRecipe extends BaseEntity {
     private Ingredient ingredient;
 
     @ManyToOne
+    @JsonIgnore
     private Recipe recipe;
 
     @Column

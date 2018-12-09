@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 25 19 ? * * *")
+@Scheduled(cronExpression = "0 0 4 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
