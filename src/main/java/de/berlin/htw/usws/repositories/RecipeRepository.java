@@ -2,10 +2,7 @@ package de.berlin.htw.usws.repositories;
 
 import de.berlin.htw.usws.model.*;
 import de.berlin.htw.usws.model.enums.RecipeSite;
-import org.apache.deltaspike.data.api.AbstractFullEntityRepository;
-import org.apache.deltaspike.data.api.Query;
-import org.apache.deltaspike.data.api.Repository;
-import org.apache.deltaspike.data.api.SingleResultType;
+import org.apache.deltaspike.data.api.*;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.criteria.*;
@@ -40,7 +37,6 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         final CriteriaQuery<Recipe> cQuery = builder.createQuery(Recipe.class);
         // Root Recipe da wir Rezepte holen
         final Root<Recipe> rootRecipe = cQuery.from(Recipe.class);
-
         // Liste von predicates vorbereiten
         final List<Predicate> predicates = new ArrayList<>();
 
@@ -50,6 +46,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
             final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
             // Join mit Ingredients
             final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
+
             predicates.add(builder.equal(joinIngredient.get(Ingredient_.name), ingredient));
         }
 

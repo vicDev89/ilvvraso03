@@ -1,8 +1,5 @@
 package de.berlin.htw.usws.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,24 +14,23 @@ import java.util.List;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @NamedQueries({
         @NamedQuery(name = Ingredient.BY_NAME,
-                query = "select i from Ingredient i where i.name=?1")
+                query = "select i from Ingredient i where i.name=?1"),
+        @NamedQuery(name = Ingredient.BY_ALL,
+                query = "select i from Ingredient i")
 })
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "withProducts", attributeNodes = @NamedAttributeNode("products"))
+})
 public class Ingredient extends BaseEntity {
 
-
     public static final String BY_NAME = "ingredientByName";
+
+    public static final String BY_ALL = "allIngredients";
 
     @Column
     private String name;
 
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.PERSIST,
-//            mappedBy = "ingredient", orphanRemoval = true)
-//    private List<IngredientInRecipe> ingredientsInRecipe;
-
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER,
-            mappedBy = "ingredient", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "ingredient", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Product> products;
 
     public Ingredient(String name) {

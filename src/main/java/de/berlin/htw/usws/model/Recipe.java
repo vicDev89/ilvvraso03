@@ -22,6 +22,9 @@ import java.util.List;
         @NamedQuery(name = Recipe.BY_IDENTIFIER_AND_TITLE,
                 query = "select r from Recipe r where r.identifier=?1 and r.title=?2")
 })
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "withIngredientsAndProducts", attributeNodes = @NamedAttributeNode(value="ingredientInRecipes"))
+})
 public class Recipe extends BaseEntity {
 
     public static final String BY_IDENTIFIER = "recipeByIdentifier";

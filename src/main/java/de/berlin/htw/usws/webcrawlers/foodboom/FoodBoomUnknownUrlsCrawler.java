@@ -1,9 +1,12 @@
 package de.berlin.htw.usws.webcrawlers.foodboom;
 
+import de.berlin.htw.usws.repositories.RecipeRepository;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,11 @@ import java.util.List;
  * @author Lucas Larisch
  * @since 09.12.2018
  */
+@Stateless
 public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
+
+    @Inject
+    private RecipeRepository recipeRepository;
 
     /**
      * String to be appended to the base URL in order to go to the pages listing recipes.
@@ -68,12 +75,13 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
             for (Element anchor : recipeAnchors) {
                 String url = anchor.attr(CSS_QUERY_ATTRIBUTE_HREF);
                 if (isRecipeUnknown(url)) {
+                    System.out.println("New Foodboom-Recipe url added: "+ url);
                     recipeUrls.add(url);
                 }
             }
             hasNextPage = setNextPage(document);
         } while(hasNextPage);
-        return null;
+        return recipeUrls;
     }
 
     /**
@@ -85,9 +93,12 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
      * @since 09.12.2018
      */
     private boolean isRecipeUnknown(String relativeUrl) {
-        // TODO: Check if already saved in DB
         String identifier = getRecipeIdFromRelativeUrl(relativeUrl);
-        return true;
+        if(this.recipeRepository.findByIdentifier(identifier) == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

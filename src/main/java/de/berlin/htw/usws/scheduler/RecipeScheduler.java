@@ -10,6 +10,7 @@ import de.berlin.htw.usws.repositories.IngredientRepository;
 import de.berlin.htw.usws.repositories.ProductRepository;
 import de.berlin.htw.usws.repositories.RecipeRepository;
 import de.berlin.htw.usws.services.ChefkochCrawlerService;
+import de.berlin.htw.usws.services.FoodboomCrawlerService;
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 0 4 ? * * *")
+@Scheduled(cronExpression = "0 30 17 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -34,7 +35,7 @@ public class RecipeScheduler implements org.quartz.Job {
     private HellofreshCrawlerService hellofreshCrawlerService;
 
     @Inject
-    private ChefkochCrawlerService chefkochCrawlerService;
+    private FoodboomCrawlerService foodboomCrawlerService;
 
     @Inject
     private BringmeisterProductAPI bringmeisterProductAPI;
@@ -60,6 +61,10 @@ public class RecipeScheduler implements org.quartz.Job {
 
         Stopwatch swGesamt = Stopwatch.createStarted();
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
+
+        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
+        recipes = this.foodboomCrawlerService.start();
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
         recipes = this.hellofreshCrawlerService.start();
