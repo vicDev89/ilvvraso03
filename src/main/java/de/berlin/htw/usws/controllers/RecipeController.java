@@ -8,9 +8,6 @@ import de.berlin.htw.usws.repositories.RecipeRepository;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Path("/")
@@ -34,18 +31,8 @@ public class RecipeController {
     @Consumes("application/json")
     @Produces("application/json")
     public Response getRecipes(final IngredientsList ingredientsList) {
-
         List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredientsList.getIngredients());
-
-        List<RecipeForFrontend> recipesForFronted = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            int ingredientsToBuy = recipe.getIngredientInRecipes().size() - ingredientsList.getIngredients().size();
-            recipesForFronted.add(new RecipeForFrontend(recipe, ingredientsToBuy));
-        }
-
-        Collections.sort(recipesForFronted, Comparator.comparingInt(RecipeForFrontend::getIngredientsToBuy));
-
-        return Response.ok().entity(recipesForFronted).build();
+        return Response.ok().entity(recipes).build();
     }
 
     /**
