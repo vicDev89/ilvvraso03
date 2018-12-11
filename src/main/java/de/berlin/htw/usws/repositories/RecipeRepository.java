@@ -47,7 +47,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
             // Join mit Ingredients
             final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
 
-            predicates.add(builder.equal(joinIngredient.get(Ingredient_.name), ingredient));
+            predicates.add(builder.like(joinIngredient.get(Ingredient_.name), "%" + ingredient + "%"));
         }
 
         // Create query

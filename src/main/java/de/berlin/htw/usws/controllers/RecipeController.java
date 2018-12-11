@@ -3,11 +3,15 @@ package de.berlin.htw.usws.controllers;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.repositories.IngredientRepository;
+import de.berlin.htw.usws.repositories.IngredientsInRecipeRepository;
 import de.berlin.htw.usws.repositories.RecipeRepository;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.PredicateUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/")
@@ -19,9 +23,11 @@ public class RecipeController {
     @Inject
     private IngredientRepository ingredientRepository;
 
+    @Inject
+    private IngredientsInRecipeRepository ingredientsInRecipeRepository;
+
     /**
-     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte durchsucht. Die Ergebnisliste wird nach der Anzahl
-     * von fehlenden Zutanten aufsteigend sortiert
+     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte durchsucht.
      *
      * @param ingredientsList
      * @return
@@ -37,6 +43,7 @@ public class RecipeController {
 
     /**
      * GET-Auruf, um alle Ingredients von der DB zu holen
+     * Dazu werden auch alle mögliche Measures von jedem Ingredient ermittelt
      *
      * @return
      */
@@ -45,10 +52,13 @@ public class RecipeController {
     @Produces("application/json")
     public Response getAllIngredients() {
         List<Ingredient> ingredients = this.ingredientRepository.findAllIngredients();
-        for (Ingredient ingredient : ingredients) {
-            ingredient.setProducts(null);
+        List<IngredientFrontend> ingredientsFrontend = new ArrayList<>();
+        for(Ingredient ingredient : ingredients) {
+            List<String> measures = this.ingredientsInRecipeRepository.getMeasuresByIngredient(ingredient.getName());
+            CollectionUtils.filter(measures, PredicateUtils.notNullPredicate());
+            ingredientsFrontend.add(new IngredientFrontend(ingredient.getName(), measures));
         }
-        return Response.ok().entity(ingredients).build();
+        return Response.ok().entity(ingredientsFrontend).build();
     }
 
 }
