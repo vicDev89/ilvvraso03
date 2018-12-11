@@ -26,7 +26,7 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
     /**
      * String to be appended to the base URL in order to go to the pages listing recipes.
      */
-    private final String TO_APPEND_TO_BASE_URL = "rezepte?page=65";
+    private final String TO_APPEND_TO_BASE_URL = "rezepte";
 
     /**
      * CSS Query for getting all anchors concerning recipes.
@@ -68,15 +68,14 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
     private ArrayList<String> crawlPagesForUrls() throws IOException {
         boolean hasNextPage = false;
         ArrayList<String> recipeUrls = new ArrayList<String>();
-
         do {
             Document document = getUnlimitedDocument();
             Elements recipeAnchors = document.select(CSS_QUERY_RECIPE_ANCHOR);
             for (Element anchor : recipeAnchors) {
                 String url = anchor.attr(CSS_QUERY_ATTRIBUTE_HREF);
                 if (isRecipeUnknown(url)) {
-                    System.out.println("New Foodboom-Recipe url added: "+ url);
                     recipeUrls.add(url);
+                    System.out.println("New Foodboom-Recipe url added: "+ getUrl() +". Gesamte Anzahl: " + recipeUrls.size());
                 }
             }
             hasNextPage = setNextPage(document);

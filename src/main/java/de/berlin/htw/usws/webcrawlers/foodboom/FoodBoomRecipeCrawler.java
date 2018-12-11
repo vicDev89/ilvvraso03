@@ -123,10 +123,11 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
             recipe.setIdentifier(getRecipeIdFromRelativeUrl(relativeUrl));
             recipe.setRecipeSite(RecipeSite.FOODBOOM);
             scrapAllRecipeInformation(recipePage);
+            System.out.println("Recipe successfully scrapped: " + recipe.getTitle());
         } catch (IOException e) {
+            System.out.println("Recipe error: " + getUrl());
             e.printStackTrace();
         }
-        System.out.println("Recipe successfully scrapped: " + recipe.getTitle());
         return recipe;
     }
 
