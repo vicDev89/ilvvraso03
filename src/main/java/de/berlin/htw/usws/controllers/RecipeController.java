@@ -11,7 +11,6 @@ import org.apache.commons.collections4.PredicateUtils;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/")
@@ -43,7 +42,6 @@ public class RecipeController {
 
     /**
      * GET-Auruf, um alle Ingredients von der DB zu holen
-     * Dazu werden auch alle mögliche Measures von jedem Ingredient ermittelt
      *
      * @return
      */
@@ -52,13 +50,26 @@ public class RecipeController {
     @Produces("application/json")
     public Response getAllIngredients() {
         List<Ingredient> ingredients = this.ingredientRepository.findAllIngredients();
-        List<IngredientFrontend> ingredientsFrontend = new ArrayList<>();
-        for(Ingredient ingredient : ingredients) {
-            List<String> measures = this.ingredientsInRecipeRepository.getMeasuresByIngredient(ingredient.getName());
-            CollectionUtils.filter(measures, PredicateUtils.notNullPredicate());
-            ingredientsFrontend.add(new IngredientFrontend(ingredient.getName(), measures));
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setProducts(null);
         }
-        return Response.ok().entity(ingredientsFrontend).build();
+        return Response.ok().entity(ingredients).build();
+    }
+
+
+    /**
+     * GET-Aufruf, um die Measures von einem Ingredient zu holen
+     *
+     * @param ingredientName
+     * @return
+     */
+    @GET
+    @Path("/getMeasures/{ingredientName}")
+    @Produces("application/json")
+    public Response getMeasures(@PathParam("ingredientName") final String ingredientName) {
+        List<String> measures = this.ingredientsInRecipeRepository.getMeasuresByIngredient(ingredientName);
+        CollectionUtils.filter(measures, PredicateUtils.notNullPredicate());
+        return Response.ok().entity(measures).build();
     }
 
 }
