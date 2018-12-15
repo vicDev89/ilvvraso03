@@ -26,7 +26,7 @@ public class RecipeController {
     private IngredientsInRecipeRepository ingredientsInRecipeRepository;
 
     /**
-     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte durchsucht.
+     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte holt.
      *
      * @param ingredientsList
      * @return
@@ -36,7 +36,37 @@ public class RecipeController {
     @Consumes("application/json")
     @Produces("application/json")
     public Response getRecipes(final IngredientsList ingredientsList) {
-        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredientsList.getIngredients());
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsAll(ingredientsList.getIngredients());
+        return Response.ok().entity(recipes).build();
+    }
+
+    /**
+     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte ab 10 holt.
+     *
+     * @param ingredientsList
+     * @return
+     */
+    @POST
+    @Path("/getRecipesRest")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response getRecipesRest(final IngredientsList ingredientsList) {
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsRest(ingredientsList.getIngredients());
+        return Response.ok().entity(recipes).build();
+    }
+
+    /**
+     * POST-Aufruf, der mit den übergebenen Ingredients die ersten 10 Rezepte holt.
+     *
+     * @param ingredientsList
+     * @return
+     */
+    @POST
+    @Path("/getRecipesMax")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response getRecipesMax(final IngredientsList ingredientsList) {
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsMax(ingredientsList.getIngredients());
         return Response.ok().entity(recipes).build();
     }
 

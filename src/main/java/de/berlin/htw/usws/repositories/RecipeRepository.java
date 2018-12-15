@@ -25,13 +25,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
     @Query(named = Recipe.BY_COUNT, singleResult = SingleResultType.OPTIONAL)
     public abstract int countRecipesBySite(final RecipeSite recipeSite);
 
-    /**
-     * Find recipes that contain given ingredients
-     *
-     * @param ingredients
-     * @return
-     */
-    public List<Recipe> findRecipesContainingIngredients(final List<String> ingredients) {
+    public List<Recipe> findRecipesContainingIngredientsAll(final List<String> ingredients) {
 
         final CriteriaBuilder builder = this.entityManager().getCriteriaBuilder();
         final CriteriaQuery<Recipe> cQuery = builder.createQuery(Recipe.class);
@@ -54,5 +48,67 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{}));
 
         return this.entityManager().createQuery(cQuery).getResultList();
+    }
+
+    /**
+     * Find all recipes that contain given ingredients
+     *
+     * @param ingredients
+     * @return
+     */
+    public List<Recipe> findRecipesContainingIngredientsRest(final List<String> ingredients) {
+
+        final CriteriaBuilder builder = this.entityManager().getCriteriaBuilder();
+        final CriteriaQuery<Recipe> cQuery = builder.createQuery(Recipe.class);
+        // Root Recipe da wir Rezepte holen
+        final Root<Recipe> rootRecipe = cQuery.from(Recipe.class);
+        // Liste von predicates vorbereiten
+        final List<Predicate> predicates = new ArrayList<>();
+
+        // Add precidate pro Ingredient übergeben
+        for (String ingredient : ingredients) {
+            // Join mit IngredientInRecipe
+            final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
+            // Join mit Ingredients
+            final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
+
+            predicates.add(builder.like(joinIngredient.get(Ingredient_.name), "%" + ingredient + "%"));
+        }
+
+        // Create query
+        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{}));
+
+        return this.entityManager().createQuery(cQuery).setFirstResult(10).getResultList();
+    }
+
+
+    /**
+     * Find only the 10 first recipes that contain all the ingredients
+     * @param ingredients
+     * @return
+     */
+    public List<Recipe> findRecipesContainingIngredientsMax(final List<String> ingredients) {
+
+        final CriteriaBuilder builder = this.entityManager().getCriteriaBuilder();
+        final CriteriaQuery<Recipe> cQuery = builder.createQuery(Recipe.class);
+        // Root Recipe da wir Rezepte holen
+        final Root<Recipe> rootRecipe = cQuery.from(Recipe.class);
+        // Liste von predicates vorbereiten
+        final List<Predicate> predicates = new ArrayList<>();
+
+        // Add precidate pro Ingredient übergeben
+        for (String ingredient : ingredients) {
+            // Join mit IngredientInRecipe
+            final Join<Recipe, IngredientInRecipe> joinIngredientsInRecipe = rootRecipe.join(Recipe_.ingredientInRecipes);
+            // Join mit Ingredients
+            final Join<IngredientInRecipe, Ingredient> joinIngredient = joinIngredientsInRecipe.join(IngredientInRecipe_.ingredient);
+
+            predicates.add(builder.like(joinIngredient.get(Ingredient_.name), "%" + ingredient + "%"));
+        }
+
+        // Create query
+        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{}));
+
+        return this.entityManager().createQuery(cQuery).setMaxResults(10).getResultList();
     }
 }
