@@ -15,16 +15,11 @@ public class BringmeisterProductAPITest {
     @Ignore
     public void getProduct() {
 
-            List<Product> bananeProducts = bringmeisterProductAPI.getProducts("banane");
-
-            List<Product> erdbeerenProducts = bringmeisterProductAPI.getProducts("Erdbeeren");
+            List<Product> bananeProducts = bringmeisterProductAPI.getProducts("hänchen");
 
             for(Product product: bananeProducts) {
                 System.out.println(product);
             }
 
-            for(Product product: erdbeerenProducts) {
-                System.out.println(product);
-            }
     }
 }
