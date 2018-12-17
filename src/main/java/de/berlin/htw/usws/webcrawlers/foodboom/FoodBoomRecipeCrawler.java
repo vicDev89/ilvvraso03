@@ -196,7 +196,12 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
                     if (tdDuration.size() > 1) {
                         // Always minutes:
                         String durationNrOnly = tdDuration.get(1).text().split(" ")[0];
-                        recipe.setPreparationTimeInMin(Integer.parseInt(durationNrOnly));
+                        try{
+                            recipe.setPreparationTimeInMin(Integer.parseInt(durationNrOnly));
+                        } catch(NumberFormatException e) {
+                            System.err.println("Error when parsing duration");
+                        }
+
                     }
                     // Dealing with the difficulty tr:
                     Elements tdDifficulty = tRows.get(1).select(CSS_QUERY_TD);
