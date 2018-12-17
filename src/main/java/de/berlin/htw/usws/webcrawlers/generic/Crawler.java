@@ -41,7 +41,7 @@ public abstract class Crawler {
      */
     protected Document getUnlimitedDocument() throws IOException {
 
-        Connection con = Jsoup.connect(url).timeout(1200000);
+        Connection con = Jsoup.connect(url).timeout(120000); // 2 minutes
         Connection.Response resp = con.execute();
         if (resp.statusCode() == 200) {
             return con.maxBodySize(0).get();

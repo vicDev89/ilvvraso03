@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,20 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
     /**
      * String to be appended to the base URL in order to go to the pages listing recipes.
      */
-    private final String TO_APPEND_TO_BASE_URL = "rezepte";
+    private final String TO_APPEND_TO_BASE_URL = "rezepte?page=";
+
+    /**
+     * Number of the page listing recipes to be scrapped.
+     */
+    private int pageCount = 1;
 
     /**
      * CSS Query for getting all anchors concerning recipes.
      */
     private final String CSS_QUERY_RECIPE_ANCHOR = "a.card.card--hover.node.node--type-recipe.node--view-mode-teaser";
+
+    /** CSS Query for the anchor for getting to the last page. */
+    private final String CSS_QUERY_LAST_PAGE_ANCHOR = "li.pager__item.pager__item--last a";
 
     /**
      * CSS Query for getting a href-attribute.
@@ -46,10 +55,10 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
      * @since 09.12.2018
      */
     public List<String> getUrlsForNewRecipes() {
-        appendToBaseUrl(TO_APPEND_TO_BASE_URL);
         ArrayList<String> urls = null;
         try {
-            urls = crawlPagesForUrls();
+            int lastPageNr = getLastPageNr();
+            urls = crawlPagesForUrls(lastPageNr);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,65 +66,94 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
     }
 
     /**
+     * Calls the first recipe page in order to scrap the number of the last page listing recipes and return it.
+     *
+     * @return Number of the last page.
+     * @author Lucas Larisch
+     * @since 17.12.2018
+     */
+    private int getLastPageNr() {
+        int lastPage = 0;
+        try {
+            Document document = setNextPage();
+            pageCount = 1;
+            Elements lastPageAnchor = document.select(CSS_QUERY_LAST_PAGE_ANCHOR);
+            if (lastPageAnchor.size() > 0){
+                String lastPageUrl = lastPageAnchor.first().attr(CSS_QUERY_ATTRIBUTE_HREF);
+                if (lastPageUrl.charAt(0)=='/') {
+                    lastPageUrl = lastPageUrl.replaceFirst("/", "");
+                }
+                try {
+                    lastPage = Integer.parseInt(lastPageUrl.replace(TO_APPEND_TO_BASE_URL, ""));
+                    System.out.println(lastPage + " has been set as last page number.");
+                }catch (NumberFormatException e) {
+                    System.err.println("Number of the last page could not be determined due to issues concerning the number-conversion.");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Number of the last page could not be determined due to issues concerning the connection.");
+            e.printStackTrace();
+        }
+        return lastPage;
+    }
+
+    /**
      * Crawls all pages listing recipes and returns a list containing each
      * URL to an unknown recipe.
      *
+     * @param lastPageNr Number of the last page listing recipes.
      * @return All unknown URLs to recipes.
      * @throws IOException
      * @author Lucas Larisch
      * @since 09.12.2018
      */
-    private ArrayList<String> crawlPagesForUrls() throws IOException {
-        boolean hasNextPage = false;
+    private ArrayList<String> crawlPagesForUrls(int lastPageNr) throws IOException {
         ArrayList<String> recipeUrls = new ArrayList<String>();
-        do {
-            Document document = getUnlimitedDocument();
-            Elements recipeAnchors = document.select(CSS_QUERY_RECIPE_ANCHOR);
-            for (Element anchor : recipeAnchors) {
-                String url = anchor.attr(CSS_QUERY_ATTRIBUTE_HREF);
-                if (isRecipeUnknown(url)) {
-                    recipeUrls.add(url);
-                    System.out.println("New Foodboom-Recipe url added: "+ getUrl() +". Gesamte Anzahl: " + recipeUrls.size());
+        while(pageCount <= lastPageNr) {
+            Document document = setNextPage();
+            if (document != null) {
+                Elements recipeAnchors = document.select(CSS_QUERY_RECIPE_ANCHOR);
+                for (Element anchor : recipeAnchors) {
+                    String url = anchor.attr(CSS_QUERY_ATTRIBUTE_HREF);
+                    if (isRecipeUnknown(url)) {
+                        recipeUrls.add(url);
+                        System.out.println("New Foodboom-Recipe url added: [FOODBOOM] " + url + ". Total: " + recipeUrls.size());
+                    }
                 }
             }
-            hasNextPage = setNextPage(document);
-        } while(hasNextPage);
+        }
         return recipeUrls;
     }
 
     /**
      * Checks whether a recipe is already known or not and returns the result.
      *
-     * @param relativeUrl
+     * @param relativeUrl Relative url to the recipe.
      * @return true if the recipe is unknown, false if not.
      * @author Lucas Larisch
      * @since 09.12.2018
      */
     private boolean isRecipeUnknown(String relativeUrl) {
         String identifier = getRecipeIdFromRelativeUrl(relativeUrl);
-        if(this.recipeRepository.findByIdentifier(identifier) == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.recipeRepository.findByIdentifier(identifier) == null;
     }
 
     /**
-     * Sets {@link de.berlin.htw.usws.webcrawlers.generic.Crawler#url} if there is
-     * a next page listing recipes.
+     * Calls the next page depending on {@link FoodBoomUnknownUrlsCrawler#pageCount} and returns it.s
      *
-     * @param document Page listing recipes.
-     * @return true if there is a next page (that has been set), false if not.
+     * @return Called next page (depending on {@link FoodBoomUnknownUrlsCrawler#pageCount}) listing recipes.
+     * @throws IOException
      * @author Lucas Larisch
-     * @since 09.12.2018
+     * @since 17.12.2018
      */
-    private boolean setNextPage(Document document) {
-        Elements anchorsToNextPage = document.select("a[rel=next]");
-        if (anchorsToNextPage.size() > 0) {
-            appendToBaseUrl(anchorsToNextPage.first().attr(CSS_QUERY_ATTRIBUTE_HREF));
-            return true;
-        } else {
-            return false;
+    private Document setNextPage() throws IOException {
+        appendToBaseUrl(TO_APPEND_TO_BASE_URL +  pageCount++);
+        Document document = null;
+        try {
+            document = getUnlimitedDocument();
+        } catch(SocketTimeoutException e) {
+            System.err.println("FoodBoom recipes page Nr. "+(pageCount-1)+ " could not be called. (Read time out)");
         }
+        return document;
     }
 }
