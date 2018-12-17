@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 0 4 ? * * *")
+@Scheduled(cronExpression = "0 30 18 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -62,9 +62,9 @@ public class RecipeScheduler implements org.quartz.Job {
         Stopwatch swGesamt = Stopwatch.createStarted();
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
-//        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
-//        recipes = this.foodboomCrawlerService.start();
-//        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
+        recipes = this.foodboomCrawlerService.start();
+        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
         recipes = this.hellofreshCrawlerService.start();

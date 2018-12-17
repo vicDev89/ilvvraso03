@@ -1,9 +1,0 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
-  <app-header-component class="mb05"></app-header-component>
-</div>
-<div class="row">
-  <app-ingredients-component class="col-md-2 border-right" (registeredIngredients)="extractKeyOfSearchedIngredients($event)"></app-ingredients-component>
-  <app-recipes-component class="col-md-10" [searchedIngredients]="searchedIngredientsNames"></app-recipes-component>
-</div>
-
