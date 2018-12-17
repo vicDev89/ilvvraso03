@@ -11,7 +11,6 @@ import org.apache.commons.collections4.PredicateUtils;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/")
@@ -27,7 +26,7 @@ public class RecipeController {
     private IngredientsInRecipeRepository ingredientsInRecipeRepository;
 
     /**
-     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte durchsucht.
+     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte holt.
      *
      * @param ingredientsList
      * @return
@@ -37,13 +36,42 @@ public class RecipeController {
     @Consumes("application/json")
     @Produces("application/json")
     public Response getRecipes(final IngredientsList ingredientsList) {
-        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredients(ingredientsList.getIngredients());
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsAll(ingredientsList.getIngredients());
+        return Response.ok().entity(recipes).build();
+    }
+
+    /**
+     * POST-Aufruf, der mit den übergebenen Ingredients alle Rezepte ab 10 holt.
+     *
+     * @param ingredientsList
+     * @return
+     */
+    @POST
+    @Path("/getRecipesRest")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response getRecipesRest(final IngredientsList ingredientsList) {
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsRest(ingredientsList.getIngredients());
+        return Response.ok().entity(recipes).build();
+    }
+
+    /**
+     * POST-Aufruf, der mit den übergebenen Ingredients die ersten 10 Rezepte holt.
+     *
+     * @param ingredientsList
+     * @return
+     */
+    @POST
+    @Path("/getRecipesMax")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response getRecipesMax(final IngredientsList ingredientsList) {
+        List<Recipe> recipes = this.recipeRepository.findRecipesContainingIngredientsMax(ingredientsList.getIngredients());
         return Response.ok().entity(recipes).build();
     }
 
     /**
      * GET-Auruf, um alle Ingredients von der DB zu holen
-     * Dazu werden auch alle mögliche Measures von jedem Ingredient ermittelt
      *
      * @return
      */
@@ -52,13 +80,26 @@ public class RecipeController {
     @Produces("application/json")
     public Response getAllIngredients() {
         List<Ingredient> ingredients = this.ingredientRepository.findAllIngredients();
-        List<IngredientFrontend> ingredientsFrontend = new ArrayList<>();
-        for(Ingredient ingredient : ingredients) {
-            List<String> measures = this.ingredientsInRecipeRepository.getMeasuresByIngredient(ingredient.getName());
-            CollectionUtils.filter(measures, PredicateUtils.notNullPredicate());
-            ingredientsFrontend.add(new IngredientFrontend(ingredient.getName(), measures));
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setProducts(null);
         }
-        return Response.ok().entity(ingredientsFrontend).build();
+        return Response.ok().entity(ingredients).build();
+    }
+
+
+    /**
+     * GET-Aufruf, um die Measures von einem Ingredient zu holen
+     *
+     * @param ingredientName
+     * @return
+     */
+    @GET
+    @Path("/getMeasures/{ingredientName}")
+    @Produces("application/json")
+    public Response getMeasures(@PathParam("ingredientName") final String ingredientName) {
+        List<String> measures = this.ingredientsInRecipeRepository.getMeasuresByIngredient(ingredientName);
+        CollectionUtils.filter(measures, PredicateUtils.notNullPredicate());
+        return Response.ok().entity(measures).build();
     }
 
 }

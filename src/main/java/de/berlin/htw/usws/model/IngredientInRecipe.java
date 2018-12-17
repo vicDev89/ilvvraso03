@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = IngredientInRecipe.MEASURE_BY_INGREDIENT,
-                query = "select distinct(ir.measure) from IngredientInRecipe ir INNER JOIN Ingredient i ON ir.ingredient=i.id WHERE i.name LIKE CONCAT('%',?1, '%')")
+                query = "select distinct(ir.measure) from IngredientInRecipe ir INNER JOIN Ingredient i ON ir.ingredient=i.id WHERE i.name =?1")
 })
 public class IngredientInRecipe extends BaseEntity {
 
