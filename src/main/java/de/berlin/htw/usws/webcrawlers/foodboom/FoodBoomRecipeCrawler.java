@@ -213,7 +213,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
      * Scraps all ingredients of the recipe and sets them for {@link FoodBoomRecipeCrawler#recipe}.
      * {@link FoodBoomRecipeCrawler#MEASURE_IF_NULL} will be set as measure if no measure, but a
      * quantity is stated. In case of none given, the ingredient will be saved without quantity/measure.
-     * All ingredients will be saved in singular.
+     * All ingredients will be saved in plural.
      *
      * @param recipePage Recipe page.
      * @author Lucas Larisch
@@ -233,7 +233,6 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
                         // Handling the ingredient name:
                         Elements sgPlIngredientNames = cellsOfIngredientRow.last().select(CSS_QUERY_DIV);
                         if (sgPlIngredientNames.size() > 0) {
-                            // TODO: Discuss: Always sg!
                             String ingredientName = sgPlIngredientNames.last().text();
                             ingredientInRecipe.setIngredient(new Ingredient(ingredientName));
                         }
@@ -250,10 +249,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
                                         ingredientInRecipe.setMeasure(measure);
                                     } else {
                                         ingredientInRecipe.setMeasure(MEASURE_IF_NULL);
-                                        System.err.println("No measure stated for recipe '" + ingredientInRecipe.getIngredient().getName() + "'. Instead of not saving any measure, '" + MEASURE_IF_NULL + "' will be set as measure. Note: Adjustable by changing the final 'MEASURE_IF_NULL' in FoodBoomRecipeCrawler.");
                                     }
-                                } else {
-                                    System.err.println("'" + ingredientInRecipe.getIngredient().getName() + "' will be saved as ingredient without quantity and measure.");
                                 }
                             } else {
                                 System.err.println("An error occurred while trying to scrap an ingredient for recipe "+recipe.getTitle()+".");
@@ -296,7 +292,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
      */
     private String readMeasureOfIngredient(Element quantityInformation) {
         String measure = null;
-        // TODO: Discus: Always sg!
+        // TODO: Discus: Measure always sg!
         Elements informationSpans = quantityInformation.select(CSS_QUERY_SPAN);
         if (informationSpans.size()>1) {
             measure = informationSpans.last().text();
