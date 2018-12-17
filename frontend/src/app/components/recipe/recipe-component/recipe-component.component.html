@@ -1,0 +1,31 @@
+<div class="row card shadow p-3 m1 bg-white rounded" (click)="openDialog()">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>
+        {{recipe.title}}
+      </h2>
+      <hr class="hr-success" />
+      <div><ngb-rating [rate]="recipe.rate" [readonly]="true" [max]="5"></ngb-rating></div>
+      <div>
+        Schwierigkeitsgrad: {{recipe.difficultyLevel}}
+      </div>
+      <div>
+        Dauer: {{recipe.preparationTimeInMin}} Minuten
+      </div>
+      <div *ngIf="fehlendeZustaten.length == 0; else somethingMissing">
+        Sie haben alle Zutaten
+      </div>
+
+      <ng-template #somethingMissing>
+        <div matTooltip="{{getNamesOf(fehlendeZustaten)}}">{{fehlendeZustaten.length}} Zutaten fehlen</div>
+      </ng-template>
+
+    </div>
+    <div class="col-md-6 text-center">
+        <img src="{{recipe.pictureUrl}}" width="250" height="250" class="img-thumbnail no-max-width">
+    </div>
+  </div>
+</div>
+
+
+
