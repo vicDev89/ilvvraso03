@@ -13,6 +13,8 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   @Input() searchedIngredients: string[] = [];
 
   recipes: Recipe[] = [];
+  restRecipes: Recipe[] = [];
+  restLoaded: boolean = false;
 
   constructor( private ingreatService: IngreatService) { }
 
@@ -23,12 +25,28 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.searchedIngredients && this.searchedIngredients.length > 0){
-        this.ingreatService.reqRecipesByIngredients(this.searchedIngredients).subscribe( data => {
+        this.ingreatService.getFirst10RecipesByIngredients(this.searchedIngredients).subscribe(data => {
         this.recipes = data;
+          if(data.length === 10){
+            this.ingreatService.getRestOfRecipesByIngredients(this.searchedIngredients).subscribe(data => {
+              this.restRecipes = data;
+              this.restLoaded = true;
+            }, (error: HttpErrorResponse) => {
+              console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
+            });
+          }
       }, (error: HttpErrorResponse) => {
         console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
       });
     }
+  }
+
+  loadRestInToRecipes(){
+    console.log("loadRestInToRecipes function was called");
+    console.log("Recipes.length: " + this.recipes.length);
+    console.log("RestRecipes: " + this.restRecipes.length);
+    this.recipes = this.recipes.concat(this.restRecipes);
+    console.log("Recipes.length after concat: " + this.recipes.length);
 
   }
 

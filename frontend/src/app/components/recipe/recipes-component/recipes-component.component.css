@@ -1,0 +1,5 @@
+.btn-outline-success:disabled{
+  color: black;
+  border-color: grey;
+  background-color: rgba(0,0,0,0.2);
+}

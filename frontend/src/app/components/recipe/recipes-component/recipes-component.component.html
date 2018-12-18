@@ -3,6 +3,12 @@
   <div class="col-md-6" *ngFor="let recipe of recipes" id="recipes">
     <app-recipe-component [recipe]="recipe" [searchedIngredients]="searchedIngredients"></app-recipe-component>
   </div>
+    <button
+      *ngIf="recipes.length <= 10"
+      type="button"
+      class="btn btn-outline-success"
+      [disabled]="!restLoaded"
+      (click)="loadRestInToRecipes()">Zeig mehr</button>
   </div>
 
   <ng-template #noRecipes>

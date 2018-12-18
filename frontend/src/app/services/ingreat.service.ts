@@ -34,14 +34,19 @@ export class IngreatService{
     );
   }
 
-  reqRecipesByIngredients(ingredients: string[]): Observable<any>{
+  getFirst10RecipesByIngredients(ingredients: string[]): Observable<any>{
     var ingredientsList = new IngredientsList(ingredients);
-    return this.http.post<any>(this.url + 'getRecipes', ingredientsList);
+    return this.http.post<any>(this.url + 'getRecipesMax', ingredientsList);
+  }
+
+  getRestOfRecipesByIngredients(ingredients: string[]): Observable<any>{
+    var ingredientsList = new IngredientsList(ingredients);
+    return this.http.post<any>(this.url + 'getRecipesRest', ingredientsList);
   }
 
   getAllIngredients(){
     return this.http.get<Ingredient[]>(this.url + 'getAllIngredients').subscribe(data => {
-      // this.ingreatService.reqRecipesByIngredients(searchedIngredients).subscribe( data => {
+      // this.ingreatService.getFirst10RecipesByIngredients(searchedIngredients).subscribe( data => {
       this.ingredients = data;
     }, (error: HttpErrorResponse) => {
       console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
