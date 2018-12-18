@@ -45,9 +45,7 @@ public class HelloFreshUnknownUrlsCrawler extends HelloFreshCrawler {
         int scrapedUrlsAmount = LIMIT;
         int counter = 0;
 
-        //TODO delete initialisation with 0
-        int startOffset = 0;
-        //int startOffset = countHelloFreshRecipesInDB();
+        int startOffset = countHelloFreshRecipesInDB();
         String token = getAuthTokenFromHelloFresh();
 
         while(scrapedUrlsAmount == LIMIT){

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 15 23 ? * * *")
+@Scheduled(cronExpression = "0 40 14 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -67,7 +67,7 @@ public class RecipeScheduler implements org.quartz.Job {
         log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
-        recipes = this.hellofreshCrawlerService.start();
+        recipes.addAll(this.hellofreshCrawlerService.start());
         log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
         Stopwatch swRecipePersister = Stopwatch.createStarted();
@@ -84,7 +84,7 @@ public class RecipeScheduler implements org.quartz.Job {
         crawlProducts();
         log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        log.info("#### Hellofresh Crawler-Service ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
 
     }
 
@@ -117,7 +117,7 @@ public class RecipeScheduler implements org.quartz.Job {
             if (this.recipeRepository.findByTitle(recipe.getTitle()) == null) {
                 this.recipeRepository.save(recipe);
             } else {
-                log.info("Recipe " + recipe.getTitle() + " already exists");
+                log.info("Recipe " + recipe.getRecipeSite() + ": " + recipe.getTitle() + " already exists");
             }
 
         }
@@ -140,13 +140,14 @@ public class RecipeScheduler implements org.quartz.Job {
             if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     Ingredient ingredient = ingredientInRecipe.getIngredient();
-                    if (this.ingredientRepository.findByName(ingredient.getName()) == null) {
-                        this.ingredientRepository.save(ingredient);
-                        newIngredients.add(ingredient);
+                    if(ingredient!=null) {
+                        if (this.ingredientRepository.findByName(ingredient.getName()) == null) {
+                            this.ingredientRepository.save(ingredient);
+                            newIngredients.add(ingredient);
+                        }
                     }
                 }
             }
-
         }
     }
 }

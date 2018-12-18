@@ -25,6 +25,9 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
     @Query(named = Recipe.BY_COUNT, singleResult = SingleResultType.OPTIONAL)
     public abstract int countRecipesBySite(final RecipeSite recipeSite);
 
+    @Query(named = Recipe.BY_URL, singleResult = SingleResultType.OPTIONAL)
+    public abstract Recipe findByUrl(final String url);
+
     public List<Recipe> findRecipesContainingIngredientsAll(final List<String> ingredients) {
 
         final CriteriaBuilder builder = this.entityManager().getCriteriaBuilder();

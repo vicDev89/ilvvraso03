@@ -136,8 +136,7 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
      * @since 09.12.2018
      */
     private boolean isRecipeUnknown(String relativeUrl) {
-        String identifier = getRecipeIdFromRelativeUrl(relativeUrl);
-        return this.recipeRepository.findByIdentifier(identifier) == null;
+        return this.recipeRepository.findByUrl(relativeUrl) == null;
     }
 
     /**

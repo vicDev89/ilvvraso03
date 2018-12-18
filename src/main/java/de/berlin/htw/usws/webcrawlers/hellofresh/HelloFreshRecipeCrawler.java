@@ -167,6 +167,7 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
             if(recipePage != null) {
                 determinePortions(recipePage);
                 recipe = new Recipe();
+                recipe.setUrl(url);
                 recipe.setIdentifier(getRecipeIdFromUrl(url));
                 recipe.setRecipeSite(RecipeSite.HELLOFRESH);
                 scrapAllRecipeInformation(recipePage);

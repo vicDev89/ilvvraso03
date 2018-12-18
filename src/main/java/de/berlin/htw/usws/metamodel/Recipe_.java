@@ -22,6 +22,7 @@ public abstract class Recipe_ extends BaseEntity_ {
 	public static volatile SingularAttribute<Recipe, RecipeSite> recipeSite;
 	public static volatile SingularAttribute<Recipe, String> title;
 	public static volatile ListAttribute<Recipe, IngredientInRecipe> ingredientInRecipes;
+	public static volatile SingularAttribute<Recipe, String> url;
 	public static volatile SingularAttribute<Recipe, String> preparation;
 
 }

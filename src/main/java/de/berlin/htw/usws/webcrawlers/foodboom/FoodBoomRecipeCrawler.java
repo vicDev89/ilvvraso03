@@ -120,6 +120,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
             appendToBaseUrl(relativeUrl + TO_APPEND_ONE_PORTION);
             Document recipePage = getUnlimitedDocument();
             recipe = new Recipe();
+            recipe.setUrl(relativeUrl);
             recipe.setIdentifier(getRecipeIdFromRelativeUrl(relativeUrl));
             recipe.setRecipeSite(RecipeSite.FOODBOOM);
             scrapAllRecipeInformation(recipePage);

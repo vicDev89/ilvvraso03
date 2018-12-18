@@ -20,7 +20,9 @@ import java.util.List;
         @NamedQuery(name = Recipe.BY_COUNT,
                 query = "select count(r) from Recipe r where r.recipeSite=?1"),
         @NamedQuery(name = Recipe.BY_IDENTIFIER_AND_TITLE,
-                query = "select r from Recipe r where r.identifier=?1 and r.title=?2")
+                query = "select r from Recipe r where r.identifier=?1 and r.title=?2"),
+        @NamedQuery(name = Recipe.BY_URL,
+                query = "select r from Recipe r where r.url=?1")
 })
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "withIngredientsAndProducts", attributeNodes = @NamedAttributeNode(value="ingredientInRecipes"))
@@ -34,6 +36,8 @@ public class Recipe extends BaseEntity {
     public static final String BY_COUNT = "recipeByCount";
 
     public static final String BY_IDENTIFIER_AND_TITLE = "recipeByIdentifierAndTitle";
+
+    public static final String BY_URL = "recipeByUrl";
 
     @Column
     private String title;
@@ -64,4 +68,7 @@ public class Recipe extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private RecipeSite recipeSite;
+
+    @Column
+    private String url;
 }
