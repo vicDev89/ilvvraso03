@@ -59,7 +59,7 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
         try {
             int lastPageNr = getLastPageNr();
             urls = crawlPagesForUrls(lastPageNr);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return urls;
@@ -93,6 +93,8 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
         } catch (IOException e) {
             System.err.println("Number of the last page could not be determined due to issues concerning the connection.");
             e.printStackTrace();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
         }
         return lastPage;
     }
@@ -107,7 +109,7 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
      * @author Lucas Larisch
      * @since 09.12.2018
      */
-    private ArrayList<String> crawlPagesForUrls(int lastPageNr) throws IOException {
+    private ArrayList<String> crawlPagesForUrls(int lastPageNr) throws Exception {
         ArrayList<String> recipeUrls = new ArrayList<String>();
         while(pageCount <= lastPageNr) {
             Document document = setNextPage();
@@ -146,13 +148,15 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
      * @author Lucas Larisch
      * @since 17.12.2018
      */
-    private Document setNextPage() throws IOException {
+    private Document setNextPage() throws Exception {
         appendToBaseUrl(TO_APPEND_TO_BASE_URL +  pageCount++);
         Document document = null;
         try {
             document = getUnlimitedDocument();
         } catch(SocketTimeoutException e) {
             System.err.println("FoodBoom recipes page Nr. "+(pageCount-1)+ " could not be called. (Read time out)");
+        } catch (Exception e) {
+            System.err.println("FoodBoom recipes page Nr. \"+(pageCount-1)+ \" could not be called. " + e.getMessage());
         }
         return document;
     }

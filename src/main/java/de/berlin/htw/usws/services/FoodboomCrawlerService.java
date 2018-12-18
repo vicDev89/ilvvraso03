@@ -28,6 +28,7 @@ public class FoodboomCrawlerService {
             System.out.println("\n#### Recipe url: " + unknownUrls.get(i) + " ####");
             Recipe recipe = recipeCrawler.scrapRecipe(unknownUrls.get(i));
             if (recipe != null) {
+                System.out.println("Foodboom recipe added. Total: " + recipes.size());
                 recipes.add(recipe);
             } else {
                 System.err.println("\n#### Recipe url: " + unknownUrls.get(i) + " was null ####");
