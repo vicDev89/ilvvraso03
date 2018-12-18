@@ -55,7 +55,7 @@ public class Recipe extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String pictureUrl;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
@@ -69,6 +69,6 @@ public class Recipe extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecipeSite recipeSite;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String url;
 }

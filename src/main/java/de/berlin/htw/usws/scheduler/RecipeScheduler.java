@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Every day at midnight - 12am
-@Scheduled(cronExpression = "0 40 14 ? * * *")
+@Scheduled(cronExpression = "0 40 19 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -128,7 +128,11 @@ public class RecipeScheduler implements org.quartz.Job {
             if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     // Find ingredient by name
-                    ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
+                    if(ingredientInRecipe.getIngredient()!=null) {
+                        ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
+                    } else {
+                        ingredientInRecipe.setIngredient(null);
+                    }
                 }
             }
         }
