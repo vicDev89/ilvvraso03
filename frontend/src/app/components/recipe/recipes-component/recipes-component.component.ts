@@ -26,10 +26,10 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(this.searchedIngredients && this.searchedIngredients.length > 0){
         this.ingreatService.getFirst10RecipesByIngredients(this.searchedIngredients).subscribe(data => {
-        this.recipes = data;
+        this.recipes = this.loadFehlendeZutatenToRecipes(data);
           if(data.length === 10){
             this.ingreatService.getRestOfRecipesByIngredients(this.searchedIngredients).subscribe(data => {
-              this.restRecipes = data;
+              this.restRecipes = this.loadFehlendeZutatenToRecipes(data);
               this.restLoaded = true;
             }, (error: HttpErrorResponse) => {
               console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
@@ -42,12 +42,20 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   }
 
   loadRestInToRecipes(){
-    console.log("loadRestInToRecipes function was called");
-    console.log("Recipes.length: " + this.recipes.length);
-    console.log("RestRecipes: " + this.restRecipes.length);
     this.recipes = this.recipes.concat(this.restRecipes);
-    console.log("Recipes.length after concat: " + this.recipes.length);
+  }
 
+  loadFehlendeZutatenToRecipes(recipes: Recipe[]){
+    for (const recipe of recipes) {
+      recipe.fehlendeZutaten = [];
+      for (const ingredientInRecipe of recipe.ingredientInRecipes) {
+        if(!this.searchedIngredients.includes(ingredientInRecipe.ingredient.name)){
+          recipe.fehlendeZutaten.push(ingredientInRecipe);
+        }
+      }
+    }
+    recipes.sort((a,b) => a.fehlendeZutaten.length > b.fehlendeZutaten.length ? 1:-1);
+    return recipes;
   }
 
 }

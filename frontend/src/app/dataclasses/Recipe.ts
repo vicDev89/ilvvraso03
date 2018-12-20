@@ -13,4 +13,5 @@ export class Recipe {
   ingredientInRecipes: IngredientInRecipe[];
   identifier: string;
   recipeSite: RecipeSite;
+  fehlendeZutaten: IngredientInRecipe[];
 }
