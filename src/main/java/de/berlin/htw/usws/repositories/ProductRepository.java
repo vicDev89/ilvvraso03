@@ -10,6 +10,10 @@ import org.apache.deltaspike.data.api.SingleResultType;
 @Repository(forEntity = Product.class)
 public abstract class ProductRepository extends AbstractFullEntityRepository<Product, Long> {
 
-    @Query(named = Product.BY_NAME_AND_SUPERMARKET, singleResult = SingleResultType.OPTIONAL)
-    public abstract Product findByNameAndSupermarket(final String name, final Supermarket supermarket);
+    @Query(named = Product.BY_PRODUCTNAME_AND_SUPERMARKET, singleResult = SingleResultType.OPTIONAL)
+    public abstract Product findByProductnameAndSupermarket(final String productName, final Supermarket supermarket);
+
+    @Query(named = Product.BY_INGREDIENTNAME_AND_SUPERMARKET, singleResult = SingleResultType.OPTIONAL)
+    public abstract int findByIngredientnameAndSupermarket(final String ingredientName, final Supermarket supermarket);
+
 }

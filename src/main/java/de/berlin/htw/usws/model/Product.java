@@ -11,12 +11,16 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Product.BY_NAME_AND_SUPERMARKET,
-                query = "select p from Product p where p.name=?1 and p.supermarket=?2")
+        @NamedQuery(name = Product.BY_PRODUCTNAME_AND_SUPERMARKET,
+                query = "select p from Product p where p.name=?1 and p.supermarket=?2"),
+        @NamedQuery(name = Product.BY_INGREDIENTNAME_AND_SUPERMARKET,
+                query = "select count(p) from Product p inner join Ingredient i on p.ingredient= i.id where i.name=?1 and p.supermarket=?2")
 })
 public class Product extends BaseEntity {
 
-    public static final String BY_NAME_AND_SUPERMARKET = "productByNameAndSupermarket";
+    public static final String BY_PRODUCTNAME_AND_SUPERMARKET = "productByProductnameAndSupermarket";
+
+    public static final String BY_INGREDIENTNAME_AND_SUPERMARKET = "productByIngrredientnameAndSupermarket";
 
     @Column
     private String name;
