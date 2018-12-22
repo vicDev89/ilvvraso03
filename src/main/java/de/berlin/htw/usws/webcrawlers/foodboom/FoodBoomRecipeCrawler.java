@@ -233,7 +233,7 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
             if (rowsOfIngredientTable.size() > 0) {
                 for (Element row : rowsOfIngredientTable) {
                     // Fix to avoid getting title row like "Für die Streusel"
-                    if(row.className() != "table__group") {
+                    if(!row.hasClass("table__group")) {
                         IngredientInRecipe ingredientInRecipe = new IngredientInRecipe();
                         ingredientInRecipe.setRecipe(recipe);
                         Elements cellsOfIngredientRow = row.select(CSS_QUERY_TD);
