@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Jeden Tag um 3 Uhr morgens
-@Scheduled(cronExpression = "0 0 3 ? * * *")
+// Jeden Tag um 3 Uhr morgens außer am Sonntag --> 0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *
+@Scheduled(cronExpression = "0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -58,33 +58,33 @@ public class RecipeScheduler implements org.quartz.Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
-        Stopwatch swGesamt = (new Stopwatch()).start();
+        Stopwatch swGesamt = Stopwatch.createStarted();
 
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
-        Stopwatch swFoodboomhRecipeScrapper = (new Stopwatch()).start();
+        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
         recipes = this.foodboomCrawlerService.start();
-        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swHellofreshRecipeScrapper = (new Stopwatch()).start();
+        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
         recipes.addAll(this.hellofreshCrawlerService.start());
-        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swRecipePersister = (new Stopwatch()).start();
+        Stopwatch swRecipePersister = Stopwatch.createStarted();
         // Persist first all ingredients
         persistIngredients();
         // Set DB ingredients to recipes
         saveIngredientsOnRecipes();
         // Persist all recipes
         persistAllRecipes();
-        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
+        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
         // Look for products for the new ingredients
         crawlProducts();
-        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
 
     }
 

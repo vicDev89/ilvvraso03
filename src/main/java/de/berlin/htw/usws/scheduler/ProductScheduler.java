@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Einmal die Woche am Sonntag um 6Uhr morgens --> 0 0 6 ? * SUN *
-@Scheduled(cronExpression = "0 40 13 ? * * *")
+// Einmal die Woche am Sonntag um 3Uhr morgens --> 0 0 6 ? * SUN *
+@Scheduled(cronExpression = "0 0 6 ? * SUN *")
 @Slf4j
 public class ProductScheduler implements org.quartz.Job{
 
@@ -41,7 +41,7 @@ public class ProductScheduler implements org.quartz.Job{
 
         log.info("#### PRODUCT SCHEDULER started at: " + LocalDateTime.now() + " ####");
 
-        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
+        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
 
         List<Ingredient> allIngredients = this.ingredientRepository.findAll();
 
@@ -60,7 +60,7 @@ public class ProductScheduler implements org.quartz.Job{
                 }
             }
         }
-        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
     }
 
     private void persistProducts(List<Product> products, Ingredient ingredient) {

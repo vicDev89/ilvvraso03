@@ -71,4 +71,10 @@ public class Recipe extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String url;
+
+
+    public int getNumberMissingIngredients(final int numberSelectedIngredients) {
+        return getIngredientInRecipes().size()-numberSelectedIngredients;
+    }
+
 }
