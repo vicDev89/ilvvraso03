@@ -14,14 +14,12 @@ export class RecipeComponentComponent implements OnInit {
 
   @Input() recipe: Recipe;
 
-  @Input() searchedIngredients: string[];
-
   fehlendeZustaten: IngredientInRecipe[] = [];
 
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.lackIngredients();
+    this.fehlendeZustaten = this.recipe.fehlendeZutaten;
   }
 
   openDialog() {
@@ -31,15 +29,6 @@ export class RecipeComponentComponent implements OnInit {
       data: {recipe: this.recipe, fehlendeZustaten: this.fehlendeZustaten}
     });
   }
-
-  lackIngredients(){
-    for (const ingredientInRecipe of this.recipe.ingredientInRecipes) {
-      if(!this.searchedIngredients.includes(ingredientInRecipe.ingredient.name)){
-        this.fehlendeZustaten.push(ingredientInRecipe);
-      }
-    }
-  }
-
 
   getNamesOf(fehlendeZustaten: IngredientInRecipe[]) {
     var names = [];

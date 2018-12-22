@@ -1,8 +1,10 @@
 <ul>
   <li *ngFor="let ingredientInRecipe of ingredientsInRecipes">
+    <span [ngClass]="{'highlighted-text':isNotLackIngredient(ingredientInRecipe)}">
     {{ingredientInRecipe.quantity}}
     {{ingredientInRecipe.measure}}
     {{ingredientInRecipe.ingredient.name}}
+      </span>
   </li>
 </ul>
 
