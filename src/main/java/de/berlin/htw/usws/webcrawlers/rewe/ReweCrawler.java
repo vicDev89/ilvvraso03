@@ -19,9 +19,9 @@ import java.util.List;
 public class ReweCrawler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReweCrawler.class);
-    private static final String PRODUCT_TILE_CLASS = "search-service-ProductTileContent";
-    private static final String PRODUCT_EURO_CLASS = "search-service-ProductPriceInteger";
-    private static final String PRODUCT_CENT_CLASS = "search-service-ProductPriceDecimal";
+    private static final String PRODUCT_TILE_CLASS = "search-service-product";
+    private static final String PRODUCT_PRICE_CLASS = "search-service-productPrice";
+    private static final String PRODUCT_OFFER_PRICE_CLASS = "search-service-productOfferPrice";
     private static final String PRODUCT_NAME_CLASS = "search-service-productTitle";
 
     private final String REWE_URL = "https://shop.rewe.de/productList?search=";
@@ -35,6 +35,8 @@ public class ReweCrawler {
 
         String searchURL = REWE_URL + ingredientName;
 
+        System.out.println("Rewe URL: " + searchURL);
+
         Document doc = Jsoup.connect(searchURL).get();
 
         Elements ProductsContent = doc.getElementsByClass(PRODUCT_TILE_CLASS);
@@ -47,14 +49,23 @@ public class ReweCrawler {
 
                     String productName = element.getElementsByClass(PRODUCT_NAME_CLASS).text();
 
-                    Elements euro = element.getElementsByClass(PRODUCT_EURO_CLASS);
-                    String euroString = euro.first().text();
+                    String price = element.getElementsByClass(PRODUCT_PRICE_CLASS).text();
 
-                    Elements cent = element.getElementsByClass(PRODUCT_CENT_CLASS);
-                    String centString = cent.first().text();
+                    if(price == "" || price == null) {
+                        price = element.getElementsByClass(PRODUCT_OFFER_PRICE_CLASS).text();
+                    }
 
-                    double price = Double.parseDouble(euroString + "." + centString);
-                    products.add(new Product(productName, Supermarket.REWE, price));
+                    price = price.replace("€", "");
+                    price = price.replace(",", ".");
+
+                    double priceDouble = 0;
+                    try {
+                         priceDouble = Double.parseDouble(price);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Price could not be parsed. URL: " + searchURL);
+                    }
+
+                    products.add(new Product(productName, Supermarket.REWE, priceDouble));
 
                     counter++;
                 }

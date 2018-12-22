@@ -232,37 +232,40 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
             Elements rowsOfIngredientTable = ingredientTables.select(CSS_QUERY_TR);
             if (rowsOfIngredientTable.size() > 0) {
                 for (Element row : rowsOfIngredientTable) {
-                    IngredientInRecipe ingredientInRecipe = new IngredientInRecipe();
-                    ingredientInRecipe.setRecipe(recipe);
-                    Elements cellsOfIngredientRow = row.select(CSS_QUERY_TD);
-                    if (cellsOfIngredientRow.size() == 2) {
-                        // Handling the ingredient name:
-                        Elements sgPlIngredientNames = cellsOfIngredientRow.last().select(CSS_QUERY_DIV);
-                        if (sgPlIngredientNames.size() > 0) {
-                            String ingredientName = sgPlIngredientNames.last().text();
-                            ingredientInRecipe.setIngredient(new Ingredient(ingredientName));
-                        }
-                        // Handling quantity and measure:
-                        Elements quantityInformation = cellsOfIngredientRow.first().select(CSS_QUERY_DIV);
-                        if (quantityInformation.size() > 0) {
-                            String ngInitAttribute = quantityInformation.first().attr(CSS_QUERY_ATTRIBUTE_NG_INIT);
-                            if (!ngInitAttribute.isEmpty()){
-                                double quantity = readQuantityOfAttribute(ngInitAttribute);
-                                if (quantity > 0) {
-                                    String measure = readMeasureOfIngredient(quantityInformation.first());
-                                    ingredientInRecipe.setQuantity(quantity);
-                                    if (measure != null && !measure.isEmpty()) {
-                                        ingredientInRecipe.setMeasure(measure);
-                                    } else {
-                                        ingredientInRecipe.setMeasure(MEASURE_IF_NULL);
+                    // Fix to avoid getting title row like "Für die Streusel"
+                    if(!row.hasClass("table__group")) {
+                        IngredientInRecipe ingredientInRecipe = new IngredientInRecipe();
+                        ingredientInRecipe.setRecipe(recipe);
+                        Elements cellsOfIngredientRow = row.select(CSS_QUERY_TD);
+                        if (cellsOfIngredientRow.size() == 2) {
+                            // Handling the ingredient name:
+                            Elements sgPlIngredientNames = cellsOfIngredientRow.last().select(CSS_QUERY_DIV);
+                            if (sgPlIngredientNames.size() > 0) {
+                                String ingredientName = sgPlIngredientNames.last().text();
+                                ingredientInRecipe.setIngredient(new Ingredient(ingredientName));
+                            }
+                            // Handling quantity and measure:
+                            Elements quantityInformation = cellsOfIngredientRow.first().select(CSS_QUERY_DIV);
+                            if (quantityInformation.size() > 0) {
+                                String ngInitAttribute = quantityInformation.first().attr(CSS_QUERY_ATTRIBUTE_NG_INIT);
+                                if (!ngInitAttribute.isEmpty()){
+                                    double quantity = readQuantityOfAttribute(ngInitAttribute);
+                                    if (quantity > 0) {
+                                        String measure = readMeasureOfIngredient(quantityInformation.first());
+                                        ingredientInRecipe.setQuantity(quantity);
+                                        if (measure != null && !measure.isEmpty()) {
+                                            ingredientInRecipe.setMeasure(measure);
+                                        } else {
+                                            ingredientInRecipe.setMeasure(MEASURE_IF_NULL);
+                                        }
                                     }
+                                } else {
+                                    System.err.println("An error occurred while trying to scrap an ingredient for recipe "+recipe.getTitle()+".");
                                 }
-                            } else {
-                                System.err.println("An error occurred while trying to scrap an ingredient for recipe "+recipe.getTitle()+".");
                             }
                         }
+                        ingredientsInRecipe.add(ingredientInRecipe);
                     }
-                    ingredientsInRecipe.add(ingredientInRecipe);
                 }
                 recipe.setIngredientInRecipes(ingredientsInRecipe);
             }

@@ -9,7 +9,6 @@ import de.berlin.htw.usws.model.Recipe;
 import de.berlin.htw.usws.repositories.IngredientRepository;
 import de.berlin.htw.usws.repositories.ProductRepository;
 import de.berlin.htw.usws.repositories.RecipeRepository;
-import de.berlin.htw.usws.services.ChefkochCrawlerService;
 import de.berlin.htw.usws.services.FoodboomCrawlerService;
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
@@ -26,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Every day at midnight - 12am
-@Scheduled(cronExpression = "0 40 19 ? * * *")
+// Jeden Tag um 3 Uhr morgens
+@Scheduled(cronExpression = "0 0 3 ? * * *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -59,39 +58,40 @@ public class RecipeScheduler implements org.quartz.Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
-        Stopwatch swGesamt = Stopwatch.createStarted();
+        Stopwatch swGesamt = (new Stopwatch()).start();
+
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
 
-        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
+        Stopwatch swFoodboomhRecipeScrapper = (new Stopwatch()).start();
         recipes = this.foodboomCrawlerService.start();
-        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
+        Stopwatch swHellofreshRecipeScrapper = (new Stopwatch()).start();
         recipes.addAll(this.hellofreshCrawlerService.start());
-        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swRecipePersister = Stopwatch.createStarted();
+        Stopwatch swRecipePersister = (new Stopwatch()).start();
         // Persist first all ingredients
         persistIngredients();
         // Set DB ingredients to recipes
         saveIngredientsOnRecipes();
         // Persist all recipes
         persistAllRecipes();
-        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
+        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
         // Look for products for the new ingredients
         crawlProducts();
-        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
 
-        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsedTime(TimeUnit.SECONDS) + " seconds.");
 
     }
 
     private void persistProducts(List<Product> products, Ingredient ingredient) {
         if (products != null) {
             for (Product product : products) {
-                if (product != null && this.productRepository.findByNameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
+                if (product != null && this.productRepository.findByProductnameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
                     product.setIngredient(ingredient);
                     this.productRepository.save(product);
                 }
