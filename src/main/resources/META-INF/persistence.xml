@@ -10,6 +10,7 @@
         <class>de.berlin.htw.usws.model.Recipe</class>
         <class>de.berlin.htw.usws.model.IngredientInRecipe</class>
         <class>de.berlin.htw.usws.model.Product</class>
+        <class>de.berlin.htw.usws.model.Protokoll</class>
 
         <shared-cache-mode>ALL</shared-cache-mode>
 
