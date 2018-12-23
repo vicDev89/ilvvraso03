@@ -21,8 +21,8 @@ export class IngredientsInRecipeComponentComponent implements OnInit{
   }
 
   isNotLackIngredient(ingredientInRecipe : IngredientInRecipe){
-    console.log(this.fehlendeZutatenNamen.toString());
-    console.log(ingredientInRecipe.ingredient.name);
+    // console.log(this.fehlendeZutatenNamen.toString());
+    // console.log(ingredientInRecipe.ingredient.name);
     return !this.fehlendeZutatenNamen.toString().includes(ingredientInRecipe.ingredient.name);
     // return !this.fehlendeZutatenNamen.includes(ingredientInRecipe.ingredient.name);
   }

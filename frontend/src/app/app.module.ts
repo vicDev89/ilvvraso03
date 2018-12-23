@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule, MatTooltipModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AgmCoreModule } from '@agm/core';
+
 
 import { AppComponent } from './app.component';
 import { IngredientsComponentComponent } from './components/search/ingredients-component/ingredients-component.component';
@@ -35,7 +37,10 @@ import { LackIngredientsComponent } from './components/recipe/lack-ingredients/l
     BrowserAnimationsModule,
     NgbModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBfwuLl4dK8T7H5ltbiWicPOieT4qym0Oc'
+    })
   ],
   exports: [
     MatTooltipModule

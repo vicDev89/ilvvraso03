@@ -22,6 +22,13 @@ export class RecipePopupComponent implements OnInit {
   recipe: Recipe;
   fehlendeZustaten: IngredientInRecipe[];
 
+  // google maps zoom level
+  zoom: number = 8;
+
+  // initial center position for the map
+  lat: number = 51.673858;
+  lng: number = 7.815982;
+
   ngOnInit() {
     this.recipe = this.data.recipe;
     this.fehlendeZustaten = this.data.fehlendeZustaten;
