@@ -2,12 +2,10 @@ package de.berlin.htw.usws.scheduler;
 
 
 import com.google.common.base.Stopwatch;
-import de.berlin.htw.usws.model.Ingredient;
-import de.berlin.htw.usws.model.IngredientInRecipe;
-import de.berlin.htw.usws.model.Product;
-import de.berlin.htw.usws.model.Recipe;
+import de.berlin.htw.usws.model.*;
 import de.berlin.htw.usws.repositories.IngredientRepository;
 import de.berlin.htw.usws.repositories.ProductRepository;
+import de.berlin.htw.usws.repositories.ProtokollRepository;
 import de.berlin.htw.usws.repositories.RecipeRepository;
 import de.berlin.htw.usws.services.FoodboomCrawlerService;
 import de.berlin.htw.usws.services.HellofreshCrawlerService;
@@ -25,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Jeden Tag um 3 Uhr morgens
-@Scheduled(cronExpression = "0 0 3 ? * * *")
+// Jeden Tag um 3 Uhr morgens außer am Sonntag --> 0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *
+@Scheduled(cronExpression = "0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 
@@ -51,45 +49,98 @@ public class RecipeScheduler implements org.quartz.Job {
     @Inject
     private ProductRepository productRepository;
 
+    @Inject
+    private ProtokollRepository protokollRepository;
+
+    private int numberNewRecipesPersisted = 0;
+
+    private int numberNewProductsPersisted = 0;
+
+    private int numberNewIngredientsPersisted = 0;
+
     private List<Recipe> recipes = new ArrayList<>();
 
     private List<Ingredient> newIngredients = new ArrayList<>();
 
+//    @Override
+//    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+//
+//        Stopwatch swGesamt = (new Stopwatch()).start();
+//        log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
+//
+//        Stopwatch swFoodboomhRecipeScrapper = (new Stopwatch()).start();
+//        recipes = this.foodboomCrawlerService.start();
+//        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+//
+//        Stopwatch swHellofreshRecipeScrapper = (new Stopwatch()).start();
+//        recipes.addAll(this.hellofreshCrawlerService.start());
+//        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+//
+//        Stopwatch swRecipePersister = (new Stopwatch()).start();
+//        // Persist first all ingredients
+//        persistIngredients();
+//        // Set DB ingredients to recipes
+//        saveIngredientsOnRecipes();
+//        // Persist all recipes
+//        persistAllRecipes();
+//        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+//
+//        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
+//        // Look for products for the new ingredients
+//        crawlProducts();
+//        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+//
+//        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+//
+//         // Create protokoll
+//        Protokoll protokoll = new Protokoll();
+//        protokoll.setErzeuger("Recipe Scheduler");
+//        protokoll.setNewProductsPersisted(numberNewProductsPersisted);
+//        protokoll.setNewIngredientsPersisted(numberNewIngredientsPersisted);
+//        protokoll.setNewRecipesPersisted(numberNewRecipesPersisted);
+//        this.protokollRepository.save(protokoll);
+// }
+
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
-        Stopwatch swGesamt = (new Stopwatch()).start();
-
+        Stopwatch swGesamt = Stopwatch.createStarted();
         log.info("#### RecipeScheduler started at: " + LocalDateTime.now() + " ####");
-
-        Stopwatch swFoodboomhRecipeScrapper = (new Stopwatch()).start();
+        Stopwatch swFoodboomhRecipeScrapper = Stopwatch.createStarted();
         recipes = this.foodboomCrawlerService.start();
-        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
-
-        Stopwatch swHellofreshRecipeScrapper = (new Stopwatch()).start();
+        log.info("#### All Foodboom recipes scrapped. Duration: ####" + swFoodboomhRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
+        Stopwatch swHellofreshRecipeScrapper = Stopwatch.createStarted();
         recipes.addAll(this.hellofreshCrawlerService.start());
-        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All Hellofresh recipes scrapped. Duration: ####" + swHellofreshRecipeScrapper.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swRecipePersister = (new Stopwatch()).start();
+        Stopwatch swRecipePersister = Stopwatch.createStarted();
         // Persist first all ingredients
         persistIngredients();
         // Set DB ingredients to recipes
         saveIngredientsOnRecipes();
         // Persist all recipes
         persistAllRecipes();
-        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All recipes persisted. Duration: ####" + swRecipePersister.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
+        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
         // Look for products for the new ingredients
         crawlProducts();
-        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsed(TimeUnit.SECONDS) + " seconds.");
 
-        log.info("#### Crawler-Services ended. Duration: ####" + swGesamt.elapsedTime(TimeUnit.SECONDS) + " seconds.");
-
+        // Create protokoll
+        Protokoll protokoll = new Protokoll();
+        protokoll.setErzeuger("Recipe Scheduler");
+        protokoll.setNewProductsPersisted(numberNewProductsPersisted);
+        protokoll.setNewIngredientsPersisted(numberNewIngredientsPersisted);
+        protokoll.setNewRecipesPersisted(numberNewRecipesPersisted);
+        this.protokollRepository.save(protokoll);
     }
 
     private void persistProducts(List<Product> products, Ingredient ingredient) {
         if (products != null) {
+            numberNewProductsPersisted += products.size();
             for (Product product : products) {
                 if (product != null && this.productRepository.findByProductnameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
                     product.setIngredient(ingredient);
@@ -116,6 +167,7 @@ public class RecipeScheduler implements org.quartz.Job {
         for (Recipe recipe : recipes) {
             if (this.recipeRepository.findByTitle(recipe.getTitle()) == null) {
                 this.recipeRepository.save(recipe);
+                numberNewRecipesPersisted+=1;
             } else {
                 log.info("Recipe " + recipe.getRecipeSite() + ": " + recipe.getTitle() + " already exists");
             }
@@ -128,7 +180,7 @@ public class RecipeScheduler implements org.quartz.Job {
             if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     // Find ingredient by name
-                    if(ingredientInRecipe.getIngredient()!=null) {
+                    if (ingredientInRecipe.getIngredient() != null) {
                         ingredientInRecipe.setIngredient(this.ingredientRepository.findByName(ingredientInRecipe.getIngredient().getName()));
                     } else {
                         ingredientInRecipe.setIngredient(null);
@@ -144,10 +196,11 @@ public class RecipeScheduler implements org.quartz.Job {
             if (recipe.getIngredientInRecipes() != null) {
                 for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipes()) {
                     Ingredient ingredient = ingredientInRecipe.getIngredient();
-                    if(ingredient!=null) {
+                    if (ingredient != null) {
                         if (this.ingredientRepository.findByName(ingredient.getName()) == null) {
                             this.ingredientRepository.save(ingredient);
                             newIngredients.add(ingredient);
+                            numberNewIngredientsPersisted +=1;
                         }
                     }
                 }

@@ -3,9 +3,11 @@ package de.berlin.htw.usws.scheduler;
 import com.google.common.base.Stopwatch;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Product;
+import de.berlin.htw.usws.model.Protokoll;
 import de.berlin.htw.usws.model.enums.Supermarket;
 import de.berlin.htw.usws.repositories.IngredientRepository;
 import de.berlin.htw.usws.repositories.ProductRepository;
+import de.berlin.htw.usws.repositories.ProtokollRepository;
 import de.berlin.htw.usws.webcrawlers.bringmeister.BringmeisterProductAPI;
 import de.berlin.htw.usws.webcrawlers.rewe.ReweCrawler;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +21,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Einmal die Woche am Sonntag um 6Uhr morgens --> 0 0 6 ? * SUN *
-@Scheduled(cronExpression = "0 40 13 ? * * *")
+// Einmal die Woche am Sonntag um 3Uhr morgens --> 0 0 6 ? * SUN *
+@Scheduled(cronExpression = "0 0 6 ? * SUN *")
 @Slf4j
 public class ProductScheduler implements org.quartz.Job{
 
@@ -36,12 +38,18 @@ public class ProductScheduler implements org.quartz.Job{
     @Inject
     private ReweCrawler reweCrawler;
 
+    @Inject
+    private ProtokollRepository protokollRepository;
+
+    private int numberNewProductsPersisted = 0;
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
         log.info("#### PRODUCT SCHEDULER started at: " + LocalDateTime.now() + " ####");
 
-        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
+        Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
+//        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
 
         List<Ingredient> allIngredients = this.ingredientRepository.findAll();
 
@@ -60,11 +68,19 @@ public class ProductScheduler implements org.quartz.Job{
                 }
             }
         }
-        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsed(TimeUnit.SECONDS) + " seconds.");
+//        log.info("#### All products scrapped and persisted. Duration: ####" + swProductScrapperAndPersister.elapsedTime(TimeUnit.SECONDS) + " seconds.");
+
+        // Create Protokoll
+        Protokoll protokoll = new Protokoll();
+        protokoll.setErzeuger("Product Scheduler");
+        protokoll.setNewProductsPersisted(numberNewProductsPersisted);
+        this.protokollRepository.save(protokoll);
     }
 
     private void persistProducts(List<Product> products, Ingredient ingredient) {
         if (products != null) {
+            numberNewProductsPersisted+=products.size();
             for (Product product : products) {
                 if (product != null && this.productRepository.findByProductnameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
                     product.setIngredient(ingredient);

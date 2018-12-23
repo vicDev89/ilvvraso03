@@ -79,7 +79,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         }
 
         // Create query
-        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{}));
+        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{})).distinct(true);
 
         return this.entityManager().createQuery(cQuery).setFirstResult(10).getResultList();
     }
@@ -110,7 +110,7 @@ public abstract class RecipeRepository extends AbstractFullEntityRepository<Reci
         }
 
         // Create query
-        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{}));
+        cQuery.select(rootRecipe).where(predicates.toArray(new Predicate[]{})).distinct(true);
 
         return this.entityManager().createQuery(cQuery).setMaxResults(10).getResultList();
     }
