@@ -1,6 +1,9 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Ingredient} from './dataclasses/Ingredient';
 import {AmountInMeasure} from './components/search/ingredients-component/ingredients-component.component';
+import {SupermarktGEO} from "./dataclasses/SupermarktGEO";
+import {HttpErrorResponse} from "@angular/common/http";
+import {IngreatService} from "./services/ingreat.service";
 
 @Component({
   selector: 'app-root',
@@ -11,9 +14,13 @@ export class AppComponent implements OnInit{
   title = 'ilvvarso03FE';
 
   searchedIngredientsNames: string[];
+  supermarketsGEO: SupermarktGEO[] = [];
+
+  constructor( private ingreatService: IngreatService) { }
 
   ngOnInit(): void {
     this.declareColors();
+    this.getSupermarketLocations();
   }
 
   extractKeyOfSearchedIngredients(searchedIngredients: Map<Ingredient, AmountInMeasure>){
@@ -22,6 +29,14 @@ export class AppComponent implements OnInit{
       searchedIngredientsNames.push(k.name);
     });
     this.searchedIngredientsNames = searchedIngredientsNames;
+  }
+
+  getSupermarketLocations(){
+    this.ingreatService.getSupermarktLocations().subscribe(data => {
+      this.supermarketsGEO = data;
+    }, (error: HttpErrorResponse) => {
+      console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
+    });
   }
 
   /**

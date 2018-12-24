@@ -59,13 +59,13 @@ export class IngreatService{
     return this.http.get<string[]>(this.url + 'getMeasures/' + ingredientName);
   }
 
-  getSupermarktLocations(){
+  getSupermarktLocations() : Observable<SupermarktGEO[]>{
     return this.getMockLocations();
     // return this.http.get<SupermarktGEO[]>(this.url + '/getSupermarktLocations');
   }
 
   //MOCK
-  getMockLocations(){
+  private getMockLocations(){
     let mockEdeka = new SupermarktGEO(
       Supermarket.EDEKA,
       'EDEKA Fromm',
@@ -84,7 +84,7 @@ export class IngreatService{
       'Berlin',
       13405);
 
-    return of(mockEdeka, mockRewe);
+    return of([mockEdeka, mockRewe]);
   }
 
 }
