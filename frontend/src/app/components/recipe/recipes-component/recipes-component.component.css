@@ -3,3 +3,8 @@
   border-color: grey;
   background-color: rgba(0,0,0,0.2);
 }
+
+agm-map {
+  height: 300px;
+  width: 300px;
+}
