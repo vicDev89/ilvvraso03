@@ -14,20 +14,9 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   @Input() searchedIngredients: string[] = [];
   @Input() supermarketGeoLocations: SupermarktGEO[] = [];
 
-
   recipes: Recipe[] = [];
   restRecipes: Recipe[] = [];
   restLoaded: boolean = false;
-
-  // google maps zoom level
-  zoom: number =12;
-
-  // initial center position for the map
-  lat: number = 52.555580;
-  lng: number = 13.346326;
-
-  urlEdekaLogo = '../../../../assets/edeka-logo-map.png';
-  urlREWELogo = '../../../../assets/rewe-logo-map.png';
 
 
   constructor( private ingreatService: IngreatService) { }

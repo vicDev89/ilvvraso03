@@ -13,20 +13,6 @@
 
   <ng-template #noRecipes>
     <div>Keine Rezepte wurden gefunden</div>
-    <agm-map
-      [latitude]="lat"
-      [longitude]="lng"
-      [zoom]="zoom"
-      [disableDefaultUI]="false"
-      [zoomControl]="false">
-
-      <agm-marker [iconUrl]="urlEdekaLogo"
-                  [latitude]="lat"
-                  [longitude]="lng">
-      </agm-marker>
-
-
-    </agm-map>
   </ng-template>
 </div>
 

@@ -21,6 +21,21 @@
       <span class="font-weight-bold">Zubereitungseinleitungen:</span>
       <br>{{recipe.preparation}}
     </div>
+    <agm-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false">
+
+      <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
+                  [iconUrl]="getPictureURL(supermarketGeo.supermarkt)"
+                  [latitude]="supermarketGeo.lat"
+                  [longitude]="supermarketGeo.lng">
+      </agm-marker>
+
+
+    </agm-map>
     <div *ngIf="fehlendeZustaten.length > 0" class="mb05">
       <span class="font-weight-bold">Fehlende Produkte:</span>
       <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" ></app-lack-ingredients>
