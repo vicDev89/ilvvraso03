@@ -12,5 +12,4 @@ export class Product {
   name: string;
   supermarket: Supermarket;
   price: number;
-
 }

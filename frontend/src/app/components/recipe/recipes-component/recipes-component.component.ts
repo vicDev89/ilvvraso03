@@ -23,14 +23,6 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   lat: number = 52.555580;
   lng: number = 13.346326;
 
-  //edeka Beispiel
-  edekaLat: number = 52.552609;
-  edekaLng: number = 13.347636;
-
-  //Rewe Beispiel
-  reweLat: number = 52.563057;
-  reweLng: number = 13.328710;
-
   urlEdekaLogo = '../../../../assets/edeka-logo-map.png';
   urlREWELogo = '../../../../assets/rewe-logo-map.png';
 
