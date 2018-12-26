@@ -21,6 +21,7 @@
       <span class="font-weight-bold">Zubereitungseinleitungen:</span>
       <br>{{recipe.preparation}}
     </div>
+    <!--googleMap-->
     <agm-map
       [latitude]="lat"
       [longitude]="lng"
@@ -32,8 +33,7 @@
                   [iconUrl]="getPictureURL(supermarketGeo.supermarkt)"
                   [latitude]="supermarketGeo.lat"
                   [longitude]="supermarketGeo.lng"
-      (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarkt"
-      (mouseOut)="showLackIngredients = false">
+      (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarkt">
 
         <agm-info-window>
           <strong>{{supermarketGeo.supermarktName}}</strong><br>
