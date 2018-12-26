@@ -9,6 +9,7 @@ export interface DialogData {
   recipe: Recipe;
   fehlendeZustaten: IngredientInRecipe[];
   supermarketGeoLocations: SupermarktGEO[];
+  searchedIngredients: string[];
 }
 
 @Component({
@@ -25,6 +26,7 @@ export class RecipePopupComponent implements OnInit {
   recipe: Recipe;
   fehlendeZustaten: IngredientInRecipe[];
   supermarketGeoLocations: SupermarktGEO[];
+  searchedIngredients: string[];
 
   // google maps zoom level
   zoom: number = 14;
@@ -43,6 +45,7 @@ export class RecipePopupComponent implements OnInit {
     this.recipe = this.data.recipe;
     this.fehlendeZustaten = this.data.fehlendeZustaten;
     this.supermarketGeoLocations = this.data.supermarketGeoLocations;
+    this.searchedIngredients = this.data.searchedIngredients;
   }
 
   onNoClick(): void {

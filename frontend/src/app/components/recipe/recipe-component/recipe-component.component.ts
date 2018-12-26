@@ -15,6 +15,8 @@ export class RecipeComponentComponent implements OnInit {
 
   @Input() recipe: Recipe;
   @Input() supermarketGeoLocations: SupermarktGEO[] = [];
+  @Input() searchedIngredients: string[] = [];
+
 
   fehlendeZustaten: IngredientInRecipe[] = [];
 
@@ -28,7 +30,10 @@ export class RecipeComponentComponent implements OnInit {
     const dialogRef = this.dialog.open(RecipePopupComponent, {
       height: '600px',
       width: '800px',
-      data: {recipe: this.recipe, fehlendeZustaten: this.fehlendeZustaten, supermarketGeoLocations: this.supermarketGeoLocations }
+      data: {recipe: this.recipe,
+        fehlendeZustaten: this.fehlendeZustaten,
+        supermarketGeoLocations: this.supermarketGeoLocations,
+        searchedIngredients: this.searchedIngredients}
     });
   }
 

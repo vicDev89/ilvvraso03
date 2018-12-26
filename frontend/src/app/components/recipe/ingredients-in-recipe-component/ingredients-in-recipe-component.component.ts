@@ -10,21 +10,26 @@ import {Recipe} from "../../../dataclasses/Recipe";
 export class IngredientsInRecipeComponentComponent implements OnInit{
 
   @Input() recipe : Recipe;
+  @Input() searchedIngredients : string[];
+
   ingredientsInRecipes: IngredientInRecipe[];
-  fehlendeZutatenNamen : string[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
     this.ingredientsInRecipes = this.recipe.ingredientInRecipes;
-    this.recipe.fehlendeZutaten.forEach((zutat) => this.fehlendeZutatenNamen.push(zutat.ingredient.name));
   }
 
-  isNotLackIngredient(ingredientInRecipe : IngredientInRecipe){
+  isSearchedIngredient(ingredientInRecipe : IngredientInRecipe){
+    for (const searchedIngredient of this.searchedIngredients) {
+      if (ingredientInRecipe.ingredient.name.includes(searchedIngredient)){
+        return true;
+      }
+    }
+    return false;
     // console.log(this.fehlendeZutatenNamen.toString());
     // console.log(ingredientInRecipe.ingredient.name);
-    return !this.fehlendeZutatenNamen.toString().includes(ingredientInRecipe.ingredient.name);
-    // return !this.fehlendeZutatenNamen.includes(ingredientInRecipe.ingredient.name);
+    // return this.searchedIngredients.includes(ingredientInRecipe.ingredient.name);
   }
 
 }
