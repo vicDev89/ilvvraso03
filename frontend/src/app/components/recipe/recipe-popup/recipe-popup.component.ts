@@ -36,6 +36,9 @@ export class RecipePopupComponent implements OnInit {
   urlEdekaLogo = '../../../../assets/edeka-logo-map.png';
   urlREWELogo = '../../../../assets/rewe-logo-map.png';
 
+  showLackIngredients: boolean = false;
+  supermarket: Supermarket;
+
   ngOnInit() {
     this.recipe = this.data.recipe;
     this.fehlendeZustaten = this.data.fehlendeZustaten;
@@ -54,4 +57,5 @@ export class RecipePopupComponent implements OnInit {
         return this.urlEdekaLogo;
     }
   }
+
 }
