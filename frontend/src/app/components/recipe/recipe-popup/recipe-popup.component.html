@@ -17,11 +17,25 @@
       <span class="font-weight-bold">Zutaten:</span>
       <app-ingredients-in-recipe-component [recipe]="recipe" [searchedIngredients]="searchedIngredients"></app-ingredients-in-recipe-component>
     </div>
-    <div class="mb05">
-      <span class="font-weight-bold">Zubereitungseinleitungen:</span>
-      <br>{{recipe.preparation}}
-    </div>
+  </div>
+  <div class="col-md-6 text-right">
+    <img src="{{recipe.pictureUrl}}" width="300" height="300" class="img-thumbnail no-max-width">
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <span class="font-weight-bold">Zubereitungseinleitungen:</span>
+    <br>{{recipe.preparation}}
+  </div>
+
+</div>
+<div class="row">
+
+  <div class="col-md-6">
     <!--googleMap-->
+
     <agm-map
       [latitude]="lat"
       [longitude]="lng"
@@ -33,7 +47,7 @@
                   [iconUrl]="getPictureURL(supermarketGeo.supermarkt)"
                   [latitude]="supermarketGeo.lat"
                   [longitude]="supermarketGeo.lng"
-      (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarkt">
+                  (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarkt">
 
         <agm-info-window>
           <strong>{{supermarketGeo.supermarktName}}</strong><br>
@@ -46,16 +60,20 @@
 
 
     </agm-map>
-
   </div>
-  <div class="col-md-6 text-right">
-    <img src="{{recipe.pictureUrl}}" width="300" height="300" class="img-thumbnail no-max-width">
+  <div class="col-md-6">
     <div *ngIf="(fehlendeZustaten.length > 0) && showLackIngredients" class="mb05">
       <span class="font-weight-bold">Fehlende Produkte:</span>
       <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" [superkarket]="supermarket"></app-lack-ingredients>
     </div>
   </div>
 </div>
+
+
+
+
+
+
 
 
 
