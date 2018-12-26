@@ -51,7 +51,7 @@ public class ProductScheduler implements org.quartz.Job{
         Stopwatch swProductScrapperAndPersister = Stopwatch.createStarted();
 //        Stopwatch swProductScrapperAndPersister = (new Stopwatch()).start();
 
-        List<Ingredient> allIngredients = this.ingredientRepository.findAll();
+        List<Ingredient> allIngredients = this.ingredientRepository.findAllIngredients();
 
         for (Ingredient ingredient : allIngredients) {
             if(this.productRepository.findByIngredientnameAndSupermarket(ingredient.getName(), Supermarket.EDEKA) == 0) {
@@ -84,7 +84,7 @@ public class ProductScheduler implements org.quartz.Job{
             for (Product product : products) {
                 if (product != null && this.productRepository.findByProductnameAndSupermarket(product.getName(), product.getSupermarket()) == null) {
                     product.setIngredient(ingredient);
-                    this.productRepository.save(product);
+                   this.productRepository.save(product);
                 }
             }
         }
