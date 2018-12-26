@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Stateless
@@ -56,12 +56,14 @@ public class BringmeisterProductAPI {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
+        Charset charset = Charset.forName("UTF8");
+        InputStreamReader stream = new InputStreamReader(con.getInputStream(), charset);
+        BufferedReader in = new BufferedReader(stream);
         StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
+
+        String read = "";
+        while ((read = in.readLine()) != null) {
+            content.append(read);
         }
 
         in.close();
