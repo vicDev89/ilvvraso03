@@ -1,6 +1,6 @@
 package de.berlin.htw.usws.webcrawlers;
 
-import de.berlin.htw.usws.webcrawlers.reweLocations.MarketGeoLocation;
+import de.berlin.htw.usws.webcrawlers.reweLocations.ReweMarketGeoLocation;
 import de.berlin.htw.usws.webcrawlers.reweLocations.ReweGeoLocationsResponse;
 import de.berlin.htw.usws.webcrawlers.reweLocations.ReweLocationsCrawler;
 import org.junit.Ignore;
@@ -20,7 +20,7 @@ public class ReweLocationsCrawlerTest {
 
         ReweGeoLocationsResponse reweGeoLocationsResponse = reweLocationsCrawler.getReweGeoLocations();
 
-        for(MarketGeoLocation market : reweGeoLocationsResponse.getMarkets()) {
+        for(ReweMarketGeoLocation market : reweGeoLocationsResponse.getMarkets()) {
             System.out.println(market.toString());
         }
 

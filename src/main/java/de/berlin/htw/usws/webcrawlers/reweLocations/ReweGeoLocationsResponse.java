@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ReweGeoLocationsResponse {
 
     @JsonProperty("markets")
-    ArrayList<MarketGeoLocation> markets = new ArrayList<>();
+    ArrayList<ReweMarketGeoLocation> markets = new ArrayList<>();
 
     @JsonProperty("total")
     private int total;
