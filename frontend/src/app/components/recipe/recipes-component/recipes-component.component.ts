@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Recipe} from '../../../dataclasses/Recipe';
 import {IngreatService} from '../../../services/ingreat.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {SupermarktGEO} from "../../../dataclasses/SupermarktGEO";
+import {SupermarketGEO} from "../../../dataclasses/SupermarketGEO";
 
 @Component({
   selector: 'app-recipes-component',
@@ -12,7 +12,7 @@ import {SupermarktGEO} from "../../../dataclasses/SupermarktGEO";
 export class RecipesComponentComponent implements OnInit, OnChanges {
 
   @Input() searchedIngredients: string[] = [];
-  @Input() supermarketGeoLocations: SupermarktGEO[] = [];
+  @Input() supermarketGeoLocations: SupermarketGEO[] = [];
 
   recipes: Recipe[] = [];
   restRecipes: Recipe[] = [];

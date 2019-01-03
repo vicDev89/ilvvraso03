@@ -1,11 +1,11 @@
 import {Supermarket} from "./Supermarket";
 
-export class SupermarktGEO {
+export class SupermarketGEO {
 
 
   constructor(supermarkt, supermarktName , lat, lng, street, housenumber, city, zip) {
-    this.supermarkt = supermarkt;
-    this.supermarktName = supermarktName;
+    this.supermarket = supermarkt;
+    this.supermarketName = supermarktName;
     this.lat = lat;
     this.lng = lng;
     this.street = street;
@@ -14,8 +14,8 @@ export class SupermarktGEO {
     this.zip = zip;
   }
 
-  supermarkt: Supermarket;
-  supermarktName: string;
+  supermarket: Supermarket;
+  supermarketName: string;
   lat: number;
   lng: number;
   street: string;

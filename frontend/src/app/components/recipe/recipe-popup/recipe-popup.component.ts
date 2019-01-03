@@ -2,13 +2,13 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Recipe} from '../../../dataclasses/Recipe';
 import {IngredientInRecipe} from '../../../dataclasses/IngredientInRecipe';
-import {SupermarktGEO} from "../../../dataclasses/SupermarktGEO";
+import {SupermarketGEO} from "../../../dataclasses/SupermarketGEO";
 import {Supermarket} from "../../../dataclasses/Supermarket";
 
 export interface DialogData {
   recipe: Recipe;
   fehlendeZustaten: IngredientInRecipe[];
-  supermarketGeoLocations: SupermarktGEO[];
+  supermarketGeoLocations: SupermarketGEO[];
   searchedIngredients: string[];
 }
 
@@ -25,7 +25,7 @@ export class RecipePopupComponent implements OnInit {
 
   recipe: Recipe;
   fehlendeZustaten: IngredientInRecipe[];
-  supermarketGeoLocations: SupermarktGEO[];
+  supermarketGeoLocations: SupermarketGEO[];
   searchedIngredients: string[];
 
   // google maps zoom level

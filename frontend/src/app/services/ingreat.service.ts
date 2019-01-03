@@ -8,7 +8,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Product} from '../dataclasses/Product';
 import {Supermarket} from '../dataclasses/Supermarket';
 import {IngredientsList} from '../dataclasses/IngredientsList';
-import {SupermarktGEO} from "../dataclasses/SupermarktGEO";
+import {SupermarketGEO} from "../dataclasses/SupermarketGEO";
 
 @Injectable({
   providedIn: 'root'
@@ -59,14 +59,14 @@ export class IngreatService{
     return this.http.get<string[]>(this.url + 'getMeasures/' + ingredientName);
   }
 
-  getSupermarktLocations() : Observable<SupermarktGEO[]>{
+  getSupermarktLocations() : Observable<SupermarketGEO[]>{
     return this.getMockLocations();
-    // return this.http.get<SupermarktGEO[]>(this.url + '/getSupermarktLocations');
+    // return this.http.get<SupermarketGEO[]>(this.url + '/getSupermarktLocations');
   }
 
   //MOCK
   private getMockLocations(){
-    let mockEdeka = new SupermarktGEO(
+    let mockEdeka = new SupermarketGEO(
       Supermarket.EDEKA,
       'EDEKA Fromm',
       52.552609, 13.347636,
@@ -75,7 +75,7 @@ export class IngreatService{
       'Berlin',
       13349);
 
-    let mockRewe = new SupermarktGEO(
+    let mockRewe = new SupermarketGEO(
       Supermarket.REWE,
       'REWE',
       52.563057, 13.328710,

@@ -44,13 +44,13 @@
       [zoomControl]="false">
 
       <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
-                  [iconUrl]="getPictureURL(supermarketGeo.supermarkt)"
+                  [iconUrl]="getPictureURL(supermarketGeo.supermarket)"
                   [latitude]="supermarketGeo.lat"
                   [longitude]="supermarketGeo.lng"
-                  (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarkt">
+                  (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket">
 
         <agm-info-window>
-          <strong>{{supermarketGeo.supermarktName}}</strong><br>
+          <strong>{{supermarketGeo.supermarketName}}</strong><br>
           {{supermarketGeo.street + ' '}}
           {{supermarketGeo.housenumber}}<br>
           {{supermarketGeo.city  + ' '}}

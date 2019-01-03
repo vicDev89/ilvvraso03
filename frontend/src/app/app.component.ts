@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Ingredient} from './dataclasses/Ingredient';
 import {AmountInMeasure} from './components/search/ingredients-component/ingredients-component.component';
-import {SupermarktGEO} from "./dataclasses/SupermarktGEO";
+import {SupermarketGEO} from "./dataclasses/SupermarketGEO";
 import {HttpErrorResponse} from "@angular/common/http";
 import {IngreatService} from "./services/ingreat.service";
 
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   title = 'ilvvarso03FE';
 
   searchedIngredientsNames: string[];
-  supermarketsGEO: SupermarktGEO[] = [];
+  supermarketsGEO: SupermarketGEO[] = [];
 
   constructor( private ingreatService: IngreatService) { }
 

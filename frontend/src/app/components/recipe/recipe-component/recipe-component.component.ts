@@ -3,7 +3,7 @@ import {Recipe} from '../../../dataclasses/Recipe';
 import {MatDialog} from '@angular/material';
 import {RecipePopupComponent} from '../recipe-popup/recipe-popup.component';
 import {IngredientInRecipe} from '../../../dataclasses/IngredientInRecipe';
-import {SupermarktGEO} from "../../../dataclasses/SupermarktGEO";
+import {SupermarketGEO} from "../../../dataclasses/SupermarketGEO";
 
 
 @Component({
@@ -14,7 +14,7 @@ import {SupermarktGEO} from "../../../dataclasses/SupermarktGEO";
 export class RecipeComponentComponent implements OnInit {
 
   @Input() recipe: Recipe;
-  @Input() supermarketGeoLocations: SupermarktGEO[] = [];
+  @Input() supermarketGeoLocations: SupermarketGEO[] = [];
   @Input() searchedIngredients: string[] = [];
 
 
