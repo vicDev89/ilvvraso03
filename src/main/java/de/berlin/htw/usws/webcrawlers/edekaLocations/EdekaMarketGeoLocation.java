@@ -1,6 +1,8 @@
 package de.berlin.htw.usws.webcrawlers.edekaLocations;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.berlin.htw.usws.model.SupermarketGEO;
+import de.berlin.htw.usws.model.enums.Supermarket;
 import lombok.Data;
 
 @Data
@@ -32,4 +34,16 @@ public class EdekaMarketGeoLocation {
 
     @JsonProperty("plz_tlc")
     private String plz_tlc;
+
+    //TODO find a way to separate house number from street in strasse_tlc
+    public SupermarketGEO convertEdekaMarketGeoLocationToSupermarketGeo(){
+        return new SupermarketGEO(Supermarket.EDEKA,
+                this.name_tlc,
+                this.geoLat_doubleField_d,
+                this.geoLng_doubleField_d,
+                this.strasse_tlc,
+                "",
+                this.ort_tlc,
+                Integer.valueOf(this.plz_tlc) );
+    }
 }

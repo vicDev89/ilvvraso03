@@ -1,7 +1,11 @@
 package de.berlin.htw.usws.model;
 
 import de.berlin.htw.usws.model.enums.Supermarket;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 public class SupermarketGEO {
 
     private Supermarket supermarket;
