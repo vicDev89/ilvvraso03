@@ -16,9 +16,6 @@ import java.util.List;
 @Transactional
 public abstract class RecipeRepository extends AbstractFullEntityRepository<Recipe, Long> {
 
-    @Query(named = Recipe.BY_IDENTIFIER, singleResult = SingleResultType.OPTIONAL)
-    public abstract Recipe findByIdentifier(final String identifier);
-
     @Query(named = Recipe.BY_TITLE, singleResult = SingleResultType.OPTIONAL)
     public abstract Recipe findByTitle(final String title);
 

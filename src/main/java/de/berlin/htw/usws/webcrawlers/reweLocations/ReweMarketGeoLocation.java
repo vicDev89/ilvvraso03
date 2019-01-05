@@ -23,14 +23,17 @@ public class ReweMarketGeoLocation {
     @JsonProperty("geoLocation")
     private GeoLocation geoLocation;
 
-    public SupermarketGEO convertReweMarketGeoLocationToSupermarketGeo(){
-        return new SupermarketGEO(Supermarket.REWE,
+    public SupermarketGEO convertReweMarketGeoLocationToSupermarketGeo() {
+        return new SupermarketGEO(
+                String.valueOf(this.id),
+                Supermarket.REWE,
                 this.name,
                 this.geoLocation.getLatitude(),
                 this.geoLocation.getLongitude(),
                 this.address.getStreet(),
                 this.address.getHouseNumber(),
                 this.address.getCity(),
-                Integer.valueOf(this.address.getPostalCode()) );
+                this.address.getPostalCode(),
+                this.phone);
     }
 }

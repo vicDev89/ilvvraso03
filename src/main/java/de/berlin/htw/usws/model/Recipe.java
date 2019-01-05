@@ -13,8 +13,6 @@ import java.util.List;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Recipe.BY_IDENTIFIER,
-                query = "select r from Recipe r where r.identifier=?1"),
         @NamedQuery(name = Recipe.BY_TITLE,
                 query = "select r from Recipe r where r.title=?1"),
         @NamedQuery(name = Recipe.BY_COUNT,
@@ -28,8 +26,6 @@ import java.util.List;
         @NamedEntityGraph(name = "withIngredientsAndProducts", attributeNodes = @NamedAttributeNode(value="ingredientInRecipes"))
 })
 public class Recipe extends BaseEntity {
-
-    public static final String BY_IDENTIFIER = "recipeByIdentifier";
 
     public static final String BY_TITLE = "recipeByTitle";
 

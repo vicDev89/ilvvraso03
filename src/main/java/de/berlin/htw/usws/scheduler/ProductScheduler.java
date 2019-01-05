@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Einmal die Woche am Sonntag um 3Uhr morgens --> 0 0 6 ? * SUN *
+// Einmal die Woche am Sonntag um 6Uhr morgens --> 0 0 6 ? * SUN *
 @Scheduled(cronExpression = "0 0 6 ? * SUN *")
 @Slf4j
 public class ProductScheduler implements org.quartz.Job{

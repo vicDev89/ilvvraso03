@@ -11,14 +11,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Protokoll_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Protokoll, String> aufrufparameter;
-	public static volatile SingularAttribute<Protokoll, Integer> numberGetMeasures;
 	public static volatile SingularAttribute<Protokoll, String> erzeuger;
-	public static volatile SingularAttribute<Protokoll, Integer> numberGetRecipes;
 	public static volatile SingularAttribute<Protokoll, Integer> newIngredientsPersisted;
+	public static volatile SingularAttribute<Protokoll, Integer> numberGetElements;
 	public static volatile SingularAttribute<Protokoll, String> ergebnisListeRecipeIds;
-	public static volatile SingularAttribute<Protokoll, Integer> numberGetAllIngredients;
+	public static volatile SingularAttribute<Protokoll, Integer> newSupermarketGEO;
 	public static volatile SingularAttribute<Protokoll, Integer> newRecipesPersisted;
 	public static volatile SingularAttribute<Protokoll, Integer> newProductsPersisted;
+	public static volatile SingularAttribute<Protokoll, Integer> updateSupermarketGEO;
 
 }
 

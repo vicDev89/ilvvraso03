@@ -35,15 +35,32 @@ public class EdekaMarketGeoLocation {
     @JsonProperty("plz_tlc")
     private String plz_tlc;
 
-    //TODO find a way to separate house number from street in strasse_tlc
     public SupermarketGEO convertEdekaMarketGeoLocationToSupermarketGeo(){
-        return new SupermarketGEO(Supermarket.EDEKA,
+        return new SupermarketGEO(
+                this.marktID_tlc,
+                Supermarket.EDEKA,
                 this.name_tlc,
                 this.geoLat_doubleField_d,
                 this.geoLng_doubleField_d,
-                this.strasse_tlc,
-                "",
+                getStreet(this.strasse_tlc),
+                getHousenumber(this.strasse_tlc),
                 this.ort_tlc,
-                Integer.valueOf(this.plz_tlc) );
+                this.plz_tlc,
+                this.telefon_tlc);
+    }
+
+    private String getStreet(String streetAndHousenumber) {
+        String[] arr = streetAndHousenumber.split("\\d+", 2);
+        return arr[0].trim();
+    }
+
+    private String getHousenumber(String streetAndHousenumber) {
+        String[] arr = streetAndHousenumber.split("\\d+", 2);
+        if(arr.length > 1) {
+            String pt1 = arr[0].trim();
+            return streetAndHousenumber.substring(pt1.length() + 1).trim();
+        } else {
+            return null;
+        }
     }
 }

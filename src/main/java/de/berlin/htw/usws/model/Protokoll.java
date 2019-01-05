@@ -35,15 +35,16 @@ public class Protokoll extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String ergebnisListeRecipeIds;
 
-    // nur für die getRecipe-API-Aufruf
+    // für alle GET-API-Aufrufe
     @Column
-    private int numberGetRecipes;
+    private int numberGetElements;
 
-    // nur für die getAllIngredients-API-Aufruf
+    // nur für SupermarketGEO-Scheduler
     @Column
-    private int numberGetAllIngredients;
+    private int updateSupermarketGEO;
 
-    // nur für die getMeasures-API-Aufruf
+    // nur für SupermarketGEO-Scheduler
     @Column
-    private int numberGetMeasures;
+    private int newSupermarketGEO;
+
 }

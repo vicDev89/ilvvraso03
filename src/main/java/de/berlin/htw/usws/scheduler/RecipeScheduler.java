@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-// Jeden Tag um 3 Uhr morgens außer am Sonntag --> 0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *
-@Scheduled(cronExpression = "0 0 3 ? * MON,TUE,WED,THU,FRI,SAT *")
+// Jeden Tag um 3 Uhr morgens außer Samstag und Sonntag --> 0 0 3 ? * MON,TUE,WED,THU,FRI *
+@Scheduled(cronExpression = "0 0 3 ? * MON,TUE,WED,THU,FRI *")
 @Slf4j
 public class RecipeScheduler implements org.quartz.Job {
 

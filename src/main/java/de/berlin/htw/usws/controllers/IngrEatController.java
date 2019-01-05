@@ -4,10 +4,8 @@ import com.google.common.base.Joiner;
 import de.berlin.htw.usws.model.Ingredient;
 import de.berlin.htw.usws.model.Protokoll;
 import de.berlin.htw.usws.model.Recipe;
-import de.berlin.htw.usws.repositories.IngredientRepository;
-import de.berlin.htw.usws.repositories.IngredientsInRecipeRepository;
-import de.berlin.htw.usws.repositories.ProtokollRepository;
-import de.berlin.htw.usws.repositories.RecipeRepository;
+import de.berlin.htw.usws.model.SupermarketGEO;
+import de.berlin.htw.usws.repositories.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.PredicateUtils;
 
@@ -21,7 +19,7 @@ import static java.util.stream.Collectors.*;
 import static java.util.Map.Entry.*;
 
 @Path("/")
-public class RecipeController {
+public class IngrEatController {
 
     @Inject
     private RecipeRepository recipeRepository;
@@ -34,6 +32,9 @@ public class RecipeController {
 
     @Inject
     private ProtokollRepository protokollRepository;
+
+    @Inject
+    private SupermarketGEORepository supermarketGEORepository;
 
     /**
      * GET-Auruf, um alle Ingredients von der DB zu holen
@@ -51,7 +52,7 @@ public class RecipeController {
         // Create protokoll
         Protokoll protokoll = new Protokoll();
         protokoll.setErzeuger("API: getAllIngredients");
-        protokoll.setNumberGetAllIngredients(ingredients.size());
+        protokoll.setNumberGetElements(ingredients.size());
         this.protokollRepository.save(protokoll);
 
         return Response.ok().entity(ingredients).build();
@@ -74,7 +75,7 @@ public class RecipeController {
         Protokoll protokoll = new Protokoll();
         protokoll.setErzeuger("API: getMeasures");
         protokoll.setAufrufparameter(ingredientName);
-        protokoll.setNumberGetMeasures(measures.size());
+        protokoll.setNumberGetElements(measures.size());
         this.protokollRepository.save(protokoll);
 
         return Response.ok().entity(measures).build();
@@ -100,7 +101,7 @@ public class RecipeController {
         Protokoll protokoll = new Protokoll();
         protokoll.setErzeuger("API: getRecipesMax");
         protokoll.setAufrufparameter(Joiner.on(", ").join(ingredientsList.getIngredients()));
-        protokoll.setNumberGetRecipes(recipes.size());
+        protokoll.setNumberGetElements(recipes.size());
         protokoll.setErgebnisListeRecipeIds(Joiner.on(", ").join(recipes.stream().map(sc -> sc.getId()).collect(Collectors.toList())));
         this.protokollRepository.save(protokoll);
 
@@ -126,7 +127,7 @@ public class RecipeController {
         Protokoll protokoll = new Protokoll();
         protokoll.setErzeuger("API: getRecipesRest");
         protokoll.setAufrufparameter(Joiner.on(", ").join(ingredientsList.getIngredients()));
-        protokoll.setNumberGetRecipes(recipes.size());
+        protokoll.setNumberGetElements(recipes.size());
         protokoll.setErgebnisListeRecipeIds(Joiner.on(", ").join(recipes.stream().map(sc -> sc.getId()).collect(Collectors.toList())));
         this.protokollRepository.save(protokoll);
 
@@ -151,11 +152,31 @@ public class RecipeController {
         Protokoll protokoll = new Protokoll();
         protokoll.setErzeuger("API: getRecipes");
         protokoll.setAufrufparameter(Joiner.on(", ").join(ingredientsList.getIngredients()));
-        protokoll.setNumberGetRecipes(recipes.size());
+        protokoll.setNumberGetElements(recipes.size());
         protokoll.setErgebnisListeRecipeIds(Joiner.on(", ").join(recipes.stream().map(sc -> sc.getId()).collect(Collectors.toList())));
         this.protokollRepository.save(protokoll);
 
         return Response.ok().entity(recipes).build();
+    }
+
+    /**
+     * GET-Auruf, um alle SupermarktGEO von der DB zu holen
+     *
+     * @return
+     */
+    @GET
+    @Path("/getAllSupermarketGeo")
+    @Produces("application/json")
+    public Response getAllSupermarketGEO() {
+        List<SupermarketGEO> supermarketGEOs = this.supermarketGEORepository.findAll();
+
+        // Create protokoll
+        Protokoll protokoll = new Protokoll();
+        protokoll.setErzeuger("API: getAllSupermarketGeo");
+        protokoll.setNumberGetElements(supermarketGEOs.size());
+        this.protokollRepository.save(protokoll);
+
+        return Response.ok().entity(supermarketGEOs).build();
     }
 
 
