@@ -31,7 +31,7 @@ public abstract class SupermarketGEORepository extends AbstractFullEntityReposit
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.marketID), supermarketGEO.getMarketID()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.supermarket), supermarketGEO.getSupermarket()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.supermarketName), supermarketGEO.getSupermarketName()));
-        predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.let), supermarketGEO.getLet()));
+        predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.lat), supermarketGEO.getLat()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.lng), supermarketGEO.getLng()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.street), supermarketGEO.getStreet()));
         if(supermarketGEO.getHousenumber() != null) {

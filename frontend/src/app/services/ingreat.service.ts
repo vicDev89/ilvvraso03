@@ -60,31 +60,7 @@ export class IngreatService{
   }
 
   getSupermarktLocations() : Observable<SupermarketGEO[]>{
-    return this.getMockLocations();
-    // return this.http.get<SupermarketGEO[]>(this.url + '/getSupermarktLocations');
-  }
-
-  //MOCK
-  private getMockLocations(){
-    let mockEdeka = new SupermarketGEO(
-      Supermarket.EDEKA,
-      'EDEKA Fromm',
-      52.552609, 13.347636,
-      'Müllerstraße',
-      '127',
-      'Berlin',
-      13349);
-
-    let mockRewe = new SupermarketGEO(
-      Supermarket.REWE,
-      'REWE',
-      52.563057, 13.328710,
-      'Kurt-Schumacher-Damm',
-      '1-15',
-      'Berlin',
-      13405);
-
-    return of([mockEdeka, mockRewe]);
+    return this.http.get<SupermarketGEO[]>(this.url + 'getAllSupermarketGeo');
   }
 
 }

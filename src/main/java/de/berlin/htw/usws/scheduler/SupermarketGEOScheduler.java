@@ -88,7 +88,7 @@ public class SupermarketGEOScheduler implements org.quartz.Job {
                 supermarketGEOfromDB.setZip(supermarketGEO.getZip());
                 supermarketGEOfromDB.setPhonenumber(supermarketGEO.getPhonenumber());
                 supermarketGEOfromDB.setCity(supermarketGEO.getCity());
-                supermarketGEOfromDB.setLet(supermarketGEO.getLet());
+                supermarketGEOfromDB.setLat(supermarketGEO.getLat());
                 supermarketGEOfromDB.setLng(supermarketGEO.getLng());
                 this.supermarketGEORepository.save(supermarketGEOfromDB);
                 numberUpdates++;

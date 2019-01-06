@@ -31,7 +31,7 @@ public class SupermarketGEO extends BaseEntity {
     private String supermarketName;
 
     @Column
-    private float let;
+    private float lat;
 
     @Column
     private float lng;
@@ -53,7 +53,7 @@ public class SupermarketGEO extends BaseEntity {
 
     public boolean sameSupermarketGEO(SupermarketGEO supermarketGEO){
         return this.supermarketName.equals(supermarketGEO.getSupermarketName()) &&
-                this.let == supermarketGEO.getLet() &&
+                this.lat == supermarketGEO.getLat() &&
                 this.lng == supermarketGEO.getLng() &&
                 this.street.equals(supermarketGEO.getStreet()) &&
                 this.housenumber.equals(supermarketGEO.getHousenumber()) &&
