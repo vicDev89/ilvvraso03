@@ -31,10 +31,10 @@ public class SupermarketGEO extends BaseEntity {
     private String supermarketName;
 
     @Column
-    private float lat;
+    private Double lat;
 
     @Column
-    private float lng;
+    private Double lng;
 
     @Column
     private String street;

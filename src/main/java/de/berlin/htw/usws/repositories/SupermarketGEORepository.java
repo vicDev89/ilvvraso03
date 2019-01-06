@@ -28,6 +28,7 @@ public abstract class SupermarketGEORepository extends AbstractFullEntityReposit
         final Root<SupermarketGEO> rootSupermarketGEO = cQuery.from(SupermarketGEO.class);
         final List<Predicate> predicates = new ArrayList<>();
 
+
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.marketID), supermarketGEO.getMarketID()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.supermarket), supermarketGEO.getSupermarket()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.supermarketName), supermarketGEO.getSupermarketName()));
@@ -41,12 +42,9 @@ public abstract class SupermarketGEORepository extends AbstractFullEntityReposit
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.zip), supermarketGEO.getZip()));
         predicates.add(builder.equal(rootSupermarketGEO.get(SupermarketGEO_.phonenumber), supermarketGEO.getPhonenumber()));
 
-
         cQuery.select(rootSupermarketGEO).where(predicates.toArray(new Predicate[]{}));
 
-        List<SupermarketGEO> list = this.entityManager().createQuery(cQuery).getResultList();
-
-        return list;
+        return this.entityManager().createQuery(cQuery).getResultList();
     }
 
 }
