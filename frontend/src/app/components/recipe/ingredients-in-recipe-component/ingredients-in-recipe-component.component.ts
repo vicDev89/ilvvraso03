@@ -22,14 +22,11 @@ export class IngredientsInRecipeComponentComponent implements OnInit{
 
   isSearchedIngredient(ingredientInRecipe : IngredientInRecipe){
     for (const searchedIngredient of this.searchedIngredients) {
-      if (ingredientInRecipe.ingredient.name.includes(searchedIngredient)){
+      if (ingredientInRecipe.ingredient.name.toLowerCase().includes(searchedIngredient.toLowerCase())){
         return true;
       }
     }
     return false;
-    // console.log(this.fehlendeZutatenNamen.toString());
-    // console.log(ingredientInRecipe.ingredient.name);
-    // return this.searchedIngredients.includes(ingredientInRecipe.ingredient.name);
   }
 
 }
