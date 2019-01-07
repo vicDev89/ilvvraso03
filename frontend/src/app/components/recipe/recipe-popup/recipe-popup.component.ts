@@ -34,8 +34,8 @@ export class RecipePopupComponent implements OnInit {
   zoom: number = 14;
 
   // initial center position for the map
-  lat: number = 52.555773;
-  lng: number = 13.347031;
+  lat: number = 52.519569;
+  lng: number = 13.409057;
 
   urlEdekaLogo = '../../../../assets/edeka-logo-map.png';
   urlREWELogo = '../../../../assets/rewe-logo-map.png';
@@ -48,6 +48,7 @@ export class RecipePopupComponent implements OnInit {
     this.fehlendeZustaten = this.data.fehlendeZustaten;
     this.supermarketGeoLocations = this.data.supermarketGeoLocations;
     this.searchedIngredients = this.data.searchedIngredients;
+    this.findMe();
   }
 
   onNoClick(): void {
@@ -60,6 +61,17 @@ export class RecipePopupComponent implements OnInit {
         return this.urlREWELogo;
       case Supermarket.EDEKA:
         return this.urlEdekaLogo;
+    }
+  }
+
+  findMe() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
   }
 
