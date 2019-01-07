@@ -1,7 +1,10 @@
 export enum Supermarket {
-  REWE,
+  REWE = "REWE",
 
-  EDEKA,
+  EDEKA = "EDEKA",
 
-  BRINGMEISTER
+  BRINGMEISTER = "BRINGMEISTER"
+
 }
+
+

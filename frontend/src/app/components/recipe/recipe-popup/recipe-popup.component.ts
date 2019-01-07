@@ -28,6 +28,8 @@ export class RecipePopupComponent implements OnInit {
   supermarketGeoLocations: SupermarketGEO[];
   searchedIngredients: string[];
 
+  superMarketEnum = Supermarket;
+
   // google maps zoom level
   zoom: number = 14;
 

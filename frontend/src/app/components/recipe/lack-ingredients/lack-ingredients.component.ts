@@ -16,7 +16,6 @@ export class LackIngredientsComponent implements OnChanges {
   constructor() { };
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("Supermarket lack ingredients:" + this.superkarket);
   }
 
   getSupermarketValue(index: number){
@@ -25,9 +24,8 @@ export class LackIngredientsComponent implements OnChanges {
 
 
   isProductExistsInSupermarket(ingredient: Ingredient, supermarket: Supermarket) {
-    let supermarketValue = this.getSupermarketValue(supermarket);
     for (const product of ingredient.products) {
-      if(product.supermarket.toString() == supermarketValue){
+      if(product.supermarket == supermarket){
         return true;
       }
     }

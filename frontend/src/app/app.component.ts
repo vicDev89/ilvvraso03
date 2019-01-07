@@ -33,6 +33,7 @@ export class AppComponent implements OnInit{
 
   getSupermarketLocations(){
     this.ingreatService.getSupermarktLocations().subscribe(data => {
+      // this.supermarketsGEO = [data[0],data[1]];
       this.supermarketsGEO = data;
     }, (error: HttpErrorResponse) => {
       console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
