@@ -69,6 +69,8 @@ export class RecipePopupComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
+      }, (error) => {
+        console.log("Position Error:" + error.message);
       });
     } else {
       alert("Geolocation is not supported by this browser.");
