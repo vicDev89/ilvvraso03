@@ -1,12 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Recipe} from '../dataclasses/Recipe';
 import {Ingredient} from '../dataclasses/Ingredient';
-import {DifficultyLevel} from '../dataclasses/DifficultyLevel';
-import {IngredientInRecipe} from '../dataclasses/IngredientInRecipe';
 import {from, Observable, of} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Product} from '../dataclasses/Product';
-import {Supermarket} from '../dataclasses/Supermarket';
 import {IngredientsList} from '../dataclasses/IngredientsList';
 import {SupermarketGEO} from "../dataclasses/SupermarketGEO";
 
@@ -14,7 +9,7 @@ import {SupermarketGEO} from "../dataclasses/SupermarketGEO";
   providedIn: 'root'
 })
 export class IngreatService{
-  private url: string;
+  readonly url: string;
   private ingredients: Ingredient[];
 
   constructor(private http: HttpClient) {
@@ -26,17 +21,30 @@ export class IngreatService{
     if (!term.trim()) {
       return of([]);
     }
-    return from(
-      [
-        this.ingredients.filter(
-          ingredient => ingredient.name.toLowerCase().includes(term.toLowerCase())
-        )
-      ]
-    );
+    if (this.ingredients) {
+      return from(
+        [
+          this.ingredients.filter(
+            ingredient => {
+              const iNameLowerCase = ingredient.name.toLowerCase();
+              const termLowerCase = term.toLowerCase();
+              if (iNameLowerCase.includes(termLowerCase)) {
+                const index = iNameLowerCase.indexOf(termLowerCase);
+                return index === 0 || iNameLowerCase.charAt(index - 1).match('\\s');
+              } else {
+                return false;
+              }
+            }
+          )
+        ]
+      );
+    } else {
+      return undefined;
+    }
   }
 
   getFirst10RecipesByIngredients(ingredients: string[]): Observable<any>{
-    var ingredientsList = new IngredientsList(ingredients);
+    const ingredientsList = new IngredientsList(ingredients);
     return this.http.post<any>(this.url + 'getRecipesMax', ingredientsList);
   }
 
@@ -63,5 +71,8 @@ export class IngreatService{
     return this.http.get<SupermarketGEO[]>(this.url + 'getAllSupermarketGeo');
   }
 
-}
+  isIngredientsSet(): boolean {
+    return !!this.ingredients;
+  }
 
+}

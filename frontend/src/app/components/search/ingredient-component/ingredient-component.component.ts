@@ -69,16 +69,13 @@ export class IngredientComponentComponent implements OnInit {
    */
   amountOrMeasureChanged(amount: HTMLInputElement, measure: HTMLSelectElement): void {
     let value = Number(amount.value);
-    const WARNING_CSS_CLASS = "warning";
     if(value && value > 0) {
       this.amountInMeasureValue.amount = value;
-      this.amountInMeasureValue.measure = this.measures[measure.selectedIndex];
-      this.amountInMeasure.emit(this.amountInMeasureValue);
-      amount.classList.remove(WARNING_CSS_CLASS);
-    } else {
-      this.amountInMeasureValue.amount = undefined;
-      this.amountInMeasure.emit(this.amountInMeasureValue)
-      amount.classList.add(WARNING_CSS_CLASS);
+    } else if (value < 0) {
+      this.amountInMeasureValue.amount = - value;
+      amount.value = '' + this.amountInMeasureValue.amount;
     }
+    this.amountInMeasureValue.measure = this.measures[measure.selectedIndex];
+    this.amountInMeasure.emit(this.amountInMeasureValue);
   }
 }

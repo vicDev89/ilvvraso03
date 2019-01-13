@@ -30,10 +30,6 @@ li {
   transition: max-height 0.2s ease-out;
 }
 
-.warning {
-  color: red;
-}
-
 div.input-group {
   padding-bottom: 8px;
 }

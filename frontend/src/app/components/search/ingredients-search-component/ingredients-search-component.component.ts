@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {distinctUntilChanged, map, switchMap} from "rxjs/operators";
-import {from, Observable, of, Subject} from "rxjs";
+import {distinctUntilChanged, switchMap} from "rxjs/operators";
+import {Observable, Subject} from "rxjs";
 import {Ingredient} from "../../../dataclasses/Ingredient";
 import {IngreatService} from "../../../services/ingreat.service";
 
@@ -46,7 +46,7 @@ export class IngredientsSearchComponentComponent implements OnInit {
    * @param {IngreatService} ingreatService Service used for dynamically requesting ingredients.
    */
   constructor(
-    private ingreatService: IngreatService
+    protected ingreatService: IngreatService
   ) {}
 
   /**
@@ -97,7 +97,7 @@ export class IngredientsSearchComponentComponent implements OnInit {
       this.addedIngredient.emit(ingredient);
 
       // Clears input field / empty search for clearing the list:
-      (<HTMLInputElement>document.getElementById("search")).value = "";
+      (<HTMLInputElement> document.getElementById("search")).value = "";
       this.search("");
     }
   }

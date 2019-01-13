@@ -2,6 +2,7 @@
   <input #searchBox
          id="search"
          placeholder="Hinzufügen..."
+         [disabled]="!ingreatService.isIngredientsSet()"
          (keyup)="search(searchBox.value)"
          (keyup.enter)="add.click()" />
 
