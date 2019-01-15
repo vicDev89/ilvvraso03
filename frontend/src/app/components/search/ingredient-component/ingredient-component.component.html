@@ -1,6 +1,10 @@
 <li>
   <div class="accordion" (click)="showOrHideMeasure(accordion, panel)" #accordion>
-    <button (click)="deleteIngredient()"><i class="far fa-trash-alt"></i></button>
+    <span>
+      <button (click)="deleteIngredient()" class="delete"><i class="far fa-trash-alt"></i></button>
+      <button class="amount" #amount><i class="fas fa-balance-scale"></i></button>
+    </span>
+    <br *ngIf="ingredient.name.length > 13">
     {{ingredient.name}}
   </div>
 

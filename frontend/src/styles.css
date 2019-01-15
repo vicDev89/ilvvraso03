@@ -1,16 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
-
-
-:root {
-  --main-color: "#8aba18";
-  --main-accent-color: "cc6600";
-  --warning-oolor: "990000";
-}
 
 .no-max-width{
   max-width: none;
@@ -33,4 +23,31 @@ agm-map {
   height: 300px;
 }
 
+/* Since 15.01.2019 @LL: */
 
+:root {
+  --main-color: rgb(249,98,46);
+  --warning-color: #6e000f;
+}
+
+/*
+Modifying the scrollbar does not work for all Browsers.
+In that case, the ordinary scrollbar will be used instead.
+*/
+::-webkit-scrollbar {
+  width: 10px;
+  top: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+button {
+  cursor: pointer;
+}

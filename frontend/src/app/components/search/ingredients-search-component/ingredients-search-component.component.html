@@ -1,22 +1,19 @@
-<div>
+<div class="add_ingredients">
   <input #searchBox
          id="search"
          placeholder="Hinzufügen..."
          [disabled]="!ingreatService.isIngredientsSet()"
          (keyup)="search(searchBox.value)"
          (keyup.enter)="add.click()" />
-
   <button #add
           [hidden]="!searchBox.value.trim()"
           (click)="addIngredient()" ><i class="fas fa-plus"></i></button>
-
-  <ul id="search_results">
-    <li *ngFor="let ingredient of ingredients$ | async" [hidden]="isIngredientAlreadyAdded(ingredient.name)">
-      <a (click)="addIngredient(ingredient)">
-        {{ingredient.name}}
-      </a>
-    </li>
-  </ul>
 </div>
 
-
+<ul id="search_results">
+  <li *ngFor="let ingredient of ingredients$ | async" [hidden]="isIngredientAlreadyAdded(ingredient.name)">
+    <a (click)="addIngredient(ingredient)">
+      {{ingredient.name}}
+    </a>
+  </li>
+</ul>

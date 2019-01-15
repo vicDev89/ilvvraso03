@@ -140,7 +140,7 @@ public class FoodBoomUnknownUrlsCrawler extends FoodBoomCrawler {
     }
 
     /**
-     * Calls the next page depending on {@link FoodBoomUnknownUrlsCrawler#pageCount} and returns it.s
+     * Calls the next page depending on {@link FoodBoomUnknownUrlsCrawler#pageCount} and returns it.
      *
      * @return Called next page (depending on {@link FoodBoomUnknownUrlsCrawler#pageCount}) listing recipes.
      * @throws IOException

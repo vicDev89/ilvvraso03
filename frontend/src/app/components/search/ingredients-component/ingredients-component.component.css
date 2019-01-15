@@ -2,3 +2,41 @@ ul {
   padding: 0;
   list-style-type: none;
 }
+
+div {
+  text-align: center;
+}
+
+button {
+  color: white;
+  background-color: var(--main-color);
+  border-radius: 2em;
+  padding: 0.5em;
+  border: 3px solid var(--main-color);
+}
+
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  font-family: FontAwesome;
+  content: "\f002";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button:hover span {
+  padding-right: 25px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}

@@ -74,6 +74,9 @@ export class IngredientComponentComponent implements OnInit {
     } else if (value < 0) {
       this.amountInMeasureValue.amount = - value;
       amount.value = '' + this.amountInMeasureValue.amount;
+    } else {
+      this.amountInMeasureValue.amount = 1;
+      amount.value = '' + this.amountInMeasureValue.amount;
     }
     this.amountInMeasureValue.measure = this.measures[measure.selectedIndex];
     this.amountInMeasure.emit(this.amountInMeasureValue);

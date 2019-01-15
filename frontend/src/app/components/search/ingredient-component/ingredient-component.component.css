@@ -1,12 +1,25 @@
 li {
-  padding-bottom: 8px
+  padding-top: 8px;
 }
 
 .accordion {
   background-color: #eee;
-  cursor: pointer;
   transition: 0.4s;
   padding: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.accordion span {
+  float: right;
+}
+
+.active {
+  -webkit-border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .active, .accordion:hover {
@@ -14,12 +27,7 @@ li {
 }
 
 .accordion:after {
-  content: '\002B';
   float: right;
-}
-
-.active:after {
-  content: "\2212";
 }
 
 .panel {
@@ -28,8 +36,24 @@ li {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+  -webkit-border-radius: 0 0 8px 8px;
+  -moz-border-radius: 0 0 8px 8px;
+  border-radius: 0 0 8px 8px;
 }
 
 div.input-group {
   padding-bottom: 8px;
+}
+
+button {
+  border: none;
+  background: transparent;
+}
+
+div.accordion:hover span button.amount, div.active span button.amount {
+  color: var(--main-color);
+}
+
+button.delete:hover {
+  color: var(--warning-color);
 }
