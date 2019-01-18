@@ -18,6 +18,7 @@ import { IngredientsInRecipeComponentComponent } from './components/recipe/ingre
 import {HttpClientModule} from '@angular/common/http';
 import { LackIngredientsComponent } from './components/recipe/lack-ingredients/lack-ingredients.component';
 import { LoadingComponent } from './components/design/loading/loading.component';
+import { NoRecipeFoundComponent } from './components/recipe/no-recipe-found/no-recipe-found.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoadingComponent } from './components/design/loading/loading.component'
     IngredientComponentComponent,
     IngredientsInRecipeComponentComponent,
     LackIngredientsComponent,
-    LoadingComponent
+    LoadingComponent,
+    NoRecipeFoundComponent
   ],
   imports: [
     BrowserModule,
