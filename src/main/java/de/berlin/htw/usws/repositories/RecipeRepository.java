@@ -1,8 +1,5 @@
 package de.berlin.htw.usws.repositories;
 
-import de.berlin.htw.usws.metamodel.IngredientInRecipe_;
-import de.berlin.htw.usws.metamodel.Ingredient_;
-import de.berlin.htw.usws.metamodel.Recipe_;
 import de.berlin.htw.usws.model.*;
 import de.berlin.htw.usws.model.enums.RecipeSite;
 import org.apache.deltaspike.data.api.*;
