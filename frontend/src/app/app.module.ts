@@ -17,6 +17,7 @@ import { IngredientComponentComponent } from './components/search/ingredient-com
 import { IngredientsInRecipeComponentComponent } from './components/recipe/ingredients-in-recipe-component/ingredients-in-recipe-component.component';
 import {HttpClientModule} from '@angular/common/http';
 import { LackIngredientsComponent } from './components/recipe/lack-ingredients/lack-ingredients.component';
+import { LoadingComponent } from './components/style/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LackIngredientsComponent } from './components/recipe/lack-ingredients/l
     RecipePopupComponent,
     IngredientComponentComponent,
     IngredientsInRecipeComponentComponent,
-    LackIngredientsComponent
+    LackIngredientsComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

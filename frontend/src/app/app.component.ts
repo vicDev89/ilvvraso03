@@ -19,7 +19,6 @@ export class AppComponent implements OnInit{
   constructor( private ingreatService: IngreatService) { }
 
   ngOnInit(): void {
-    this.declareColors();
     this.getSupermarketLocations();
   }
 
@@ -31,36 +30,12 @@ export class AppComponent implements OnInit{
     this.searchedIngredientsNames = searchedIngredientsNames;
   }
 
-  getSupermarketLocations(){
+  getSupermarketLocations(): void {
     this.ingreatService.getSupermarktLocations().subscribe(data => {
       // this.supermarketsGEO = [data[0],data[1]];
       this.supermarketsGEO = data;
     }, (error: HttpErrorResponse) => {
       console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
-    });
-  }
-
-  /**
-   * Declares colors (hex-values) as variables that can be called in CSS files.
-   *
-   * @since 19.11.2018
-   * @author Lucas Larisch
-   */
-  declareColors(): void {
-    // TODO: Makes sense in our case?
-    let primaryMain = '0,0,0';
-    let primaryMainAccent = '255,255,255';
-
-    const colors = new Map([
-      ['primaryColor', 'rgb(158,0,57)'],
-      ['primaryMain', 'rgb('+primaryMain+')'],
-      ['primaryMainTransparent', 'rgba('+primaryMain+',0.7)'],
-      ['primaryMainAccent', 'rgb('+primaryMainAccent+')'],
-      ['primaryMainAccentTransparent', 'rgba('+primaryMainAccent+',0.7)']
-    ]);
-
-    Array.from(colors.entries()).forEach(([name, value]) => {
-      document.body.style.setProperty(`--${name}`, value);
     });
   }
 

@@ -1,9 +1,13 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
-  <app-header-component class="mb05"></app-header-component>
-</div>
-<div class="row">
-  <app-ingredients-component class="col-md-2 border-right" (registeredIngredients)="extractKeyOfSearchedIngredients($event)"></app-ingredients-component>
-  <app-recipes-component class="col-md-10" [searchedIngredients]="searchedIngredientsNames" [supermarketGeoLocations]="supermarketsGEO"></app-recipes-component>
-</div>
+<app-header-component #header></app-header-component>
 
+<div [ngStyle]="{'paddingTop': header.getHeight() + 3 + 'px'}" class="row">
+  <app-ingredients-component #ingredients
+    class="col-sm-3 col-md-3 no-float"
+    (registeredIngredients)="extractKeyOfSearchedIngredients($event)"
+  ></app-ingredients-component>
+  <app-recipes-component
+    class="col-sm-9 col-md-9 border-left"
+    [searchedIngredients]="searchedIngredientsNames"
+    [supermarketGeoLocations]="supermarketsGEO"
+  ></app-recipes-component>
+</div>

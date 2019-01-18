@@ -1,14 +1,55 @@
+div {
+  display: inline-block;
+}
+
+div#ingredient_search {
+  width: 100%;
+  border: 2px solid var(--main-color);
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+div#ingredient_search input, div#ingredient_search button {
+  background-color:transparent;
+  padding: 0.5em;
+}
+
+div#ingredient_search input {
+  width: 80%;
+  border: none;
+}
+
+div#ingredient_search div {
+  text-align: center;
+  width: 20%;
+}
+
+div#ingredient_search button {
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+}
+
+div#ingredient_search button:enabled:hover, div#ingredient_search button:enabled:focus {
+  color: var(--main-color);
+}
+
 ul#search_results {
   position: absolute;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--main-color-light-90);
   z-index: 10;
   list-style-type: none;
   cursor: pointer;
+  left: 32px;
+  right: 32px;
   padding-left: 0;
-  margin-top: 0;
+  margin-top: -0.5em;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 8em;
-  width: 100%;
   box-shadow: #555555;
 }
 
@@ -16,9 +57,10 @@ ul#search_results li a {
   display: block;
   text-decoration: none;
   cursor: pointer;
+  padding: 0.1em 0.5em 0.1em 0.5em;
 }
 
-#search_results li:hover {
+#search_results li:hover, #search_results li:focus {
   background: var(--main-color);
   color: white;
 }

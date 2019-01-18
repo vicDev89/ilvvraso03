@@ -4,12 +4,11 @@
       <button (click)="deleteIngredient()" class="delete"><i class="far fa-trash-alt"></i></button>
       <button class="amount" #amount><i class="fas fa-balance-scale"></i></button>
     </span>
-    <br *ngIf="ingredient.name.length > 13">
     {{ingredient.name}}
   </div>
-
   <div class="panel" #panel>
     <div class="input-group">
+      <!-- TODO: style this -->
       <input class="form-control" type="number" (input)="amountOrMeasureChanged(amount, measure)" #amount >
       <select class="form-control" (change)="amountOrMeasureChanged(amount, measure)" #measure>
         <option *ngFor="let measure of measures">

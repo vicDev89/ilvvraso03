@@ -1,16 +1,25 @@
-<div class="add_ingredients">
+<div id="ingredient_search">
   <input #searchBox
          id="search"
-         placeholder="Hinzufügen..."
+         placeholder="Zutat"
          [disabled]="!ingreatService.isIngredientsSet()"
          (keyup)="search(searchBox.value)"
          (keyup.enter)="add.click()" />
-  <button #add
-          [hidden]="!searchBox.value.trim()"
-          (click)="addIngredient()" ><i class="fas fa-plus"></i></button>
+  <div>
+    <app-loading *ngIf="!ingreatService.isIngredientsSet()"
+                 [size]="searchBox.offsetHeight-6"
+    ></app-loading>
+    <button #add
+            [disabled]="!searchBox.value.trim()"
+            [hidden]="!ingreatService.isIngredientsSet()"
+            (click)="addIngredient()"
+            [ngStyle]="{'height':searchBox.offsetHeight + 'px'}">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
 </div>
-
 <ul id="search_results">
+  <!-- TODO: Navigate with keys -->
   <li *ngFor="let ingredient of ingredients$ | async" [hidden]="isIngredientAlreadyAdded(ingredient.name)">
     <a (click)="addIngredient(ingredient)">
       {{ingredient.name}}

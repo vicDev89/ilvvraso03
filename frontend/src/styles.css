@@ -26,7 +26,8 @@ agm-map {
 /* Since 15.01.2019 @LL: */
 
 :root {
-  --main-color: rgb(249,98,46);
+  --main-color: rgb(249, 98, 46);
+  --main-color-light-90: rgba(255, 230, 213, 0.9);
   --warning-color: #6e000f;
 }
 
@@ -41,6 +42,8 @@ In that case, the ordinary scrollbar will be used instead.
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+  -webkit-border-radius: 2em solid var(--main-color);
+  -moz-border-radius: 2em solid var(--main-color);
   border-radius: 2em;
 }
 
@@ -48,6 +51,6 @@ In that case, the ordinary scrollbar will be used instead.
   background: #555;
 }
 
-button {
+button:enabled {
   cursor: pointer;
 }

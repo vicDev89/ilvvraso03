@@ -81,4 +81,5 @@ export class IngredientComponentComponent implements OnInit {
     this.amountInMeasureValue.measure = this.measures[measure.selectedIndex];
     this.amountInMeasure.emit(this.amountInMeasureValue);
   }
+
 }

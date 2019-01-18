@@ -1,9 +1,15 @@
+<div
+  id="ingredients_container"
+  (window:resize)="setBarHeights()"
+>
+
 <app-ingredients-search-component
+  id="search_component"
   [registeredIngredients]="registeredIngredientsAsArray()"
   (addedIngredient)="onIngredientAdded($event)"
 ></app-ingredients-search-component>
 
-<ul>
+<ul id="ingredients_list">
   <app-ingredient-component
     *ngFor="let ingredient of registeredIngredientsAsArray()"
     [ingredient]="ingredient"
@@ -11,10 +17,12 @@
   ></app-ingredient-component>
 </ul>
 
-<div>
+<div id="send_container" #send_container>
   <button
     (click)="onSearchRecipes()"
-    *ngIf="registeredIngredientsAsArray().length > 0">
+    [disabled]="registeredIngredientsAsArray().length === 0">
     <span>Suchen</span>
   </button>
+</div>
+
 </div>

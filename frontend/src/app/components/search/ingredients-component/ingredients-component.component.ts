@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Ingredient} from "../../../dataclasses/Ingredient";
 
 /**
@@ -12,13 +12,17 @@ import {Ingredient} from "../../../dataclasses/Ingredient";
   templateUrl: './ingredients-component.component.html',
   styleUrls: ['./ingredients-component.component.css']
 })
-export class IngredientsComponentComponent {
+export class IngredientsComponentComponent implements OnInit {
 
   @Output()
   registeredIngredients: EventEmitter<Map<Ingredient, AmountInMeasure>> = new EventEmitter();
 
   /** List containing all ingredients the user has added. */
   private _registeredIngredients: Map<Ingredient, AmountInMeasure> = new Map<Ingredient, AmountInMeasure>();
+
+  ngOnInit(): void {
+    this.setBarHeights();
+  }
 
   /**
    * Pushes an ingredient to the array containing all added
@@ -68,6 +72,18 @@ export class IngredientsComponentComponent {
    */
   onSearchRecipes(): void {
     this.registeredIngredients.emit(this._registeredIngredients);
+  }
+
+  setBarHeights(): void {
+    // TODO: Discuss this solution
+    let container = document.getElementById('ingredients_container');
+    let list = document.getElementById('ingredients_list');
+    const send = document.getElementById('send_container');
+    const header = document.getElementById('header');
+
+    container.style.height = window.innerHeight-container.getBoundingClientRect().top + 'px';
+    const listPosition = list.getBoundingClientRect().top;
+    list.style.height = container.offsetHeight - 6 - send.offsetHeight - listPosition + header.offsetHeight + 'px';
   }
 }
 

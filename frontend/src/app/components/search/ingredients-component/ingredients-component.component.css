@@ -1,18 +1,36 @@
-ul {
-  padding: 0;
-  list-style-type: none;
+div#ingredients_container {
+  min-height: 200px;
 }
 
-div {
+ul#ingredients_list {
+  padding: 0;
+  list-style-type: none;
+  overflow-y: auto;
+  height: 100%;
+}
+
+div#send_container {
+  width: 100%;
   text-align: center;
+  padding-bottom: 1em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 button {
   color: white;
   background-color: var(--main-color);
+  border: 3px solid var(--main-color);
+  -webkit-border-radius: 2em solid var(--main-color);
+  -moz-border-radius: 2em solid var(--main-color);
   border-radius: 2em;
   padding: 0.5em;
-  border: 3px solid var(--main-color);
+}
+
+button:disabled {
+  background-color: #888888;
+  border: 3px solid #888888;
 }
 
 button span {

@@ -22,7 +22,7 @@ li {
   border-radius: 8px 8px 0 0;
 }
 
-.active, .accordion:hover {
+.active, .accordion:hover, .accordion:focus {
   background-color: #ccc;
 }
 
@@ -50,10 +50,10 @@ button {
   background: transparent;
 }
 
-div.accordion:hover span button.amount, div.active span button.amount {
+div.accordion:hover span button.amount, div.accordion:focus span button.amount, div.active span button.amount {
   color: var(--main-color);
 }
 
-button.delete:hover {
+button.delete:hover , button.delete:focus {
   color: var(--warning-color);
 }
