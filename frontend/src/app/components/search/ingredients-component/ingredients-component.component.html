@@ -3,26 +3,26 @@
   (window:resize)="setBarHeights()"
 >
 
-<app-ingredients-search-component
-  id="search_component"
-  [registeredIngredients]="registeredIngredientsAsArray()"
-  (addedIngredient)="onIngredientAdded($event)"
-></app-ingredients-search-component>
+  <app-ingredients-search-component
+    id="search_component"
+    [registeredIngredients]="registeredIngredientsAsArray()"
+    (addedIngredient)="onIngredientAdded($event)"
+  ></app-ingredients-search-component>
 
-<ul id="ingredients_list">
-  <app-ingredient-component
-    *ngFor="let ingredient of registeredIngredientsAsArray()"
-    [ingredient]="ingredient"
-    (amountInMeasure)="onAmountChanged($event, ingredient)"
-  ></app-ingredient-component>
-</ul>
+  <ul id="ingredients_list">
+    <app-ingredient-component
+      *ngFor="let ingredient of registeredIngredientsAsArray()"
+      [ingredient]="ingredient"
+      (amountInMeasure)="onAmountChanged($event, ingredient)"
+    ></app-ingredient-component>
+  </ul>
 
-<div id="send_container" #send_container>
-  <button
-    (click)="onSearchRecipes()"
-    [disabled]="registeredIngredientsAsArray().length === 0">
-    <span>Suchen</span>
-  </button>
-</div>
+  <div id="send_container" #send_container>
+    <button
+      (click)="onSearchRecipes()"
+      [disabled]="registeredIngredientsAsArray().length === 0">
+      <span>Suchen</span>
+    </button>
+  </div>
 
 </div>

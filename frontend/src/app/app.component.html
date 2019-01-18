@@ -1,12 +1,22 @@
 <app-header-component #header></app-header-component>
 
-<div [ngStyle]="{'paddingTop': header.getHeight() + 3 + 'px'}" class="row">
+<div
+  [ngStyle]="{'paddingTop': header.getHeight() + 'px'}"
+  class="row">
+
   <app-ingredients-component #ingredients
-    class="col-sm-3 col-md-3 no-float"
+    [ngStyle]="{'position': isResized() ? 'fixed' : 'absolute'}"
+    class="col-sm-4 col-md-3 no-float"
     (registeredIngredients)="extractKeyOfSearchedIngredients($event)"
   ></app-ingredients-component>
+
+  <div
+    [ngStyle]="{'height': ingredients.getComponentHeight()}"
+    class="col-sm-4 col-md-3 no-float"
+  ></div>
+
   <app-recipes-component
-    class="col-sm-9 col-md-9 border-left"
+    class="col-sm-8 col-md-9 border-left"
     [searchedIngredients]="searchedIngredientsNames"
     [supermarketGeoLocations]="supermarketsGEO"
   ></app-recipes-component>

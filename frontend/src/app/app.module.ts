@@ -8,7 +8,7 @@ import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { IngredientsComponentComponent } from './components/search/ingredients-component/ingredients-component.component';
-import { HeaderComponentComponent } from './components/header-component/header-component.component';
+import { HeaderComponentComponent } from './components/design/header-component/header-component.component';
 import { RecipesComponentComponent } from './components/recipe/recipes-component/recipes-component.component';
 import { IngredientsSearchComponentComponent } from './components/search/ingredients-search-component/ingredients-search-component.component';
 import { RecipeComponentComponent } from './components/recipe/recipe-component/recipe-component.component';
@@ -17,7 +17,7 @@ import { IngredientComponentComponent } from './components/search/ingredient-com
 import { IngredientsInRecipeComponentComponent } from './components/recipe/ingredients-in-recipe-component/ingredients-in-recipe-component.component';
 import {HttpClientModule} from '@angular/common/http';
 import { LackIngredientsComponent } from './components/recipe/lack-ingredients/lack-ingredients.component';
-import { LoadingComponent } from './components/style/loading/loading.component';
+import { LoadingComponent } from './components/design/loading/loading.component';
 
 @NgModule({
   declarations: [

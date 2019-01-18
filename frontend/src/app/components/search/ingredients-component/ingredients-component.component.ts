@@ -85,6 +85,10 @@ export class IngredientsComponentComponent implements OnInit {
     const listPosition = list.getBoundingClientRect().top;
     list.style.height = container.offsetHeight - 6 - send.offsetHeight - listPosition + header.offsetHeight + 'px';
   }
+
+  getComponentHeight(): string {
+    return document.getElementById('ingredients_container').style.height;
+  }
 }
 
 /**

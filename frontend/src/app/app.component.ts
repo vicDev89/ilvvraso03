@@ -39,4 +39,9 @@ export class AppComponent implements OnInit{
     });
   }
 
+  isResized(): boolean {
+    return window.innerWidth > 575;
+    // = before resize breakpoint?
+    // Src: https://getbootstrap.com/docs/4.2/layout/overview/
+  }
 }

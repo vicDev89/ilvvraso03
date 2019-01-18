@@ -1,12 +1,11 @@
-app-header-component {
-  position: absolute;
-  width: 100%;
-}
-
 * {
   margin: 0;
 }
 
+div.no-float {
+  z-index: -1;
+}
+
 app-recipes-component {
-  padding: 0 2em 0 2em;
+  padding: 1em 2em 0 2em;
 }
