@@ -46,7 +46,7 @@ export class IngredientsSearchComponentComponent implements OnInit {
    * @param {IngreatService} ingreatService Service used for dynamically requesting ingredients.
    */
   constructor(
-    protected ingreatService: IngreatService
+    private ingreatService: IngreatService
   ) {}
 
   /**

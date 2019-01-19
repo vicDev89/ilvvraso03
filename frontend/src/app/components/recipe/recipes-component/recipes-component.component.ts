@@ -18,6 +18,7 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   restRecipes: Recipe[] = [];
   restLoaded: boolean = false;
 
+  isCurrentlySearching: boolean = false;
 
   constructor( private ingreatService: IngreatService) { }
 
@@ -28,7 +29,8 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.searchedIngredients && this.searchedIngredients.length > 0){
-        this.ingreatService.getFirst10RecipesByIngredients(this.searchedIngredients).subscribe(data => {
+      this.isCurrentlySearching = true;
+      this.ingreatService.getFirst10RecipesByIngredients(this.searchedIngredients).subscribe(data => {
         this.recipes = this.loadFehlendeZutatenToRecipes(data);
           if(data.length === 10){
             this.ingreatService.getRestOfRecipesByIngredients(this.searchedIngredients).subscribe(data => {
@@ -38,8 +40,10 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
               console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
             });
           }
+      this.isCurrentlySearching = false;
       }, (error: HttpErrorResponse) => {
         console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
+        this.isCurrentlySearching = false;
       });
     }
   }

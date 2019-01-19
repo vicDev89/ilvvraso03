@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Ingredient} from "../../../dataclasses/Ingredient";
 
 /**
@@ -81,7 +81,12 @@ export class IngredientsComponentComponent implements OnInit {
     const send = document.getElementById('send_container');
     const header = document.getElementById('header');
 
-    container.style.height = window.innerHeight-container.getBoundingClientRect().top + 'px';
+    if (window.innerWidth < 576) {
+      container.style.height = window.innerHeight - window.scrollY- container.getBoundingClientRect().top + 'px';
+    } else {
+      container.style.height = window.innerHeight - container.getBoundingClientRect().top + 'px';
+    }
+
     const listPosition = list.getBoundingClientRect().top;
     list.style.height = container.offsetHeight - 6 - send.offsetHeight - listPosition + header.offsetHeight + 'px';
   }

@@ -4,20 +4,24 @@
   [ngStyle]="{'paddingTop': header.getHeight() + 'px'}"
   class="row">
 
-  <app-ingredients-component #ingredients
-    [ngStyle]="{'position': isResized() ? 'fixed' : 'absolute'}"
+  <app-ingredients-component
+    #ingredients
+    [ngStyle]="{'position': isResized() ? 'absolute' : 'fixed'}"
     class="col-sm-4 col-md-3 no-float"
     (registeredIngredients)="extractKeyOfSearchedIngredients($event)"
   ></app-ingredients-component>
 
+  <!-- Used for padding, same classes as ingredients-component: -->
   <div
     [ngStyle]="{'height': ingredients.getComponentHeight()}"
     class="col-sm-4 col-md-3 no-float"
   ></div>
 
   <app-recipes-component
+    #recipes
     class="col-sm-8 col-md-9 border-left"
     [searchedIngredients]="searchedIngredientsNames"
     [supermarketGeoLocations]="supermarketsGEO"
   ></app-recipes-component>
+
 </div>

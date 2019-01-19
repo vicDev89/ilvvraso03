@@ -18,3 +18,9 @@
   </ng-template>
 </div>
 
+<app-loading-text
+  [hidden]="!isCurrentlySearching"
+  [size]="100"
+  [text]="'Rezepte werden geladen...'"
+></app-loading-text>
+

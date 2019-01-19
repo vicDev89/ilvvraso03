@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ingredient} from './dataclasses/Ingredient';
 import {AmountInMeasure} from './components/search/ingredients-component/ingredients-component.component';
 import {SupermarketGEO} from "./dataclasses/SupermarketGEO";
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
   }
 
   extractKeyOfSearchedIngredients(searchedIngredients: Map<Ingredient, AmountInMeasure>){
-    var searchedIngredientsNames = [];
+    let searchedIngredientsNames = [];
     searchedIngredients.forEach(function (v,k) {
       searchedIngredientsNames.push(k.name);
     });
@@ -40,8 +40,9 @@ export class AppComponent implements OnInit{
   }
 
   isResized(): boolean {
-    return window.innerWidth > 575;
-    // = before resize breakpoint?
+    return window.innerWidth < 576;
+    // true = before resize breakpoint
     // Src: https://getbootstrap.com/docs/4.2/layout/overview/
   }
+
 }
