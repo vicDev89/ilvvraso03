@@ -60,15 +60,17 @@
         [longitude]="lng"
         [zoom]="zoom"
         [disableDefaultUI]="false"
-        [zoomControl]="false">
+        [zoomControl]="false"
+        (mapClick)="close_window($event)">
 
         <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
                     [iconUrl]="getPictureURL(supermarketGeo.supermarket)"
                     [latitude]="supermarketGeo.lat"
                     [longitude]="supermarketGeo.lng"
-                    (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket">
+                    (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket"
+                    (markerClick)=select_marker($event)>
 
-          <agm-info-window>
+          <agm-info-window [disableAutoPan]="true">
             <strong>{{supermarketGeo.supermarketName}}</strong><br>
             {{supermarketGeo.street + ' '}}
             {{supermarketGeo.housenumber}}<br>
