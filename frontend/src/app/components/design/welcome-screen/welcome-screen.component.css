@@ -30,3 +30,7 @@ div.welcome {
   border-radius: 2em;
   width: 100%
 }
+
+h2 {
+  font-weight: normal;
+}

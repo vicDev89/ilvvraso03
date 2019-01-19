@@ -2,20 +2,8 @@
   margin-bottom: 1.5em;
 }
 
-.star {
-  position: relative;
-  display: inline-block;
-  font-size: 3rem;
-  color: #d3d3d3;
-}
-.full {
-  color: #ffcb00;
-}
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: #ffcb00;
+agm-map {
+  height: 20em;
 }
 
 app-ingredients-in-recipe-component {
@@ -45,4 +33,12 @@ div.map+div.col-md-12 {
 
 div.letsgo {
   color: var(--main-color);
+}
+
+div.information {
+  padding: 1em;
+  background: var(--main-color-light-90);
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
 }

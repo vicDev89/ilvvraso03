@@ -1,1 +1,40 @@
+div.recipe {
+  cursor: pointer;
+  position: relative;
+}
 
+img, div.recipe {
+  width: 100%;
+}
+
+.recipe_content {
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.card-img-overlay:hover .recipe_content:not(:hover){
+  opacity: 0.3;
+}
+
+div.card-img-overlay {
+  padding: 0;
+}
+
+div.recipe_content {
+  background-color: rgba(255,255,255,0.9);
+  text-align: center;
+  padding: 0.5em;
+  margin: 1em;
+}
+
+div.recipe_content h4 {
+  color: var(--main-color);
+}
+
+div.ingredientsAvailableInfo {
+  font-style: italic;
+}

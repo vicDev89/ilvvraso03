@@ -1,10 +1,13 @@
-<div class="row" *ngIf="!ingreatService.isNeverBeenSearchedForRecipes">
-  <div *ngIf="recipes.length > 0 ; else noRecipes">
-  <div class="col-md-6" *ngFor="let recipe of recipes" id="recipes">
-    <app-recipe-component [recipe]="recipe"
-                          [supermarketGeoLocations]="supermarketGeoLocations"
-                          [searchedIngredients]="searchedIngredients"></app-recipe-component>
+<div *ngIf="!ingreatService.isNeverBeenSearchedForRecipes">
+  <div class="row card-group" *ngIf="recipes.length > 0 ; else noRecipes">
+    <div class="col-md-6" *ngFor="let recipe of recipes" id="recipes">
+      <app-recipe-component [recipe]="recipe"
+                            [supermarketGeoLocations]="supermarketGeoLocations"
+                            [searchedIngredients]="searchedIngredients"></app-recipe-component>
+    </div>
   </div>
+
+  <div class="col-md-12 show_more_container">
     <button
       *ngIf="showMehrAnzeigenButton()"
       type="button"

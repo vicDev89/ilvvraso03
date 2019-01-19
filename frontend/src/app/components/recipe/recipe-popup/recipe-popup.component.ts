@@ -15,7 +15,7 @@ export interface DialogData {
 @Component({
   selector: 'app-recipe-popup',
   templateUrl: './recipe-popup.component.html',
-  styleUrls: ['./recipe-popup.component.css']
+  styleUrls: ['./recipe-popup.component.css', '../../../shared_styles/rating.css']
 })
 export class RecipePopupComponent implements OnInit {
 
