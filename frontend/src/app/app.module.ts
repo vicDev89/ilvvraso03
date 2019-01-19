@@ -20,6 +20,7 @@ import { LackIngredientsComponent } from './components/recipe/lack-ingredients/l
 import { LoadingComponent } from './components/design/loading/loading.component';
 import { NoRecipeFoundComponent } from './components/recipe/no-recipe-found/no-recipe-found.component';
 import { LoadingTextComponent } from './components/design/loading-text/loading-text.component';
+import { WelcomeScreenComponent } from './components/design/welcome-screen/welcome-screen.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoadingTextComponent } from './components/design/loading-text/loading-t
     LackIngredientsComponent,
     LoadingComponent,
     NoRecipeFoundComponent,
-    LoadingTextComponent
+    LoadingTextComponent,
+    WelcomeScreenComponent
   ],
   imports: [
     BrowserModule,

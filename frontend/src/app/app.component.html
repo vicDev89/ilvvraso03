@@ -17,11 +17,18 @@
     class="col-sm-4 col-md-3 no-float"
   ></div>
 
-  <app-recipes-component
-    #recipes
-    class="col-sm-8 col-md-9 border-left"
-    [searchedIngredients]="searchedIngredientsNames"
-    [supermarketGeoLocations]="supermarketsGEO"
-  ></app-recipes-component>
+  <div class="col-sm-8 col-md-9 border-left">
+    <app-welcome-screen
+      *ngIf="ingreatService.isNeverBeenSearchedForRecipes"
+    ></app-welcome-screen>
 
+    <!--
+      Content of this component will not be displayed while ingreatService.isNeverBeenSearchedForRecipes;
+      no ngIf...else used since the input-fields would not work anymore.
+    -->
+    <app-recipes-component
+      [searchedIngredients]="searchedIngredientsNames"
+      [supermarketGeoLocations]="supermarketsGEO"
+    ></app-recipes-component>
+  </div>
 </div>

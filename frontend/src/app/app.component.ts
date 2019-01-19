@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   searchedIngredientsNames: string[];
   supermarketsGEO: SupermarketGEO[] = [];
 
-  constructor( private ingreatService: IngreatService) { }
+  constructor( protected ingreatService: IngreatService) { }
 
   ngOnInit(): void {
     this.getSupermarketLocations();

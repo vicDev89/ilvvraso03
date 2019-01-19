@@ -20,7 +20,7 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
 
   isCurrentlySearching: boolean = false;
 
-  constructor( private ingreatService: IngreatService) { }
+  constructor( protected ingreatService: IngreatService) { }
 
   ngOnInit() {
     this.recipes = [];
@@ -41,9 +41,11 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
           });
         }
         this.isCurrentlySearching = false;
+        this.ingreatService.isNeverBeenSearchedForRecipes = false;
       }, (error: HttpErrorResponse) => {
         console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
         this.isCurrentlySearching = false;
+        this.ingreatService.isNeverBeenSearchedForRecipes = false;
       });
     }
 

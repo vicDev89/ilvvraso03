@@ -5,7 +5,3 @@
 div.no-float {
   z-index: -1;
 }
-
-app-recipes-component {
-  padding: 1em 2em 0 2em;
-}

@@ -46,10 +46,6 @@ export class IngreatService{
   }
 
   getFirst10RecipesByIngredients(ingredients: string[]): Observable<any>{
-    if (this.isNeverBeenSearchedForRecipes) {
-      this.isNeverBeenSearchedForRecipes = false;
-      // TODO: Show start page if false
-    }
     const ingredientsList = new IngredientsList(ingredients);
     return this.http.post<any>(this.url + 'getRecipesMax', ingredientsList);
   }
