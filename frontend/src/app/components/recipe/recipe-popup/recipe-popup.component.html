@@ -50,7 +50,7 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="fehlendeZustaten.length > 0; else letsGo">
+  <div class="row">
 
     <div class="col-md-6">
       <!--googleMap-->
@@ -61,6 +61,7 @@
         [zoom]="zoom"
         [disableDefaultUI]="false"
         [zoomControl]="false"
+        (mapClick)="close_window($event)"
         #map>
 
         <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
@@ -77,33 +78,15 @@
             {{supermarketGeo.zip}}
           </agm-info-window>
         </agm-marker>
+
+
       </agm-map>
-
-      <div class="map_loading" *ngIf="map">
-        <span>
-          <app-loading [size]="50"></app-loading>
-        </span>
-        Karte wird geladen...
-      </div>
-
     </div>
     <div class="col-md-6">
-      <div *ngIf="showLackIngredients" class="mb05">
+      <div *ngIf="(fehlendeZustaten.length > 0) && showLackIngredients" class="mb05">
         <span class="font-weight-bold">Fehlende Produkte:</span>
         <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" [superkarket]="supermarket"></app-lack-ingredients>
       </div>
     </div>
   </div>
-
-  <ng-template #letsGo>
-    <div class="row letsgo">
-      <div class="col-md-12 text-center">
-        <h3>
-          Sie haben alle Zutaten. Es kann losgehen!
-          <i class="fas fa-utensils"></i>
-        </h3>
-      </div>
-    </div>
-  </ng-template>
-
 </div>

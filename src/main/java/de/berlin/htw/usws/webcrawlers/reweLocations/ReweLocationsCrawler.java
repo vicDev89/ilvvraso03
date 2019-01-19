@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 @Stateless
 public class ReweLocationsCrawler {
@@ -42,7 +43,7 @@ public class ReweLocationsCrawler {
 
     private StringBuffer getStringBuffer(HttpURLConnection con) throws IOException {
         BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+                new InputStreamReader(con.getInputStream(), Charset.forName("UTF8")));
         String inputLine;
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {

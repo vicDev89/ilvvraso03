@@ -43,6 +43,9 @@ export class RecipePopupComponent implements OnInit {
   showLackIngredients: boolean = false;
   supermarket: Supermarket;
 
+  infoWindowOpened = null;
+  previous_info_window = null;
+
   ngOnInit() {
     this.recipe = this.data.recipe;
     this.fehlendeZustaten = this.data.fehlendeZustaten;
@@ -75,6 +78,23 @@ export class RecipePopupComponent implements OnInit {
     } else {
       alert("Geolocation is not supported by this browser.");
     }
+  }
+
+  close_window(){
+    if (this.previous_info_window != null ) {
+      this.previous_info_window.close()
+    }
+  }
+
+  select_marker(event){
+    let infoWindow = event.infoWindow._results[0];
+    if (this.previous_info_window == null)
+      this.previous_info_window = infoWindow;
+    else{
+      this.infoWindowOpened = infoWindow;
+      this.previous_info_window.close()
+    }
+    this.previous_info_window = infoWindow
   }
 
 }
