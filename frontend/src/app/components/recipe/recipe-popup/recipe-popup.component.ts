@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Recipe} from '../../../dataclasses/Recipe';
 import {IngredientInRecipe} from '../../../dataclasses/IngredientInRecipe';
@@ -24,7 +24,7 @@ export class RecipePopupComponent implements OnInit {
   }
 
   recipe: Recipe;
-  fehlendeZustaten: IngredientInRecipe[];
+  missingIngredients: IngredientInRecipe[];
   supermarketGeoLocations: SupermarketGEO[];
   searchedIngredients: string[];
 
@@ -46,9 +46,11 @@ export class RecipePopupComponent implements OnInit {
   infoWindowOpened = null;
   previous_info_window = null;
 
+  @ViewChild('map') private map;
+
   ngOnInit() {
     this.recipe = this.data.recipe;
-    this.fehlendeZustaten = this.data.fehlendeZustaten;
+    this.missingIngredients = this.data.fehlendeZustaten;
     this.supermarketGeoLocations = this.data.supermarketGeoLocations;
     this.searchedIngredients = this.data.searchedIngredients;
     this.findMe();

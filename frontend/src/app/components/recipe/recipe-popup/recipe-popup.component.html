@@ -50,9 +50,15 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="missingIngredients.length > 0; else letsGo">
 
-    <div class="col-md-6">
+    <div class="col-md-12 text-center">
+      <h3>
+        Finden Sie fehlende Zutaten hier:
+      </h3>
+    </div>
+
+    <div class="col-md-12 map">
       <!--googleMap-->
 
       <agm-map
@@ -68,9 +74,10 @@
                     [iconUrl]="getPictureURL(supermarketGeo.supermarket)"
                     [latitude]="supermarketGeo.lat"
                     [longitude]="supermarketGeo.lng"
-                    (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket">
+                    (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket"
+                    (markerClick)=select_marker($event)>
 
-          <agm-info-window>
+          <agm-info-window [disableAutoPan]="true">
             <strong>{{supermarketGeo.supermarketName}}</strong><br>
             {{supermarketGeo.street + ' '}}
             {{supermarketGeo.housenumber}}<br>
@@ -78,15 +85,48 @@
             {{supermarketGeo.zip}}
           </agm-info-window>
         </agm-marker>
-
-
       </agm-map>
-    </div>
-    <div class="col-md-6">
-      <div *ngIf="(fehlendeZustaten.length > 0) && showLackIngredients" class="mb05">
-        <span class="font-weight-bold">Fehlende Produkte:</span>
-        <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" [superkarket]="supermarket"></app-lack-ingredients>
+
+      <div class="text-center map_loading" *ngIf="!map || !supermarketGeoLocations">
+        <span>
+          <app-loading [size]="50"></app-loading>
+        </span>
+        Karte wird geladen...
       </div>
+
+    </div>
+    <div class="col-md-12">
+
+      <div *ngIf="showLackIngredients; else noHoverYet" class="mb05">
+        <app-lack-ingredients [missingIngredients]="missingIngredients" [superkarket]="supermarket"></app-lack-ingredients>
+      </div>
+
+      <!-- TODO: Loading component if no marks yet? -->
+      <ng-template #noHoverYet>
+        <div class="noHoverYet text-justify">
+          Bitte wählen Sie die Icons auf der Karte, um sich anzeigen zu lassen, welche fehlenden Zutaten Sie dort kaufen können.
+          <br>
+          <br>
+          <div class="information font-italic">
+            Es werden (noch) keine Icons angezeigt? Da wir Ihnen die Standorte von EDEKA und REWE in ganz Berlin zeigen, kann es abhängig
+            von Ihrer Internetverbindung eine Weile dauern, bis die Supermärkte auf der Karte angezeigt werden. Bitte haben Sie einen Moment
+            Geduld. Beachten Sie auch, dass es ggf. keinen Supermarkt im aktuellen Kartenabschnitt gibt.
+          </div>
+        </div>
+      </ng-template>
+
     </div>
   </div>
+
+  <ng-template #letsGo>
+    <div class="row letsgo">
+      <div class="col-md-12 text-center">
+        <h3>
+          Sie haben alle Zutaten. Es kann losgehen!
+          <i class="fas fa-utensils"></i>
+        </h3>
+      </div>
+    </div>
+  </ng-template>
+
 </div>

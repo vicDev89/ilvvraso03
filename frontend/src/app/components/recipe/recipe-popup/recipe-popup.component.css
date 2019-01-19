@@ -35,6 +35,12 @@ div.map_loading {
   padding-bottom: 1em;
   text-align: center;
   color: var(--main-color);
+  width: 100%;
+  padding-right: 2em;
+}
+
+div.map+div.col-md-12 {
+  padding-top: 1em;
 }
 
 div.letsgo {

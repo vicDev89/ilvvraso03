@@ -1,7 +1,7 @@
-<div *ngFor="let fehlendeZutat of fehlendeZustaten">
-  <div><b>{{fehlendeZutat.ingredient.name}}</b></div>
-  <div *ngIf="isProductExistsInSupermarket(fehlendeZutat.ingredient, superkarket); else noProductsFound">
-  <div *ngFor="let product of fehlendeZutat.ingredient.products">
+<div *ngFor="let missingIngredient of missingIngredients">
+  <div><b>{{missingIngredient.ingredient.name}}</b></div>
+  <div *ngIf="isProductExistsInSupermarket(missingIngredient.ingredient, superkarket); else noProductsFound">
+  <div *ngFor="let product of missingIngredient.ingredient.products">
     <span *ngIf="product.supermarket == getSupermarketValue(superkarket)">
     <img *ngIf="product.supermarket == 'EDEKA'" src="..\..\..\assets\edeka-logo.png" width="25" height="25">
     <img *ngIf="product.supermarket == 'REWE'" src="..\..\..\assets\rewe-logo.png" width="30" height="25">
@@ -13,4 +13,5 @@
   <ng-template #noProductsFound>
     Es wurden keine Produkte gefunden
   </ng-template>
+  <br *ngIf="missingIngredient !== missingIngredients[missingIngredients.length - 1]">
 </div>

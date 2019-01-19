@@ -10,7 +10,7 @@ import {Ingredient} from "../../../dataclasses/Ingredient";
 })
 export class LackIngredientsComponent implements OnChanges {
 
-  @Input() fehlendeZustaten: IngredientInRecipe[];
+  @Input() missingIngredients: IngredientInRecipe[];
   @Input() superkarket: Supermarket;
 
   constructor() { };
