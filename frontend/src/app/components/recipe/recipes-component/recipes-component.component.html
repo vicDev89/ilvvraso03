@@ -6,7 +6,7 @@
                           [searchedIngredients]="searchedIngredients"></app-recipe-component>
   </div>
     <button
-      *ngIf="recipes.length <= 10"
+      *ngIf="showMehrAnzeigenButton()"
       type="button"
       class="btn btn-outline-success"
       [disabled]="!restLoaded"

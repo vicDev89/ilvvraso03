@@ -49,7 +49,10 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   }
 
   loadRestInToRecipes(){
-    this.recipes = this.recipes.concat(this.restRecipes);
+    let endIndex = this.recipes.length;
+    let startIndex = this.recipes.length-10;
+    let newRecipesToAdd = this.restRecipes.slice(startIndex, endIndex);
+    this.recipes = this.recipes.concat(newRecipesToAdd);
   }
 
   loadFehlendeZutatenToRecipes(recipes: Recipe[]){
@@ -63,6 +66,14 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
     }
     recipes.sort((a,b) => a.fehlendeZutaten.length > b.fehlendeZutaten.length ? 1:-1);
     return recipes;
+  }
+
+  showMehrAnzeigenButton(){
+    if(this.restRecipes && this.restRecipes.length > 0){
+      return this.recipes.length >= 10 && this.recipes.length != this.restRecipes.length+10;
+    } else {
+      return this.recipes.length >= 10;
+    }
   }
 
 }
