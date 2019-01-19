@@ -8,9 +8,17 @@
   </div>
   <div class="panel" #panel>
     <div class="input-group">
-      <!-- TODO: style this -->
-      <input class="form-control" type="number" (input)="amountOrMeasureChanged(amount, measure)" #amount >
+      <input
+        class="form-control"
+        type="number"
+        (input)="amountOrMeasureChanged(amount, measure)"
+        #amount
+        [disabled] = "measure.selectedIndex === 0"
+      >
       <select class="form-control" (change)="amountOrMeasureChanged(amount, measure)" #measure>
+        <option>
+          {{NO_MEASURE}}
+        </option>
         <option *ngFor="let measure of measures">
           {{measure}}
         </option>

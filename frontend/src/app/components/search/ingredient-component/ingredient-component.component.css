@@ -42,7 +42,13 @@ li {
 }
 
 div.input-group {
-  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border: 2px solid var(--main-color);
+  border-radius: 2em;
+}
+
+.form-control {
+  border-radius: 2em;
 }
 
 button {

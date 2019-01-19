@@ -10,6 +10,8 @@ import {IngreatService} from "../../../services/ingreat.service";
 })
 export class IngredientComponentComponent implements OnInit {
 
+  readonly NO_MEASURE = '-';
+
   @Input()
   ingredient: Ingredient;
 
@@ -68,17 +70,23 @@ export class IngredientComponentComponent implements OnInit {
    * @author Lucas Larisch
    */
   amountOrMeasureChanged(amount: HTMLInputElement, measure: HTMLSelectElement): void {
-    let value = Number(amount.value);
-    if(value && value > 0) {
-      this.amountInMeasureValue.amount = value;
-    } else if (value < 0) {
-      this.amountInMeasureValue.amount = - value;
-      amount.value = '' + this.amountInMeasureValue.amount;
+    if (measure.selectedIndex > 0) {
+      let value = Number(amount.value);
+      if (value && value > 0) {
+        this.amountInMeasureValue.amount = value;
+      } else if (value && value < 0) {
+        this.amountInMeasureValue.amount = -value;
+        amount.value = '' + this.amountInMeasureValue.amount;
+      } else {
+        this.amountInMeasureValue.amount = 1;
+        amount.value = '' + this.amountInMeasureValue.amount;
+      }
+      this.amountInMeasureValue.measure = this.measures[measure.selectedIndex - 1];
     } else {
-      this.amountInMeasureValue.amount = 1;
-      amount.value = '' + this.amountInMeasureValue.amount;
+      this.amountInMeasureValue.measure = undefined;
+      this.amountInMeasureValue.amount = undefined;
+      amount.value = '';
     }
-    this.amountInMeasureValue.measure = this.measures[measure.selectedIndex];
     this.amountInMeasure.emit(this.amountInMeasureValue);
   }
 
