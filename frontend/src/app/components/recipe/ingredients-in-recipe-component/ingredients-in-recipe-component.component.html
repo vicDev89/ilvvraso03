@@ -1,10 +1,14 @@
-<ul>
-  <li *ngFor="let ingredientInRecipe of ingredientsInRecipes">
-    <span [ngClass]="{'highlighted-text':isSearchedIngredient(ingredientInRecipe)}">
-    {{ingredientInRecipe.quantity}}
-    {{ingredientInRecipe.measure}}
-    {{ingredientInRecipe.ingredient.name}}
-      </span>
-  </li>
-</ul>
-
+<table>
+  <tr>
+    <th colspan="7">Zutatenliste</th>
+  </tr>
+  <tr *ngFor="let ingredientInRecipe of ingredientsInRecipes">
+    <td>
+      <i class="far fa-check-circle" *ngIf="isSearchedIngredient(ingredientInRecipe)" ></i>
+      <i class="far fa-times-circle" *ngIf="!isSearchedIngredient(ingredientInRecipe)" ></i>
+    </td>
+    <td class="ingredient">{{ingredientInRecipe.ingredient.name}}</td>
+    <td class="quantity">{{getFormattedIngredientQuantity(ingredientInRecipe)}}</td>
+    <td class="measure">{{ingredientInRecipe.measure}}</td>
+  </tr>
+</table>

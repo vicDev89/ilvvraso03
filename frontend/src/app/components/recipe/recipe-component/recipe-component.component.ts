@@ -17,8 +17,6 @@ export class RecipeComponentComponent implements OnInit {
   @Input() supermarketGeoLocations: SupermarketGEO[] = [];
   @Input() searchedIngredients: string[] = [];
 
-  // TODO: Pipe ingredients -> Z.B. bei Rezept zu Eier & Erdnusskerne, geröstet und gesalzen
-
   fehlendeZustaten: IngredientInRecipe[] = [];
 
   constructor(public dialog: MatDialog) { }

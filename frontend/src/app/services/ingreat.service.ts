@@ -12,6 +12,8 @@ export class IngreatService{
   readonly url: string;
   private ingredients: Ingredient[];
 
+  isNeverBeenSearchedForRecipes: boolean = true;
+
   constructor(private http: HttpClient) {
     this.url = 'http://1d61324f.ngrok.io/api/';
     this.getAllIngredients();
@@ -44,12 +46,16 @@ export class IngreatService{
   }
 
   getFirst10RecipesByIngredients(ingredients: string[]): Observable<any>{
+    if (this.isNeverBeenSearchedForRecipes) {
+      this.isNeverBeenSearchedForRecipes = false;
+      // TODO: Show start page if false
+    }
     const ingredientsList = new IngredientsList(ingredients);
     return this.http.post<any>(this.url + 'getRecipesMax', ingredientsList);
   }
 
   getRestOfRecipesByIngredients(ingredients: string[]): Observable<any>{
-    var ingredientsList = new IngredientsList(ingredients);
+    const ingredientsList = new IngredientsList(ingredients);
     return this.http.post<any>(this.url + 'getRecipesRest', ingredientsList);
   }
 

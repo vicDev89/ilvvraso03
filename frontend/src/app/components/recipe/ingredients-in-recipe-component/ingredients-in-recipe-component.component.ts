@@ -7,7 +7,7 @@ import {Recipe} from "../../../dataclasses/Recipe";
   templateUrl: './ingredients-in-recipe-component.component.html',
   styleUrls: ['./ingredients-in-recipe-component.component.css']
 })
-export class IngredientsInRecipeComponentComponent implements OnInit{
+export class IngredientsInRecipeComponentComponent implements OnInit {
 
   @Input() recipe : Recipe;
   @Input() searchedIngredients : string[];
@@ -29,4 +29,11 @@ export class IngredientsInRecipeComponentComponent implements OnInit{
     return false;
   }
 
+  getFormattedIngredientQuantity(ingredientInRecipe: IngredientInRecipe): string | number {
+    if (ingredientInRecipe.quantity) {
+      return +(ingredientInRecipe.quantity).toFixed(2);
+    } else {
+      return '';
+    }
+  }
 }

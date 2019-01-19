@@ -1,81 +1,90 @@
 <!-- TODO: fixed items should remain on opening! -->
 
-<div class="row">
-  <div class="col-md-6">
-    <h2>
-      {{recipe.title}}
-    </h2>
-    <hr class="hr-success"/>
-    <div class="mb05">
-      <ngb-rating [rate]="recipe.rate" [readonly]="true" [max]="5"></ngb-rating>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <h2>
+        {{recipe.title}}
+      </h2>
+      <hr class="hr-success"/>
+      <div class="mb05">
+        <ngb-rating [(rate)]="recipe.rate" [starTemplate]="starTemplate" [readonly]="true" [max]="5"></ngb-rating>
+        <ng-template #starTemplate let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#x2605;</span>&#x2605;
+          </span>
+        </ng-template>
+      </div>
+      <div class="mb05">
+        <!-- TODO: Why is difficulty level not as string? -->
+        <span class="font-weight-bold">Schwierigkeitsgrad:</span> {{recipe.difficultyLevel}}
+      </div>
+      <div class="mb05">
+        <span class="font-weight-bold">Dauer:</span> {{recipe.preparationTimeInMin}} Minuten
+      </div>
     </div>
-    <div class="mb05">
-      <span class="font-weight-bold">Schwierigkeitsgrad:</span> {{recipe.difficultyLevel}}
+    <div class="col-md-6 text-right">
+      <img src="{{recipe.pictureUrl}}"
+           class="img-thumbnail img-responsive">
     </div>
-    <div class="mb05">
-      <span class="font-weight-bold">Dauer:</span> {{recipe.preparationTimeInMin}} Minuten
-    </div>
-    <div class="mb05">
-      <span class="font-weight-bold">Zutaten:</span>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
       <app-ingredients-in-recipe-component [recipe]="recipe" [searchedIngredients]="searchedIngredients"></app-ingredients-in-recipe-component>
     </div>
+    <div class="col-md-12 text-center">
+      <h3>
+        Zubereitung
+      </h3>
+      <hr class="hr-success"/>
+    </div>
+    <div class="col-md-12 text-justify">
+      {{recipe.preparation}}
+    </div>
+    <div class="col-md-12">
+      <br>
+      <hr class="hr-success"/>
+      <br>
+    </div>
   </div>
-  <div class="col-md-6 text-right">
-    <img src="{{recipe.pictureUrl}}" width="300" height="300" class="img-thumbnail no-max-width">
 
-  </div>
+  <div class="row">
 
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <span class="font-weight-bold">Zubereitungseinleitungen:</span>
-    <br>{{recipe.preparation}}
-  </div>
+    <div class="col-md-6">
+      <!--googleMap-->
 
-</div>
-<div class="row">
+      <agm-map
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [disableDefaultUI]="false"
+        [zoomControl]="false">
 
-  <div class="col-md-6">
-    <!--googleMap-->
+        <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
+                    [iconUrl]="getPictureURL(supermarketGeo.supermarket)"
+                    [latitude]="supermarketGeo.lat"
+                    [longitude]="supermarketGeo.lng"
+                    (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket">
 
-    <agm-map
-      [latitude]="lat"
-      [longitude]="lng"
-      [zoom]="zoom"
-      [disableDefaultUI]="false"
-      [zoomControl]="false">
-
-      <agm-marker *ngFor="let supermarketGeo of supermarketGeoLocations"
-                  [iconUrl]="getPictureURL(supermarketGeo.supermarket)"
-                  [latitude]="supermarketGeo.lat"
-                  [longitude]="supermarketGeo.lng"
-                  (mouseOver)="showLackIngredients = true; supermarket = supermarketGeo.supermarket">
-
-        <agm-info-window>
-          <strong>{{supermarketGeo.supermarketName}}</strong><br>
-          {{supermarketGeo.street + ' '}}
-          {{supermarketGeo.housenumber}}<br>
-          {{supermarketGeo.city  + ' '}}
-          {{supermarketGeo.zip}}
-        </agm-info-window>
-      </agm-marker>
+          <agm-info-window>
+            <strong>{{supermarketGeo.supermarketName}}</strong><br>
+            {{supermarketGeo.street + ' '}}
+            {{supermarketGeo.housenumber}}<br>
+            {{supermarketGeo.city  + ' '}}
+            {{supermarketGeo.zip}}
+          </agm-info-window>
+        </agm-marker>
 
 
-    </agm-map>
-  </div>
-  <div class="col-md-6">
-    <div *ngIf="(fehlendeZustaten.length > 0) && showLackIngredients" class="mb05">
-      <span class="font-weight-bold">Fehlende Produkte:</span>
-      <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" [superkarket]="supermarket"></app-lack-ingredients>
+      </agm-map>
+    </div>
+    <div class="col-md-6">
+      <div *ngIf="(fehlendeZustaten.length > 0) && showLackIngredients" class="mb05">
+        <span class="font-weight-bold">Fehlende Produkte:</span>
+        <app-lack-ingredients [fehlendeZustaten]="fehlendeZustaten" [superkarket]="supermarket"></app-lack-ingredients>
+      </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-

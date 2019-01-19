@@ -1,0 +1,30 @@
+.container-fluid {
+  margin-bottom: 1.5em;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 3rem;
+  color: #d3d3d3;
+}
+.full {
+  color: #ffcb00;
+}
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #ffcb00;
+}
+
+app-ingredients-in-recipe-component {
+  margin: 1em;
+}
+
+img {
+  /*
+  TODO: Only as high as content div?
+   */
+  width: 100%;
+  object-fit: cover;}

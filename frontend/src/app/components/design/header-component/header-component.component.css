@@ -9,3 +9,7 @@ div#header {
   z-index: 1;
   padding: 0.5em;
 }
+
+h3:hover, img:hover {
+  cursor: pointer;
+}

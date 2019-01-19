@@ -1,3 +1,44 @@
 .highlighted-text{
   background-color: yellow;
 }
+
+table {
+  border-left: 2px solid var(--main-color);
+  border-right: 2px solid var(--main-color);
+  border-bottom: 2px solid var(--main-color);
+  width: 100%;
+}
+
+th {
+  background-color: var(--main-color);
+  color: white;
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+  background-color: var(--main-color-light-90);
+}
+
+td {
+  padding: 4px;
+}
+
+td.quantity {
+  text-align: right;
+}
+
+td.ingredient {
+  width: 99%;
+}
+
+th, td.quantity, td.measure {
+  font-weight: bold;
+}
+
+.fa-check-circle {
+  color: #8aba18
+}
+
+.fa-times-circle {
+  color: var(--warning-color)
+}
