@@ -28,23 +28,27 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.searchedIngredients && this.searchedIngredients.length > 0){
+    if (this.searchedIngredients && this.searchedIngredients.length > 0) {
       this.isCurrentlySearching = true;
       this.ingreatService.getFirst10RecipesByIngredients(this.searchedIngredients).subscribe(data => {
         this.recipes = this.loadFehlendeZutatenToRecipes(data);
-          if(data.length === 10){
-            this.ingreatService.getRestOfRecipesByIngredients(this.searchedIngredients).subscribe(data => {
-              this.restRecipes = this.loadFehlendeZutatenToRecipes(data);
-              this.restLoaded = true;
-            }, (error: HttpErrorResponse) => {
-              console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
-            });
-          }
-      this.isCurrentlySearching = false;
+        if (data.length === 10) {
+          this.ingreatService.getRestOfRecipesByIngredients(this.searchedIngredients).subscribe(data => {
+            this.restRecipes = this.loadFehlendeZutatenToRecipes(data);
+            this.restLoaded = true;
+          }, (error: HttpErrorResponse) => {
+            console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
+          });
+        }
+        this.isCurrentlySearching = false;
       }, (error: HttpErrorResponse) => {
         console.log(`Backend returned code ${error.status}, body was: ${error.error}`);
         this.isCurrentlySearching = false;
       });
+    }
+
+    if (window.innerWidth >= 576) {
+      window.scrollTo(0, 0);
     }
   }
 

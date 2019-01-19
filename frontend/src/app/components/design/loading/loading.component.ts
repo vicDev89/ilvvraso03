@@ -21,7 +21,8 @@ export class LoadingComponent implements OnInit {
     "fas fa-cookie",
     "fas fa-utensils",
     "fas fa-cookie-bite",
-    "fas fa-cocktail"
+    "fas fa-cocktail",
+    "fas fa-mortar-pestle"
   ];
 
   ngOnInit(): void {
