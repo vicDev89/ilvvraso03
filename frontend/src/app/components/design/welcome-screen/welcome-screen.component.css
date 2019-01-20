@@ -34,3 +34,7 @@ div.welcome {
 h2 {
   font-weight: normal;
 }
+
+div.steps {
+  display: inline-block;
+}
