@@ -12,12 +12,9 @@ export class LoadingComponent implements OnInit {
   random_icon: string;
 
   private readonly CLASSES = [
-    // TODO: Include commented icons?
     "fas fa-lemon",
     "fas fa-stroopwafel",
-    // "fas fa-carrot",
     "fas fa-apple-alt",
-    // "fas fa-candy-cane",
     "fas fa-cookie",
     "fas fa-utensils",
     "fas fa-cookie-bite",

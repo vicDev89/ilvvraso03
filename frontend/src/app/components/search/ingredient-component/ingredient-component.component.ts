@@ -23,7 +23,7 @@ export class IngredientComponentComponent implements OnInit {
   private amountInMeasureValue: AmountInMeasure = new AmountInMeasure();
 
   constructor(
-    private ingreatService: IngreatService
+    public ingreatService: IngreatService
   ){ }
 
   /**

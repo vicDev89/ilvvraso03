@@ -75,7 +75,6 @@ export class IngredientsComponentComponent implements OnInit {
   }
 
   setBarHeights(): void {
-    // TODO: Discuss this solution
     let container = document.getElementById('ingredients_container');
     let list = document.getElementById('ingredients_list');
     const send = document.getElementById('send_container');

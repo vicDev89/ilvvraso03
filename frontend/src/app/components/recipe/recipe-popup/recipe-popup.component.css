@@ -11,9 +11,6 @@ app-ingredients-in-recipe-component {
 }
 
 img {
-  /*
-  TODO: Only as high as content div?
-   */
   width: 100%;
   object-fit: cover;
 }

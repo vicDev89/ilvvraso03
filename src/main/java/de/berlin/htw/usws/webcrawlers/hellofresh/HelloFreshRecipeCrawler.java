@@ -270,7 +270,6 @@ public class HelloFreshRecipeCrawler extends HelloFreshCrawler {
             try {
                 int durationInMinutes = Integer.parseInt(difficultyAndDuration.get(0).text().replace(TO_REPLACE_MINUTES, ""));
                 recipe.setPreparationTimeInMin(durationInMinutes);
-                // TODO: [DB] Difficulty levels: 1-3 / Discuss assumption: 1 = EASY, 2 = MEDIUM, 3 = DIFFICULT?
                 DifficultyLevel difficulty = DIFFICULTY_LEVEL_CONVERSION.get(difficultyAndDuration.get(1).text());
                 recipe.setDifficultyLevel(difficulty);
             } catch (NumberFormatException e) {

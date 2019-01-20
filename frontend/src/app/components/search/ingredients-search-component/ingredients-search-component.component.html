@@ -19,7 +19,6 @@
   </div>
 </div>
 <ul id="search_results">
-  <!-- TODO: Navigate with keys -->
   <li *ngFor="let ingredient of ingredients$ | async" [hidden]="isIngredientAlreadyAdded(ingredient.name)">
     <a (click)="addIngredient(ingredient)">
       {{ingredient.name}}

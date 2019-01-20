@@ -285,7 +285,6 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
         String firstOperation = ngInitAttribute.split(";")[0];
         if (firstOperation.contains("=")) {
             String operationValue = firstOperation.split("=")[1];
-            // TODO: Discuss assumption: better an error in parsing than throwing one if not matching a regex
             quantity = Double.parseDouble(operationValue);
         }
         return quantity;
@@ -301,7 +300,6 @@ public class FoodBoomRecipeCrawler extends FoodBoomCrawler {
      */
     private String readMeasureOfIngredient(Element quantityInformation) {
         String measure = null;
-        // TODO: Discus: Measure always sg!
         Elements informationSpans = quantityInformation.select(CSS_QUERY_SPAN);
         if (informationSpans.size()>1) {
             measure = informationSpans.last().text();

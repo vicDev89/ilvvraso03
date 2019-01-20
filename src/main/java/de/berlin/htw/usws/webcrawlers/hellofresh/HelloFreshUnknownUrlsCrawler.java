@@ -30,8 +30,6 @@ import java.util.List;
 @Stateless
 public class HelloFreshUnknownUrlsCrawler extends HelloFreshCrawler {
 
-    //TODO change system.out to logger
-
     private static final String HELLO_FRESH_RECIPES_PAGE_URL = "https://www.hellofresh.de/recipes/search/?order=-date";
     private static final int LIMIT = 10;
 

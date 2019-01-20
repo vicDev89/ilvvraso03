@@ -20,7 +20,7 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
 
   isCurrentlySearching: boolean = false;
 
-  constructor( protected ingreatService: IngreatService) { }
+  constructor( public ingreatService: IngreatService) { }
 
   ngOnInit() {
     this.recipes = [];
