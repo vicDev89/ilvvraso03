@@ -15,7 +15,7 @@ export class IngreatService{
   isNeverBeenSearchedForRecipes: boolean = true;
 
   constructor(private http: HttpClient) {
-    this.url = 'http://1d61324f.ngrok.io/api/';
+    this.url = 'https://1d61324f.ngrok.io/api/';
     this.getAllIngredients();
   }
 
