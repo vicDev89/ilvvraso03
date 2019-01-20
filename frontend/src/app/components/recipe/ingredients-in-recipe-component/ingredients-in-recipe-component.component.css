@@ -1,11 +1,8 @@
-.highlighted-text{
-  background-color: yellow;
+table {
+  border: 2px solid var(--main-color);
 }
 
-table {
-  border-left: 2px solid var(--main-color);
-  border-right: 2px solid var(--main-color);
-  border-bottom: 2px solid var(--main-color);
+table, td.ingredient {
   width: 100%;
 }
 
@@ -25,10 +22,6 @@ td {
 
 td.quantity {
   text-align: right;
-}
-
-td.ingredient {
-  width: 99%;
 }
 
 th, td.quantity, td.measure {

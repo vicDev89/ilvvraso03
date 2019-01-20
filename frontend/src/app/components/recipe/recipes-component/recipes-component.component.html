@@ -1,19 +1,19 @@
-<div *ngIf="!ingreatService.isNeverBeenSearchedForRecipes">
+<div *ngIf="!ingreatService.isNeverBeenSearchedForRecipes" class="recipes_container">
   <div class="row card-group" *ngIf="recipes.length > 0 ; else noRecipes">
     <div class="col-md-6" *ngFor="let recipe of recipes" id="recipes">
       <app-recipe-component [recipe]="recipe"
                             [supermarketGeoLocations]="supermarketGeoLocations"
                             [searchedIngredients]="searchedIngredients"></app-recipe-component>
     </div>
-  </div>
 
-  <div class="col-md-12 show_more_container">
-    <button
-      *ngIf="showMehrAnzeigenButton()"
-      type="button"
-      class="btn btn-outline-success"
-      [disabled]="!restLoaded"
-      (click)="loadRestInToRecipes()">Mehr anzeigen</button>
+    <div class="col-md-12 show_more_container">
+      <button
+        *ngIf="showMehrAnzeigenButton()"
+        type="button"
+        class="btn btn-outline-success"
+        [disabled]="!restLoaded"
+        (click)="loadRestInToRecipes()">Mehr anzeigen</button>
+    </div>
   </div>
 
   <ng-template #noRecipes>
