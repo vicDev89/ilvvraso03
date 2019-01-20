@@ -65,7 +65,8 @@ export class RecipesComponentComponent implements OnInit, OnChanges {
     for (const recipe of recipes) {
       recipe.fehlendeZutaten = [];
       for (const ingredientInRecipe of recipe.ingredientInRecipes) {
-        if(!this.searchedIngredients.includes(ingredientInRecipe.ingredient.name)){
+        let index = this.searchedIngredients.findIndex(searchedIngredient => ingredientInRecipe.ingredient.name.toLowerCase().includes(searchedIngredient.toLowerCase()));
+        if(index == -1){
           recipe.fehlendeZutaten.push(ingredientInRecipe);
         }
       }
