@@ -6,6 +6,8 @@
 
 div.recipes_container {
   height: 100%;
+  padding-top: 0.5em;
+  padding-right: 1em;
 }
 
 app-no-recipe-found {
@@ -15,6 +17,7 @@ app-no-recipe-found {
 
 div.show_more_container {
   text-align: center;
+  padding-top: 0.5em;
   padding-bottom: 1em;
 }
 

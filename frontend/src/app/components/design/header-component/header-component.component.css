@@ -10,6 +10,10 @@ div#header {
   padding: 0.5em;
 }
 
-h3:hover, img:hover {
+img {
   cursor: pointer;
+  height: 50px;
+  width: auto;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
